@@ -9,18 +9,16 @@ namespace Nager.ArduinoStepperMotor.TestUI
 {
     public partial class Form1 : Form
     {
-        private SerialPort _serialPort = new SerialPort("COM3", 115200, Parity.None, 8, StopBits.One);
+        private SerialPort _serialPort;
         private ConcurrentQueue<string> _queue = new ConcurrentQueue<string>();
         private bool _stopUiUpdate = false;
+        private bool _updateSpeed = false;
 
         public Form1()
         {
             this.InitializeComponent();
 
-            this._serialPort.Handshake = Handshake.None;
-            this._serialPort.DataReceived += this.SerialPortDataReceived;
-            this._serialPort.ReadTimeout = 1000;
-            this._serialPort.Open();
+            this.comboBoxSerialPort.DataSource = SerialPort.GetPortNames();
 
             new Thread(this.RefreshUi).Start();
         }
@@ -82,30 +80,110 @@ namespace Nager.ArduinoStepperMotor.TestUI
 
         private void buttonStart_Click(object sender, System.EventArgs e)
         {
+            if (!this._serialPort.IsOpen)
+            {
+                return;
+            }
+
             this._serialPort.Write("start");
         }
 
         private void buttonStop_Click(object sender, System.EventArgs e)
         {
+            if (!this._serialPort.IsOpen)
+            {
+                return;
+            }
+
             this._serialPort.Write("stop");
         }
 
         private void buttonMoveLeft_Click(object sender, System.EventArgs e)
         {
+            if (!this._serialPort.IsOpen)
+            {
+                return;
+            }
+
             var rotate = this.trackBar1.Value;
             this._serialPort.Write($"move=-{rotate}");
         }
 
         private void buttonMoveRight_Click(object sender, System.EventArgs e)
         {
+            if (!this._serialPort.IsOpen)
+            {
+                return;
+            }
+
             var rotate = this.trackBar1.Value;
             this._serialPort.Write($"move={rotate}");
         }
 
+        private void UpdateSpeed()
+        {
+            if (!this._updateSpeed)
+            {
+                return;
+            }
+
+            if (!this._serialPort.IsOpen)
+            {
+                return;
+            }
+
+            var speed = this.trackBarSpeed.Value;
+            this.textBoxSpeed.Text = speed.ToString();
+            this._serialPort.Write($"speed={speed}");
+        }
+
         private void trackBarSpeed_ValueChanged(object sender, System.EventArgs e)
         {
-            var speed = this.trackBarSpeed.Value;
-            this._serialPort.Write($"speed={speed}");
+            this.UpdateSpeed();
+        }
+
+        private void trackBar1_ValueChanged(object sender, EventArgs e)
+        {
+            var rotate = this.trackBar1.Value;
+            this.textBoxSteps.Text = rotate.ToString();
+        }
+
+        private void trackBarSpeed_MouseUp(object sender, MouseEventArgs e)
+        {
+            this._updateSpeed = true;
+            this.UpdateSpeed();
+        }
+
+        private void trackBarSpeed_MouseDown(object sender, MouseEventArgs e)
+        {
+            this._updateSpeed = false;
+        }
+
+        private void buttonConnect_Click(object sender, EventArgs e)
+        {
+            if (this._serialPort != null && this._serialPort.IsOpen)
+            {
+                return;
+            }
+
+            var serialPort = this.comboBoxSerialPort.SelectedItem as string;
+
+            this._serialPort = new SerialPort(serialPort, 115200, Parity.None, 8, StopBits.One);
+            this._serialPort.Handshake = Handshake.None;
+            this._serialPort.DataReceived += this.SerialPortDataReceived;
+            this._serialPort.ReadTimeout = 1000;
+            this._serialPort.Open();
+
+            this.buttonConnect.Enabled = false;
+            this.buttonDisconnect.Enabled = true;
+        }
+
+        private void buttonDisconnect_Click(object sender, EventArgs e)
+        {
+            this._serialPort.Close();
+
+            this.buttonConnect.Enabled = true;
+            this.buttonDisconnect.Enabled = false;
         }
     }
 }
