@@ -7,8 +7,10 @@ C# control a stepper motor
 
 
 
-Hardware
+## Hardware
 
-[Akozon Automatische Kugelumlaufspindel Linearer CNC-Schlitten](https://amzn.to/2uOP0eR)
-[PChero Mechanische Endschalter mit LED Indikator](https://amzn.to/2UIAZh4)
-[Quimat Arduino CNC Steuerung Kit mit Schrittmotor](https://amzn.to/2I4SG4M)
+Quantity | Product | 
+--- | --- | 
+1x | [Akozon Automatische Kugelumlaufspindel Linearer CNC-Schlitten](https://amzn.to/2uOP0eR) |
+1x | [PChero Mechanische Endschalter mit LED Indikator](https://amzn.to/2UIAZh4) |
+1x | [Quimat Arduino CNC Steuerung Kit mit Schrittmotor](https://amzn.to/2I4SG4M) |
