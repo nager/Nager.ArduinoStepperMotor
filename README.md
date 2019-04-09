@@ -5,9 +5,16 @@ C# control a stepper motor
 
 ![Fritzing](doc/ConnectionDiagram.png)
 
+## Serial Commands (Baudrate 115200)
 
+Command | Description | 
+--- | --- | 
+`start` | Enable the motor driver, the motor has voltage
+`stop` | Disable the motor driver, the motor has no voltage
+`move=500` | Move the motor for 500 steps
+`speed=200` | Change the rpm (rotation per minute) to the new value
 
-## Hardware
+## Required Hardware
 
 Quantity | Product | 
 --- | --- | 
