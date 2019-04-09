@@ -1,5 +1,5 @@
 # Nager.ArduinoStepperMotor
-C# control a stepper motor
+Control a stepper motor over C#
 
 
 
