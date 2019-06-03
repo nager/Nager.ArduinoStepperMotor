@@ -66,15 +66,23 @@ namespace Nager.ArduinoStepperMotor.TestUI
 
         private void SerialPortDataReceived(object sender, SerialDataReceivedEventArgs e)
         {
-            while (this._serialPort.BytesToRead > 0)
+            try
             {
-                var data = this._serialPort.ReadExisting();
-                this._queue.Enqueue(data.Trim());
-
-                if (this._queue.Count > 20)
+                while (this._serialPort.BytesToRead > 0)
                 {
-                    this._queue.TryDequeue(out var temp);
+                    var data = this._serialPort.ReadLine();
+  
+                    this._queue.Enqueue($"{DateTime.Now:mm:ss.fff} - {data.Trim()}");
+
+                    if (this._queue.Count > 20)
+                    {
+                        this._queue.TryDequeue(out var temp);
+                    }
                 }
+            }
+            catch (Exception exception)
+            {
+
             }
         }
 
@@ -169,9 +177,10 @@ namespace Nager.ArduinoStepperMotor.TestUI
             var serialPort = this.comboBoxSerialPort.SelectedItem as string;
 
             this._serialPort = new SerialPort(serialPort, 115200, Parity.None, 8, StopBits.One);
-            this._serialPort.Handshake = Handshake.None;
+            //this._serialPort.Handshake = Handshake.None;
             this._serialPort.DataReceived += this.SerialPortDataReceived;
-            this._serialPort.ReadTimeout = 1000;
+            this._serialPort.RtsEnable = true;
+            //this._serialPort.ReadTimeout = 10000;
             this._serialPort.Open();
 
             this.buttonConnect.Enabled = false;
@@ -184,6 +193,28 @@ namespace Nager.ArduinoStepperMotor.TestUI
 
             this.buttonConnect.Enabled = true;
             this.buttonDisconnect.Enabled = false;
+        }
+
+        private void trackBar2_ValueChanged(object sender, EventArgs e)
+        {
+            var speed = this.trackBar2.Value;
+            this.textBox1.Text = speed.ToString();
+
+            if (speed > 0)
+            {
+                this._serialPort.WriteLine("left");
+            }
+            else
+            {
+                this._serialPort.WriteLine("right");
+            }
+
+            this._serialPort.WriteLine($"speed={Math.Abs(speed)}");
+        }
+
+        private void buttonStop1_Click(object sender, EventArgs e)
+        {
+            this.trackBar2.Value = 0;
         }
     }
 }

@@ -39,17 +39,27 @@
             this.label2 = new System.Windows.Forms.Label();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
+            this.textBoxSteps = new System.Windows.Forms.TextBox();
+            this.textBoxSpeed = new System.Windows.Forms.TextBox();
             this.buttonConnect = new System.Windows.Forms.Button();
             this.buttonDisconnect = new System.Windows.Forms.Button();
             this.groupBox3 = new System.Windows.Forms.GroupBox();
             this.comboBoxSerialPort = new System.Windows.Forms.ComboBox();
-            this.textBoxSpeed = new System.Windows.Forms.TextBox();
-            this.textBoxSteps = new System.Windows.Forms.TextBox();
+            this.tabControl1 = new System.Windows.Forms.TabControl();
+            this.tabPage1 = new System.Windows.Forms.TabPage();
+            this.tabPage2 = new System.Windows.Forms.TabPage();
+            this.buttonStop1 = new System.Windows.Forms.Button();
+            this.trackBar2 = new System.Windows.Forms.TrackBar();
+            this.textBox1 = new System.Windows.Forms.TextBox();
             ((System.ComponentModel.ISupportInitialize)(this.trackBar1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.trackBarSpeed)).BeginInit();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.groupBox3.SuspendLayout();
+            this.tabControl1.SuspendLayout();
+            this.tabPage1.SuspendLayout();
+            this.tabPage2.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.trackBar2)).BeginInit();
             this.SuspendLayout();
             // 
             // trackBar1
@@ -121,12 +131,11 @@
             // 
             this.trackBarSpeed.LargeChange = 100;
             this.trackBarSpeed.Location = new System.Drawing.Point(64, 89);
-            this.trackBarSpeed.Maximum = 1400;
+            this.trackBarSpeed.Maximum = 1000;
             this.trackBarSpeed.Name = "trackBarSpeed";
             this.trackBarSpeed.Size = new System.Drawing.Size(393, 45);
-            this.trackBarSpeed.SmallChange = 50;
             this.trackBarSpeed.TabIndex = 6;
-            this.trackBarSpeed.TickFrequency = 200;
+            this.trackBarSpeed.TickFrequency = 50;
             this.trackBarSpeed.ValueChanged += new System.EventHandler(this.trackBarSpeed_ValueChanged);
             this.trackBarSpeed.MouseDown += new System.Windows.Forms.MouseEventHandler(this.trackBarSpeed_MouseDown);
             this.trackBarSpeed.MouseUp += new System.Windows.Forms.MouseEventHandler(this.trackBarSpeed_MouseUp);
@@ -153,9 +162,9 @@
             // 
             this.groupBox1.Controls.Add(this.buttonStart);
             this.groupBox1.Controls.Add(this.buttonStop);
-            this.groupBox1.Location = new System.Drawing.Point(12, 104);
+            this.groupBox1.Location = new System.Drawing.Point(6, 7);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(565, 52);
+            this.groupBox1.Size = new System.Drawing.Size(536, 52);
             this.groupBox1.TabIndex = 9;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Motor Shield";
@@ -170,12 +179,28 @@
             this.groupBox2.Controls.Add(this.label2);
             this.groupBox2.Controls.Add(this.trackBar1);
             this.groupBox2.Controls.Add(this.label1);
-            this.groupBox2.Location = new System.Drawing.Point(12, 162);
+            this.groupBox2.Location = new System.Drawing.Point(6, 65);
             this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Size = new System.Drawing.Size(565, 260);
+            this.groupBox2.Size = new System.Drawing.Size(536, 202);
             this.groupBox2.TabIndex = 10;
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "Move";
+            // 
+            // textBoxSteps
+            // 
+            this.textBoxSteps.Location = new System.Drawing.Point(463, 140);
+            this.textBoxSteps.Name = "textBoxSteps";
+            this.textBoxSteps.ReadOnly = true;
+            this.textBoxSteps.Size = new System.Drawing.Size(67, 20);
+            this.textBoxSteps.TabIndex = 10;
+            // 
+            // textBoxSpeed
+            // 
+            this.textBoxSpeed.Location = new System.Drawing.Point(463, 89);
+            this.textBoxSpeed.Name = "textBoxSpeed";
+            this.textBoxSpeed.ReadOnly = true;
+            this.textBoxSpeed.Size = new System.Drawing.Size(67, 20);
+            this.textBoxSpeed.TabIndex = 9;
             // 
             // buttonConnect
             // 
@@ -205,7 +230,7 @@
             this.groupBox3.Controls.Add(this.buttonDisconnect);
             this.groupBox3.Location = new System.Drawing.Point(12, 12);
             this.groupBox3.Name = "groupBox3";
-            this.groupBox3.Size = new System.Drawing.Size(565, 86);
+            this.groupBox3.Size = new System.Drawing.Size(552, 86);
             this.groupBox3.TabIndex = 13;
             this.groupBox3.TabStop = false;
             this.groupBox3.Text = "Connection";
@@ -219,30 +244,77 @@
             this.comboBoxSerialPort.Size = new System.Drawing.Size(156, 21);
             this.comboBoxSerialPort.TabIndex = 13;
             // 
-            // textBoxSpeed
+            // tabControl1
             // 
-            this.textBoxSpeed.Location = new System.Drawing.Point(463, 89);
-            this.textBoxSpeed.Name = "textBoxSpeed";
-            this.textBoxSpeed.ReadOnly = true;
-            this.textBoxSpeed.Size = new System.Drawing.Size(74, 20);
-            this.textBoxSpeed.TabIndex = 9;
+            this.tabControl1.Controls.Add(this.tabPage1);
+            this.tabControl1.Controls.Add(this.tabPage2);
+            this.tabControl1.Location = new System.Drawing.Point(12, 104);
+            this.tabControl1.Name = "tabControl1";
+            this.tabControl1.SelectedIndex = 0;
+            this.tabControl1.Size = new System.Drawing.Size(556, 318);
+            this.tabControl1.TabIndex = 12;
             // 
-            // textBoxSteps
+            // tabPage1
             // 
-            this.textBoxSteps.Location = new System.Drawing.Point(463, 140);
-            this.textBoxSteps.Name = "textBoxSteps";
-            this.textBoxSteps.ReadOnly = true;
-            this.textBoxSteps.Size = new System.Drawing.Size(74, 20);
-            this.textBoxSteps.TabIndex = 10;
+            this.tabPage1.Controls.Add(this.groupBox1);
+            this.tabPage1.Controls.Add(this.groupBox2);
+            this.tabPage1.Location = new System.Drawing.Point(4, 22);
+            this.tabPage1.Name = "tabPage1";
+            this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPage1.Size = new System.Drawing.Size(548, 292);
+            this.tabPage1.TabIndex = 0;
+            this.tabPage1.Text = "Stepper A4988";
+            this.tabPage1.UseVisualStyleBackColor = true;
+            // 
+            // tabPage2
+            // 
+            this.tabPage2.Controls.Add(this.textBox1);
+            this.tabPage2.Controls.Add(this.buttonStop1);
+            this.tabPage2.Controls.Add(this.trackBar2);
+            this.tabPage2.Location = new System.Drawing.Point(4, 22);
+            this.tabPage2.Name = "tabPage2";
+            this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPage2.Size = new System.Drawing.Size(548, 292);
+            this.tabPage2.TabIndex = 1;
+            this.tabPage2.Text = "Custom Control";
+            this.tabPage2.UseVisualStyleBackColor = true;
+            // 
+            // buttonStop1
+            // 
+            this.buttonStop1.Location = new System.Drawing.Point(6, 171);
+            this.buttonStop1.Name = "buttonStop1";
+            this.buttonStop1.Size = new System.Drawing.Size(536, 79);
+            this.buttonStop1.TabIndex = 13;
+            this.buttonStop1.Text = "Stop";
+            this.buttonStop1.UseVisualStyleBackColor = true;
+            this.buttonStop1.Click += new System.EventHandler(this.buttonStop1_Click);
+            // 
+            // trackBar2
+            // 
+            this.trackBar2.Location = new System.Drawing.Point(6, 120);
+            this.trackBar2.Maximum = 255;
+            this.trackBar2.Minimum = -255;
+            this.trackBar2.Name = "trackBar2";
+            this.trackBar2.Size = new System.Drawing.Size(536, 45);
+            this.trackBar2.TabIndex = 12;
+            this.trackBar2.TickFrequency = 10;
+            this.trackBar2.ValueChanged += new System.EventHandler(this.trackBar2_ValueChanged);
+            // 
+            // textBox1
+            // 
+            this.textBox1.Location = new System.Drawing.Point(224, 75);
+            this.textBox1.Name = "textBox1";
+            this.textBox1.ReadOnly = true;
+            this.textBox1.Size = new System.Drawing.Size(100, 20);
+            this.textBox1.TabIndex = 14;
             // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(950, 434);
+            this.Controls.Add(this.tabControl1);
             this.Controls.Add(this.groupBox3);
-            this.Controls.Add(this.groupBox2);
-            this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.textBoxReceive);
             this.Name = "Form1";
             this.Text = "Nager.ArduinoStepperMotor.TestUI";
@@ -253,6 +325,11 @@
             this.groupBox2.ResumeLayout(false);
             this.groupBox2.PerformLayout();
             this.groupBox3.ResumeLayout(false);
+            this.tabControl1.ResumeLayout(false);
+            this.tabPage1.ResumeLayout(false);
+            this.tabPage2.ResumeLayout(false);
+            this.tabPage2.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.trackBar2)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -277,6 +354,12 @@
         private System.Windows.Forms.ComboBox comboBoxSerialPort;
         private System.Windows.Forms.TextBox textBoxSteps;
         private System.Windows.Forms.TextBox textBoxSpeed;
+        private System.Windows.Forms.TabControl tabControl1;
+        private System.Windows.Forms.TabPage tabPage1;
+        private System.Windows.Forms.TabPage tabPage2;
+        private System.Windows.Forms.TrackBar trackBar2;
+        private System.Windows.Forms.Button buttonStop1;
+        private System.Windows.Forms.TextBox textBox1;
     }
 }
 
