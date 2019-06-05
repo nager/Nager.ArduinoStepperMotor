@@ -48,9 +48,10 @@
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tabPage1 = new System.Windows.Forms.TabPage();
             this.tabPage2 = new System.Windows.Forms.TabPage();
+            this.textBox1 = new System.Windows.Forms.TextBox();
             this.buttonStop1 = new System.Windows.Forms.Button();
             this.trackBar2 = new System.Windows.Forms.TrackBar();
-            this.textBox1 = new System.Windows.Forms.TextBox();
+            this.buttonRefresh = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.trackBar1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.trackBarSpeed)).BeginInit();
             this.groupBox1.SuspendLayout();
@@ -225,6 +226,7 @@
             // 
             // groupBox3
             // 
+            this.groupBox3.Controls.Add(this.buttonRefresh);
             this.groupBox3.Controls.Add(this.comboBoxSerialPort);
             this.groupBox3.Controls.Add(this.buttonConnect);
             this.groupBox3.Controls.Add(this.buttonDisconnect);
@@ -279,12 +281,22 @@
             this.tabPage2.Text = "Custom Control";
             this.tabPage2.UseVisualStyleBackColor = true;
             // 
+            // textBox1
+            // 
+            this.textBox1.Location = new System.Drawing.Point(224, 75);
+            this.textBox1.Name = "textBox1";
+            this.textBox1.ReadOnly = true;
+            this.textBox1.Size = new System.Drawing.Size(100, 20);
+            this.textBox1.TabIndex = 14;
+            this.textBox1.TabStop = false;
+            // 
             // buttonStop1
             // 
             this.buttonStop1.Location = new System.Drawing.Point(6, 171);
             this.buttonStop1.Name = "buttonStop1";
             this.buttonStop1.Size = new System.Drawing.Size(536, 79);
             this.buttonStop1.TabIndex = 13;
+            this.buttonStop1.TabStop = false;
             this.buttonStop1.Text = "Stop";
             this.buttonStop1.UseVisualStyleBackColor = true;
             this.buttonStop1.Click += new System.EventHandler(this.buttonStop1_Click);
@@ -299,14 +311,17 @@
             this.trackBar2.TabIndex = 12;
             this.trackBar2.TickFrequency = 10;
             this.trackBar2.ValueChanged += new System.EventHandler(this.trackBar2_ValueChanged);
+            this.trackBar2.KeyDown += new System.Windows.Forms.KeyEventHandler(this.trackBar2_KeyDown);
             // 
-            // textBox1
+            // buttonRefresh
             // 
-            this.textBox1.Location = new System.Drawing.Point(224, 75);
-            this.textBox1.Name = "textBox1";
-            this.textBox1.ReadOnly = true;
-            this.textBox1.Size = new System.Drawing.Size(100, 20);
-            this.textBox1.TabIndex = 14;
+            this.buttonRefresh.Location = new System.Drawing.Point(168, 17);
+            this.buttonRefresh.Name = "buttonRefresh";
+            this.buttonRefresh.Size = new System.Drawing.Size(75, 23);
+            this.buttonRefresh.TabIndex = 14;
+            this.buttonRefresh.Text = "Refresh";
+            this.buttonRefresh.UseVisualStyleBackColor = true;
+            this.buttonRefresh.Click += new System.EventHandler(this.buttonRefresh_Click);
             // 
             // Form1
             // 
@@ -360,6 +375,7 @@
         private System.Windows.Forms.TrackBar trackBar2;
         private System.Windows.Forms.Button buttonStop1;
         private System.Windows.Forms.TextBox textBox1;
+        private System.Windows.Forms.Button buttonRefresh;
     }
 }
 
