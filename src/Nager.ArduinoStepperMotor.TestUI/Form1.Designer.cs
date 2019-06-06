@@ -44,14 +44,12 @@
             this.buttonConnect = new System.Windows.Forms.Button();
             this.buttonDisconnect = new System.Windows.Forms.Button();
             this.groupBox3 = new System.Windows.Forms.GroupBox();
+            this.buttonRefresh = new System.Windows.Forms.Button();
             this.comboBoxSerialPort = new System.Windows.Forms.ComboBox();
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tabPage1 = new System.Windows.Forms.TabPage();
             this.tabPage2 = new System.Windows.Forms.TabPage();
-            this.textBox1 = new System.Windows.Forms.TextBox();
-            this.buttonStop1 = new System.Windows.Forms.Button();
-            this.trackBar2 = new System.Windows.Forms.TrackBar();
-            this.buttonRefresh = new System.Windows.Forms.Button();
+            this.smoothMotorControlWithStepCount1 = new Nager.ArduinoStepperMotor.TestUI.CustomControl.SmoothMotorControlWithStepCount();
             ((System.ComponentModel.ISupportInitialize)(this.trackBar1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.trackBarSpeed)).BeginInit();
             this.groupBox1.SuspendLayout();
@@ -60,7 +58,6 @@
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
             this.tabPage2.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.trackBar2)).BeginInit();
             this.SuspendLayout();
             // 
             // trackBar1
@@ -237,6 +234,16 @@
             this.groupBox3.TabStop = false;
             this.groupBox3.Text = "Connection";
             // 
+            // buttonRefresh
+            // 
+            this.buttonRefresh.Location = new System.Drawing.Point(168, 17);
+            this.buttonRefresh.Name = "buttonRefresh";
+            this.buttonRefresh.Size = new System.Drawing.Size(75, 23);
+            this.buttonRefresh.TabIndex = 14;
+            this.buttonRefresh.Text = "Refresh";
+            this.buttonRefresh.UseVisualStyleBackColor = true;
+            this.buttonRefresh.Click += new System.EventHandler(this.buttonRefresh_Click);
+            // 
             // comboBoxSerialPort
             // 
             this.comboBoxSerialPort.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
@@ -270,58 +277,23 @@
             // 
             // tabPage2
             // 
-            this.tabPage2.Controls.Add(this.textBox1);
-            this.tabPage2.Controls.Add(this.buttonStop1);
-            this.tabPage2.Controls.Add(this.trackBar2);
+            this.tabPage2.Controls.Add(this.smoothMotorControlWithStepCount1);
             this.tabPage2.Location = new System.Drawing.Point(4, 22);
             this.tabPage2.Name = "tabPage2";
             this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
             this.tabPage2.Size = new System.Drawing.Size(548, 292);
             this.tabPage2.TabIndex = 1;
-            this.tabPage2.Text = "Custom Control";
+            this.tabPage2.Text = "SmoothMotorControlWithStepCount";
             this.tabPage2.UseVisualStyleBackColor = true;
             // 
-            // textBox1
+            // smoothMotorControlWithStepCount1
             // 
-            this.textBox1.Location = new System.Drawing.Point(224, 75);
-            this.textBox1.Name = "textBox1";
-            this.textBox1.ReadOnly = true;
-            this.textBox1.Size = new System.Drawing.Size(100, 20);
-            this.textBox1.TabIndex = 14;
-            this.textBox1.TabStop = false;
-            // 
-            // buttonStop1
-            // 
-            this.buttonStop1.Location = new System.Drawing.Point(6, 171);
-            this.buttonStop1.Name = "buttonStop1";
-            this.buttonStop1.Size = new System.Drawing.Size(536, 79);
-            this.buttonStop1.TabIndex = 13;
-            this.buttonStop1.TabStop = false;
-            this.buttonStop1.Text = "Stop";
-            this.buttonStop1.UseVisualStyleBackColor = true;
-            this.buttonStop1.Click += new System.EventHandler(this.buttonStop1_Click);
-            // 
-            // trackBar2
-            // 
-            this.trackBar2.Location = new System.Drawing.Point(6, 120);
-            this.trackBar2.Maximum = 255;
-            this.trackBar2.Minimum = -255;
-            this.trackBar2.Name = "trackBar2";
-            this.trackBar2.Size = new System.Drawing.Size(536, 45);
-            this.trackBar2.TabIndex = 12;
-            this.trackBar2.TickFrequency = 10;
-            this.trackBar2.ValueChanged += new System.EventHandler(this.trackBar2_ValueChanged);
-            this.trackBar2.KeyDown += new System.Windows.Forms.KeyEventHandler(this.trackBar2_KeyDown);
-            // 
-            // buttonRefresh
-            // 
-            this.buttonRefresh.Location = new System.Drawing.Point(168, 17);
-            this.buttonRefresh.Name = "buttonRefresh";
-            this.buttonRefresh.Size = new System.Drawing.Size(75, 23);
-            this.buttonRefresh.TabIndex = 14;
-            this.buttonRefresh.Text = "Refresh";
-            this.buttonRefresh.UseVisualStyleBackColor = true;
-            this.buttonRefresh.Click += new System.EventHandler(this.buttonRefresh_Click);
+            this.smoothMotorControlWithStepCount1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.smoothMotorControlWithStepCount1.Location = new System.Drawing.Point(3, 3);
+            this.smoothMotorControlWithStepCount1.Name = "smoothMotorControlWithStepCount1";
+            this.smoothMotorControlWithStepCount1.Size = new System.Drawing.Size(542, 286);
+            this.smoothMotorControlWithStepCount1.TabIndex = 0;
+            this.smoothMotorControlWithStepCount1.SendCommand += new System.Action<string>(this.smoothMotorControlWithStepCount1_SendCommand);
             // 
             // Form1
             // 
@@ -343,8 +315,6 @@
             this.tabControl1.ResumeLayout(false);
             this.tabPage1.ResumeLayout(false);
             this.tabPage2.ResumeLayout(false);
-            this.tabPage2.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.trackBar2)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -372,10 +342,8 @@
         private System.Windows.Forms.TabControl tabControl1;
         private System.Windows.Forms.TabPage tabPage1;
         private System.Windows.Forms.TabPage tabPage2;
-        private System.Windows.Forms.TrackBar trackBar2;
-        private System.Windows.Forms.Button buttonStop1;
-        private System.Windows.Forms.TextBox textBox1;
         private System.Windows.Forms.Button buttonRefresh;
+        private CustomControl.SmoothMotorControlWithStepCount smoothMotorControlWithStepCount1;
     }
 }
 

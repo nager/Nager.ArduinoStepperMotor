@@ -17,9 +17,7 @@ namespace Nager.ArduinoStepperMotor.TestUI
         public Form1()
         {
             this.InitializeComponent();
-
             this.RefreshSerialPorts();
-            this.textBox1.Text = "0";
 
             new Thread(this.RefreshUi).Start();
         }
@@ -87,46 +85,41 @@ namespace Nager.ArduinoStepperMotor.TestUI
             }
         }
 
-        private void buttonStart_Click(object sender, System.EventArgs e)
+        private void WriteSerialData(string data)
         {
+            if (this._serialPort == null)
+            {
+                return;
+            }
+
             if (!this._serialPort.IsOpen)
             {
                 return;
             }
 
-            this._serialPort.Write("start");
+            this._serialPort.WriteLine(data);
+        }
+
+        private void buttonStart_Click(object sender, System.EventArgs e)
+        {
+            this.WriteSerialData("start");
         }
 
         private void buttonStop_Click(object sender, System.EventArgs e)
         {
-            if (!this._serialPort.IsOpen)
-            {
-                return;
-            }
-
-            this._serialPort.Write("stop");
+            this.WriteSerialData("stop");
         }
 
         private void buttonMoveLeft_Click(object sender, System.EventArgs e)
         {
-            if (!this._serialPort.IsOpen)
-            {
-                return;
-            }
-
             var rotate = this.trackBar1.Value;
-            this._serialPort.Write($"move=-{rotate}");
+            this.WriteSerialData($"move=-{rotate}");
         }
 
         private void buttonMoveRight_Click(object sender, System.EventArgs e)
         {
-            if (!this._serialPort.IsOpen)
-            {
-                return;
-            }
-
             var rotate = this.trackBar1.Value;
-            this._serialPort.Write($"move={rotate}");
+            this.WriteSerialData($"move={rotate}");
         }
 
         private void UpdateSpeed()
@@ -136,14 +129,9 @@ namespace Nager.ArduinoStepperMotor.TestUI
                 return;
             }
 
-            if (!this._serialPort.IsOpen)
-            {
-                return;
-            }
-
             var speed = this.trackBarSpeed.Value;
             this.textBoxSpeed.Text = speed.ToString();
-            this._serialPort.Write($"speed={speed}");
+            this.WriteSerialData($"speed={speed}");
         }
 
         private void trackBarSpeed_ValueChanged(object sender, System.EventArgs e)
@@ -190,46 +178,16 @@ namespace Nager.ArduinoStepperMotor.TestUI
 
         private void buttonDisconnect_Click(object sender, EventArgs e)
         {
-            this._serialPort.Close();
-
-            this.buttonConnect.Enabled = true;
-            this.buttonDisconnect.Enabled = false;
-        }
-
-        private void trackBar2_ValueChanged(object sender, EventArgs e)
-        {
-            var speed = this.trackBar2.Value;
-            this.textBox1.Text = speed.ToString();
-
-            if (!this._serialPort.IsOpen)
+            if (this._serialPort == null)
             {
                 return;
             }
 
-            if (speed > 0)
-            {
-                this._serialPort.WriteLine("left");
-            }
-            else
-            {
-                this._serialPort.WriteLine("right");
-            }
+            this._serialPort.Close();
+            this._serialPort.DataReceived -= this.SerialPortDataReceived;
 
-            this._serialPort.WriteLine($"speed={speed}");
-        }
-
-        private void buttonStop1_Click(object sender, EventArgs e)
-        {
-            this.trackBar2.Value = 0;
-            this.trackBar2.Focus();
-        }
-
-        private void trackBar2_KeyDown(object sender, KeyEventArgs e)
-        {
-            if (e.KeyCode == Keys.Enter)
-            {
-                this.trackBar2.Value = 0;
-            }
+            this.buttonConnect.Enabled = true;
+            this.buttonDisconnect.Enabled = false;
         }
 
         private void buttonRefresh_Click(object sender, EventArgs e)
@@ -240,6 +198,11 @@ namespace Nager.ArduinoStepperMotor.TestUI
         private void RefreshSerialPorts()
         {
             this.comboBoxSerialPort.DataSource = SerialPort.GetPortNames();
+        }
+
+        private void smoothMotorControlWithStepCount1_SendCommand(string data)
+        {
+            this.WriteSerialData(data);
         }
     }
 }
