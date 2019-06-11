@@ -37,7 +37,7 @@ void setup() {
   TIMSK1 |= (1 << TOIE1);   // enable Timer1 overflow interrupt:
   interrupts();             // alle Interrupts scharf schalten
 
-  caculateAccel(2000, 1, 0.7);
+  caculateAccel(3000, 1, 0.6);
 }
 
 void caculateAccel(int startDelay, int angle, float acceleration) {
@@ -73,8 +73,6 @@ ISR(TIMER1_OVF_vect)
     //PORTD = B00001000;
     //PORTD = B00000000;
 
-
-
     if (direction == 1)
     {
       steps++;
@@ -84,7 +82,6 @@ ISR(TIMER1_OVF_vect)
     }
 
   }
-
   
   int index = abs(speed);
   if (index > rampIndex)
@@ -154,7 +151,7 @@ void loop() {
     }
   }
 
-  if (steps > 23000 && direction == 1)
+  if (steps > 8900 && direction == 1)
   {
     rampIndex = 0;
     speed = 0;

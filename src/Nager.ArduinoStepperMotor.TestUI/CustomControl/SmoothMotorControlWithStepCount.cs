@@ -1,11 +1,13 @@
 ﻿using System;
 using System.Threading;
+using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace Nager.ArduinoStepperMotor.TestUI.CustomControl
 {
     public partial class SmoothMotorControlWithStepCount : UserControl
     {
+        private Random _random = new Random();
         public event Action<string> SendCommand;
 
         public SmoothMotorControlWithStepCount()
@@ -45,6 +47,22 @@ namespace Nager.ArduinoStepperMotor.TestUI.CustomControl
             {
                 this.trackBarSpeed.Value = 0;
             }
+        }
+
+        private async void buttonRandom_Click(object sender, EventArgs e)
+        {
+            for (var i = 0; i < 100; i++)
+            {
+                var randomSpeed = this._random.Next(-255, 255);
+                var delay = this._random.Next(10, 400);
+
+                this.trackBarSpeed.Value = randomSpeed;
+                await Task.Delay(delay);
+            }
+
+            this.trackBarSpeed.Value = -255;
+            await Task.Delay(2000);
+            this.trackBarSpeed.Value = 0;
         }
     }
 }
