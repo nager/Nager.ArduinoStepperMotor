@@ -1,6 +1,6 @@
-int motorDriverActivePin = 13;
+int motorDriverActivePin = 7;
 int stepPin = 5;
-int directionPin = 12;
+int directionPin = 6;
 
 int onTime = 0;
 
