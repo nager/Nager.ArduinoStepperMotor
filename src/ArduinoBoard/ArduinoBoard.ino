@@ -6,7 +6,7 @@
 #define MICROSTEPS 4
 //#define MICROSTEPS 1
 // Target RPM for cruise speed
-#define RPM 150
+#define RPM 100
 
 #define DIR 5
 #define STEP 2
@@ -23,9 +23,10 @@ int rotate = 0;
 unsigned wait_time_micros = 0;
 int Led = 13 ;// define LED Interface
 
-int pin9 = 0;
-int pin10 = 0;
-int pin11 = 0;
+int pin9 = 0; //Endstop
+int pin10 = 0; //Manual move
+int pin11 = 0; //Manual move
+bool autoMode = false;
 
 void setup() {
   Serial.setTimeout(50);
@@ -61,13 +62,27 @@ void setup() {
 
 void loop() {
 
-
   pin9 = digitalRead(9);
   pin10 = digitalRead(10);
   pin11 = digitalRead(11);
 
   if (pin9 == 0) {
     stepper.stop();
+    autoMode = false;
+    return;
+  }
+
+  if (pin10 == 0 && pin11 == 0) {
+    autoMode = true;
+  }
+
+  if (autoMode) {
+    stepper.enable();
+    stepper.move(10000);
+    delay(1000);
+    stepper.move(-10000);
+    stepper.disable();
+    delay(1000);
   }
 
 /*
@@ -101,13 +116,13 @@ void loop() {
     if (command == "start") {
       Serial.println("enable stepper");
       stepper.enable();
-      digitalWrite (Led, HIGH);
+      digitalWrite(Led, HIGH);
     }
     if (command == "stop") {
       Serial.println("disable stepper");
       stepper.stop();
       stepper.disable();
-      digitalWrite (Led, LOW);
+      digitalWrite(Led, LOW);
     }
     if (command.startsWith("move")) {
          
