@@ -27,14 +27,14 @@ namespace Nager.ArduinoStepperMotor.TestUI.CustomControl
             var speed = this.trackBarSpeed.Value;
             this.textBoxSpeed.Text = speed.ToString();
 
-            if (speed > 0)
-            {
-                this.SendCommand?.Invoke("left");
-            }
-            else
-            {
-                this.SendCommand?.Invoke("right");
-            }
+            //if (speed > 0)
+            //{
+            //    this.SendCommand?.Invoke("left");
+            //}
+            //else
+            //{
+            //    this.SendCommand?.Invoke("right");
+            //}
 
             Thread.Sleep(5);
 
@@ -63,6 +63,26 @@ namespace Nager.ArduinoStepperMotor.TestUI.CustomControl
             this.trackBarSpeed.Value = -255;
             await Task.Delay(2000);
             this.trackBarSpeed.Value = 0;
+        }
+
+        private void buttonLimitEnable_Click(object sender, EventArgs e)
+        {
+            this.SendCommand?.Invoke($"limitenable");
+        }
+
+        private void buttonLimitDisable_Click(object sender, EventArgs e)
+        {
+            this.SendCommand?.Invoke($"limitdisable");
+        }
+
+        private void buttonSetLimitLeft_Click(object sender, EventArgs e)
+        {
+            this.SendCommand?.Invoke($"setlimitleft");
+        }
+
+        private void buttonSetLimitRight_Click(object sender, EventArgs e)
+        {
+            this.SendCommand?.Invoke($"setlimitright");
         }
     }
 }
