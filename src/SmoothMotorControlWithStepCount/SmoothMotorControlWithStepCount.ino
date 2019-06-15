@@ -36,6 +36,7 @@ void setup() {
 
   digitalWrite(directionPin, LOW);
   digitalWrite(motorDriverActivePin, HIGH);
+  digitalWrite(motorDriverActivePin, LOW);
 
   //https://www.heise.de/developer/artikel/Timer-Counter-und-Interrupts-3273309.html
   noInterrupts();           // Alle Interrupts temporär abschalten
@@ -57,6 +58,16 @@ void setup() {
 }
 
 void caculateAccel(int startDelay, int angle, float acceleration) {
+  /*
+  uint16_t maxDelay = 2000;
+  uint16_t minDelay = 200;
+  for(uint16_t i = 0; i < 256; i++)
+  {
+    ramp[i] = (uint16_t)maxDelay - (uint32_t)((uint32_t)(maxDelay - minDelay) * (uint32_t)i / 256);
+  }
+  */
+
+  
   float c0 = startDelay * sqrt(2 * angle / acceleration) * 0.67703; // in us
   ramp[0] = c0 * TIMERTICKS_PER_US;
   float d = 0;
@@ -67,6 +78,7 @@ void caculateAccel(int startDelay, int angle, float acceleration) {
     ramp[i] = d * TIMERTICKS_PER_US;
     lastDelay = d;
   }
+  
 }
 
 ISR(TIMER1_OVF_vect) {
@@ -91,8 +103,11 @@ ISR(TIMER1_OVF_vect) {
     onTime = ramp[rampIndex];
     TCNT1 = 65536 - onTime;
 
-  checkLeftLimit();
-  checkRightLimit();
+    checkLeftLimit();
+    checkRightLimit();
+    if (rampIndex == 0) {
+      return;
+    }
 
     //http://profhof.com/arduino-port-manipulation/
     //https://www.peterbeard.co/blog/post/why-is-arduino-digitalwrite-so-slow/
@@ -118,7 +133,7 @@ ISR(TIMER1_OVF_vect) {
       rampIndex--;
     } else {
       switchDirection();
-      TCNT1 = 65536;
+      TCNT1 = 65400;
     }
   } else {
     //Change motor motorSpeed to a new ramp position
@@ -131,10 +146,10 @@ ISR(TIMER1_OVF_vect) {
 
     if (rampIndex == 0) {
       //Disable stepper driver
-      digitalWrite(motorDriverActivePin, HIGH);
+      //digitalWrite(motorDriverActivePin, HIGH);
     } else if (rampIndex == 1) {
       //Enable stepper driver
-      digitalWrite(motorDriverActivePin, LOW);
+      //digitalWrite(motorDriverActivePin, LOW);
     }
   }
 }

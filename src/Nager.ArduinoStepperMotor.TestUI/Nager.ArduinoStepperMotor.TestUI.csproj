@@ -35,6 +35,7 @@
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Windows.Forms.DataVisualization" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -46,6 +47,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="CustomControl\RampControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="CustomControl\RampControl.Designer.cs">
+      <DependentUpon>RampControl.cs</DependentUpon>
+    </Compile>
     <Compile Include="CustomControl\SmoothMotorControlWithStepCount.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -60,6 +67,9 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <EmbeddedResource Include="CustomControl\RampControl.resx">
+      <DependentUpon>RampControl.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="CustomControl\SmoothMotorControlWithStepCount.resx">
       <DependentUpon>SmoothMotorControlWithStepCount.cs</DependentUpon>
     </EmbeddedResource>
