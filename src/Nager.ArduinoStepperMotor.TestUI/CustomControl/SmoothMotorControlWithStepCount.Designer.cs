@@ -33,16 +33,22 @@
             this.trackBarSpeed = new System.Windows.Forms.TrackBar();
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
             this.panel1 = new System.Windows.Forms.Panel();
-            this.buttonSetLimitRight = new System.Windows.Forms.Button();
-            this.buttonSetLimitLeft = new System.Windows.Forms.Button();
-            this.buttonLimitDisable = new System.Windows.Forms.Button();
-            this.buttonLimitEnable = new System.Windows.Forms.Button();
-            this.buttonRandom = new System.Windows.Forms.Button();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.buttonSetLimitRight = new System.Windows.Forms.Button();
+            this.buttonLimitEnable = new System.Windows.Forms.Button();
+            this.buttonLimitDisable = new System.Windows.Forms.Button();
+            this.buttonSetLimitLeft = new System.Windows.Forms.Button();
+            this.buttonRandom = new System.Windows.Forms.Button();
+            this.panel2 = new System.Windows.Forms.Panel();
+            this.buttonMaxRight = new System.Windows.Forms.Button();
+            this.buttonMaxLeft = new System.Windows.Forms.Button();
+            this.buttonEnableMotorDriver = new System.Windows.Forms.Button();
+            this.buttonDisableMotorDriver = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.trackBarSpeed)).BeginInit();
             this.tableLayoutPanel1.SuspendLayout();
             this.panel1.SuspendLayout();
             this.groupBox1.SuspendLayout();
+            this.panel2.SuspendLayout();
             this.SuspendLayout();
             // 
             // textBoxSpeed
@@ -57,10 +63,9 @@
             // 
             // buttonStop
             // 
-            this.buttonStop.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.buttonStop.Location = new System.Drawing.Point(3, 172);
+            this.buttonStop.Location = new System.Drawing.Point(3, 3);
             this.buttonStop.Name = "buttonStop";
-            this.buttonStop.Size = new System.Drawing.Size(508, 34);
+            this.buttonStop.Size = new System.Drawing.Size(110, 28);
             this.buttonStop.TabIndex = 16;
             this.buttonStop.TabStop = false;
             this.buttonStop.Text = "Stop";
@@ -86,8 +91,8 @@
             this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
             this.tableLayoutPanel1.Controls.Add(this.textBoxSpeed, 0, 0);
             this.tableLayoutPanel1.Controls.Add(this.trackBarSpeed, 0, 1);
-            this.tableLayoutPanel1.Controls.Add(this.buttonStop, 0, 2);
             this.tableLayoutPanel1.Controls.Add(this.panel1, 0, 3);
+            this.tableLayoutPanel1.Controls.Add(this.panel2, 0, 2);
             this.tableLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutPanel1.Location = new System.Drawing.Point(0, 0);
             this.tableLayoutPanel1.Name = "tableLayoutPanel1";
@@ -101,64 +106,16 @@
             // 
             // panel1
             // 
+            this.panel1.Controls.Add(this.buttonDisableMotorDriver);
+            this.panel1.Controls.Add(this.buttonEnableMotorDriver);
             this.panel1.Controls.Add(this.groupBox1);
             this.panel1.Controls.Add(this.buttonRandom);
             this.panel1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panel1.Location = new System.Drawing.Point(2, 211);
-            this.panel1.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.panel1.Margin = new System.Windows.Forms.Padding(2);
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(510, 81);
             this.panel1.TabIndex = 19;
-            // 
-            // buttonSetLimitRight
-            // 
-            this.buttonSetLimitRight.Location = new System.Drawing.Point(176, 19);
-            this.buttonSetLimitRight.Name = "buttonSetLimitRight";
-            this.buttonSetLimitRight.Size = new System.Drawing.Size(81, 23);
-            this.buttonSetLimitRight.TabIndex = 22;
-            this.buttonSetLimitRight.Text = "Set right limit";
-            this.buttonSetLimitRight.UseVisualStyleBackColor = true;
-            this.buttonSetLimitRight.Click += new System.EventHandler(this.buttonSetLimitRight_Click);
-            // 
-            // buttonSetLimitLeft
-            // 
-            this.buttonSetLimitLeft.Location = new System.Drawing.Point(97, 19);
-            this.buttonSetLimitLeft.Name = "buttonSetLimitLeft";
-            this.buttonSetLimitLeft.Size = new System.Drawing.Size(73, 23);
-            this.buttonSetLimitLeft.TabIndex = 21;
-            this.buttonSetLimitLeft.Text = "Set left limit";
-            this.buttonSetLimitLeft.UseVisualStyleBackColor = true;
-            this.buttonSetLimitLeft.Click += new System.EventHandler(this.buttonSetLimitLeft_Click);
-            // 
-            // buttonLimitDisable
-            // 
-            this.buttonLimitDisable.Location = new System.Drawing.Point(8, 19);
-            this.buttonLimitDisable.Name = "buttonLimitDisable";
-            this.buttonLimitDisable.Size = new System.Drawing.Size(83, 23);
-            this.buttonLimitDisable.TabIndex = 20;
-            this.buttonLimitDisable.Text = "Disable Limit";
-            this.buttonLimitDisable.UseVisualStyleBackColor = true;
-            this.buttonLimitDisable.Click += new System.EventHandler(this.buttonLimitDisable_Click);
-            // 
-            // buttonLimitEnable
-            // 
-            this.buttonLimitEnable.Location = new System.Drawing.Point(8, 46);
-            this.buttonLimitEnable.Name = "buttonLimitEnable";
-            this.buttonLimitEnable.Size = new System.Drawing.Size(83, 23);
-            this.buttonLimitEnable.TabIndex = 19;
-            this.buttonLimitEnable.Text = "Enable Limit";
-            this.buttonLimitEnable.UseVisualStyleBackColor = true;
-            this.buttonLimitEnable.Click += new System.EventHandler(this.buttonLimitEnable_Click);
-            // 
-            // buttonRandom
-            // 
-            this.buttonRandom.Location = new System.Drawing.Point(3, 3);
-            this.buttonRandom.Name = "buttonRandom";
-            this.buttonRandom.Size = new System.Drawing.Size(111, 23);
-            this.buttonRandom.TabIndex = 18;
-            this.buttonRandom.Text = "Random drive";
-            this.buttonRandom.UseVisualStyleBackColor = true;
-            this.buttonRandom.Click += new System.EventHandler(this.buttonRandom_Click);
             // 
             // groupBox1
             // 
@@ -174,6 +131,109 @@
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Limits";
             // 
+            // buttonSetLimitRight
+            // 
+            this.buttonSetLimitRight.Location = new System.Drawing.Point(176, 19);
+            this.buttonSetLimitRight.Name = "buttonSetLimitRight";
+            this.buttonSetLimitRight.Size = new System.Drawing.Size(81, 23);
+            this.buttonSetLimitRight.TabIndex = 22;
+            this.buttonSetLimitRight.Text = "Set right limit";
+            this.buttonSetLimitRight.UseVisualStyleBackColor = true;
+            this.buttonSetLimitRight.Click += new System.EventHandler(this.buttonSetLimitRight_Click);
+            // 
+            // buttonLimitEnable
+            // 
+            this.buttonLimitEnable.Location = new System.Drawing.Point(8, 46);
+            this.buttonLimitEnable.Name = "buttonLimitEnable";
+            this.buttonLimitEnable.Size = new System.Drawing.Size(83, 23);
+            this.buttonLimitEnable.TabIndex = 19;
+            this.buttonLimitEnable.Text = "Enable Limit";
+            this.buttonLimitEnable.UseVisualStyleBackColor = true;
+            this.buttonLimitEnable.Click += new System.EventHandler(this.buttonLimitEnable_Click);
+            // 
+            // buttonLimitDisable
+            // 
+            this.buttonLimitDisable.Location = new System.Drawing.Point(8, 19);
+            this.buttonLimitDisable.Name = "buttonLimitDisable";
+            this.buttonLimitDisable.Size = new System.Drawing.Size(83, 23);
+            this.buttonLimitDisable.TabIndex = 20;
+            this.buttonLimitDisable.Text = "Disable Limit";
+            this.buttonLimitDisable.UseVisualStyleBackColor = true;
+            this.buttonLimitDisable.Click += new System.EventHandler(this.buttonLimitDisable_Click);
+            // 
+            // buttonSetLimitLeft
+            // 
+            this.buttonSetLimitLeft.Location = new System.Drawing.Point(97, 19);
+            this.buttonSetLimitLeft.Name = "buttonSetLimitLeft";
+            this.buttonSetLimitLeft.Size = new System.Drawing.Size(73, 23);
+            this.buttonSetLimitLeft.TabIndex = 21;
+            this.buttonSetLimitLeft.Text = "Set left limit";
+            this.buttonSetLimitLeft.UseVisualStyleBackColor = true;
+            this.buttonSetLimitLeft.Click += new System.EventHandler(this.buttonSetLimitLeft_Click);
+            // 
+            // buttonRandom
+            // 
+            this.buttonRandom.Location = new System.Drawing.Point(3, 3);
+            this.buttonRandom.Name = "buttonRandom";
+            this.buttonRandom.Size = new System.Drawing.Size(111, 23);
+            this.buttonRandom.TabIndex = 18;
+            this.buttonRandom.Text = "Random drive";
+            this.buttonRandom.UseVisualStyleBackColor = true;
+            this.buttonRandom.Click += new System.EventHandler(this.buttonRandom_Click);
+            // 
+            // panel2
+            // 
+            this.panel2.Controls.Add(this.buttonMaxRight);
+            this.panel2.Controls.Add(this.buttonMaxLeft);
+            this.panel2.Controls.Add(this.buttonStop);
+            this.panel2.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.panel2.Location = new System.Drawing.Point(3, 172);
+            this.panel2.Name = "panel2";
+            this.panel2.Size = new System.Drawing.Size(508, 34);
+            this.panel2.TabIndex = 20;
+            // 
+            // buttonMaxRight
+            // 
+            this.buttonMaxRight.Location = new System.Drawing.Point(235, 3);
+            this.buttonMaxRight.Name = "buttonMaxRight";
+            this.buttonMaxRight.Size = new System.Drawing.Size(110, 28);
+            this.buttonMaxRight.TabIndex = 18;
+            this.buttonMaxRight.TabStop = false;
+            this.buttonMaxRight.Text = "Max Right";
+            this.buttonMaxRight.UseVisualStyleBackColor = true;
+            this.buttonMaxRight.Click += new System.EventHandler(this.buttonMaxRight_Click);
+            // 
+            // buttonMaxLeft
+            // 
+            this.buttonMaxLeft.Location = new System.Drawing.Point(119, 3);
+            this.buttonMaxLeft.Name = "buttonMaxLeft";
+            this.buttonMaxLeft.Size = new System.Drawing.Size(110, 28);
+            this.buttonMaxLeft.TabIndex = 17;
+            this.buttonMaxLeft.TabStop = false;
+            this.buttonMaxLeft.Text = "Max Left";
+            this.buttonMaxLeft.UseVisualStyleBackColor = true;
+            this.buttonMaxLeft.Click += new System.EventHandler(this.buttonMaxLeft_Click);
+            // 
+            // buttonEnableMotorDriver
+            // 
+            this.buttonEnableMotorDriver.Location = new System.Drawing.Point(4, 32);
+            this.buttonEnableMotorDriver.Name = "buttonEnableMotorDriver";
+            this.buttonEnableMotorDriver.Size = new System.Drawing.Size(111, 23);
+            this.buttonEnableMotorDriver.TabIndex = 24;
+            this.buttonEnableMotorDriver.Text = "Enable Motor Driver";
+            this.buttonEnableMotorDriver.UseVisualStyleBackColor = true;
+            this.buttonEnableMotorDriver.Click += new System.EventHandler(this.buttonEnableMotorDriver_Click);
+            // 
+            // buttonDisableMotorDriver
+            // 
+            this.buttonDisableMotorDriver.Location = new System.Drawing.Point(121, 32);
+            this.buttonDisableMotorDriver.Name = "buttonDisableMotorDriver";
+            this.buttonDisableMotorDriver.Size = new System.Drawing.Size(111, 23);
+            this.buttonDisableMotorDriver.TabIndex = 25;
+            this.buttonDisableMotorDriver.Text = "Disable Motor Driver";
+            this.buttonDisableMotorDriver.UseVisualStyleBackColor = true;
+            this.buttonDisableMotorDriver.Click += new System.EventHandler(this.buttonDisableMotorDriver_Click);
+            // 
             // SmoothMotorControlWithStepCount
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -186,6 +246,7 @@
             this.tableLayoutPanel1.PerformLayout();
             this.panel1.ResumeLayout(false);
             this.groupBox1.ResumeLayout(false);
+            this.panel2.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
@@ -203,5 +264,10 @@
         private System.Windows.Forms.Button buttonSetLimitLeft;
         private System.Windows.Forms.Button buttonSetLimitRight;
         private System.Windows.Forms.GroupBox groupBox1;
+        private System.Windows.Forms.Panel panel2;
+        private System.Windows.Forms.Button buttonMaxRight;
+        private System.Windows.Forms.Button buttonMaxLeft;
+        private System.Windows.Forms.Button buttonDisableMotorDriver;
+        private System.Windows.Forms.Button buttonEnableMotorDriver;
     }
 }

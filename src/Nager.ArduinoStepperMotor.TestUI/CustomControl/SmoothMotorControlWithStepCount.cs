@@ -1,5 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using Nager.ArduinoStepperMotor.TestUI.Model;
+using Newtonsoft.Json;
+using System;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
@@ -9,12 +10,35 @@ namespace Nager.ArduinoStepperMotor.TestUI.CustomControl
     public partial class SmoothMotorControlWithStepCount : UserControl
     {
         private Random _random = new Random();
+        private int _speed = 0;
+
         public event Action<string> SendCommand;
 
         public SmoothMotorControlWithStepCount()
         {
             this.InitializeComponent();
             this.textBoxSpeed.Text = "0";
+        }
+
+        public void DataReceived(string data)
+        {
+            var limits = JsonConvert.DeserializeObject<LimitInfo>(data);
+            if (limits.LimitLeft == -1|| limits.LimitRight == -1)
+            {
+                return;
+            }
+
+            if (limits.LimitLeft < 1200 && this._speed < 0)
+            {
+                var reduceSpeed = Math.Ceiling(Math.Abs(this._speed) / 2.0);
+                this.SendSpeed(this._speed + (int)reduceSpeed);
+            }
+
+            if (limits.LimitRight < 1200 && this._speed > 0)
+            {
+                var reduceSpeed = Math.Ceiling(this._speed / 2.0);
+                this.SendSpeed(this._speed - (int)reduceSpeed);
+            }
         }
 
         private void buttonStop_Click(object sender, EventArgs e)
@@ -26,18 +50,23 @@ namespace Nager.ArduinoStepperMotor.TestUI.CustomControl
         private void trackBarSpeed_ValueChanged(object sender, EventArgs e)
         {
             var speed = this.trackBarSpeed.Value;
-            this.textBoxSpeed.Text = speed.ToString();
+            this.SendSpeed(speed);
+        }
 
-            //if (speed > 0)
-            //{
-            //    this.SendCommand?.Invoke("left");
-            //}
-            //else
-            //{
-            //    this.SendCommand?.Invoke("right");
-            //}
+        private void SendSpeed(int speed)
+        {
+            this._speed = speed;
+            this.textBoxSpeed.Invoke((MethodInvoker)delegate
+            {
+                this.textBoxSpeed.Text = speed.ToString();
+            });
 
-            Thread.Sleep(5);
+            this.trackBarSpeed.ValueChanged -= trackBarSpeed_ValueChanged;
+            this.trackBarSpeed.Invoke((MethodInvoker)delegate
+            {
+                this.trackBarSpeed.Value = speed;
+            });
+            this.trackBarSpeed.ValueChanged += trackBarSpeed_ValueChanged;
 
             this.SendCommand?.Invoke($"speed={speed}");
         }
@@ -84,6 +113,26 @@ namespace Nager.ArduinoStepperMotor.TestUI.CustomControl
         private void buttonSetLimitRight_Click(object sender, EventArgs e)
         {
             this.SendCommand?.Invoke($"setlimitright");
+        }
+
+        private void buttonMaxLeft_Click(object sender, EventArgs e)
+        {
+            this.SendSpeed(-255);
+        }
+
+        private void buttonMaxRight_Click(object sender, EventArgs e)
+        {
+            this.SendSpeed(255);
+        }
+
+        private void buttonEnableMotorDriver_Click(object sender, EventArgs e)
+        {
+            this.SendCommand?.Invoke($"enablemotordriver");
+        }
+
+        private void buttonDisableMotorDriver_Click(object sender, EventArgs e)
+        {
+            this.SendCommand?.Invoke($"disablemotordriver");
         }
     }
 }

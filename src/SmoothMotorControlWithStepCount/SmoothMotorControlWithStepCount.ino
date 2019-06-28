@@ -35,7 +35,7 @@ void setup() {
   pinMode(directionPin, OUTPUT); // Motor Direction
 
   digitalWrite(directionPin, LOW);
-  digitalWrite(motorDriverActivePin, HIGH);
+  //digitalWrite(motorDriverActivePin, HIGH);
   digitalWrite(motorDriverActivePin, LOW);
 
   //https://www.heise.de/developer/artikel/Timer-Counter-und-Interrupts-3273309.html
@@ -49,8 +49,8 @@ void setup() {
   TIMSK1 |= (1 << TOIE1);   // enable Timer1 overflow interrupt:
   interrupts();             // alle Interrupts scharf schalten
 
-  //caculateAccel(3000, 1, 0.6);
-  caculateAccel(1500, 1, 0.6);
+  caculateAccel(3000, 1, 0.6);
+  //caculateAccel(1500, 1, 0.6);
 
   steps = 2147483647;
   limitRight = steps - 500;
@@ -174,6 +174,14 @@ void loop() {
       }
     }
 
+    if (command.startsWith("enablemotordriver")) {
+      digitalWrite(motorDriverActivePin, LOW);
+    }
+
+    if (command.startsWith("disablemotordriver")) {
+      digitalWrite(motorDriverActivePin, HIGH);
+    }
+
     if (command.startsWith("limitenable")) {
       limitActive = true;
     }
@@ -198,10 +206,12 @@ void loop() {
 
   }
 
-  if (counter == 20000) {
-    Serial.println((String)"Steps:" + steps + (String)" Direction:" + movementDirection + (String)" Speed:" + motorSpeed);
-    Serial.println((String)"LimitLeft:" + limitLeft + (String)" " + checkLeftLimit());
-    Serial.println((String)"LimitRight:" + limitRight + (String)" " + checkRightLimit());
+  //if (counter == 20000) {
+  if (counter == 500) {
+    //Serial.println((String)"Steps:" + steps + (String)" Direction:" + movementDirection + (String)" Speed:" + motorSpeed);
+    //Serial.println((String)"LimitLeft:" + limitLeft + (String)" " + checkLeftLimit());
+    //Serial.println((String)"LimitRight:" + limitRight + (String)" " + checkRightLimit());
+    Serial.println((String)"{ \"limitLeft\":" + checkLeftLimit() +  ", \"limitRight\":" + checkRightLimit() + " }");
     counter = 0;
   }
 

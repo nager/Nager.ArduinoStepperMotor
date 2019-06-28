@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Concurrent;
+using System.Diagnostics;
 using System.IO.Ports;
 using System.Text;
 using System.Threading;
@@ -7,14 +8,14 @@ using System.Windows.Forms;
 
 namespace Nager.ArduinoStepperMotor.TestUI
 {
-    public partial class Form1 : Form
+    public partial class Main : Form
     {
         private SerialPort _serialPort;
         private ConcurrentQueue<string> _queue = new ConcurrentQueue<string>();
         private bool _stopUiUpdate = false;
         private bool _updateSpeed = false;
 
-        public Form1()
+        public Main()
         {
             this.InitializeComponent();
             this.RefreshSerialPorts();
@@ -70,12 +71,14 @@ namespace Nager.ArduinoStepperMotor.TestUI
                 while (this._serialPort.BytesToRead > 0)
                 {
                     var data = this._serialPort.ReadLine();
+                    this.smoothMotorControlWithStepCount1.DataReceived(data);
   
                     this._queue.Enqueue($"{DateTime.Now:mm:ss.fff} - {data.Trim()}");
 
                     if (this._queue.Count > 20)
                     {
                         this._queue.TryDequeue(out var temp);
+                        this._queue.TryDequeue(out temp);
                     }
                 }
             }
@@ -97,7 +100,11 @@ namespace Nager.ArduinoStepperMotor.TestUI
                 return;
             }
 
+            //var sw = new Stopwatch();
+            //sw.Start();
             this._serialPort.WriteLine(data);
+            //sw.Stop();
+            //this._queue.Enqueue($"{DateTime.Now:mm:ss.fff} Send - {data} {sw.Elapsed.TotalMilliseconds}ms");
         }
 
         private void buttonStart_Click(object sender, System.EventArgs e)
