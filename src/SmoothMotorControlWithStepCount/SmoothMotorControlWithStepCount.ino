@@ -24,7 +24,7 @@ volatile byte rampIndex = 0;
 volatile int motorSpeed  = 0;
 volatile unsigned long steps = 0;
 volatile enum movementDirections movementDirection = MOVEMENT_RIGHT;
-volatile enum movementDirections movementDirection1 = MOVEMENT_RIGHT;
+volatile enum movementDirections nextMovementDirection = MOVEMENT_RIGHT;
 
 void setup() {
   Serial.setTimeout(50);
@@ -127,7 +127,7 @@ ISR(TIMER1_OVF_vect) {
     }
   }
 
-  if (movementDirection != movementDirection1) {
+  if (movementDirection != nextMovementDirection) {
     //Slow down motor for direction switch
     if (rampIndex > 0) {
       rampIndex--;
@@ -137,7 +137,7 @@ ISR(TIMER1_OVF_vect) {
     }
   } else {
     //Change motor motorSpeed to a new ramp position
-    int index = abs(motorSpeed);
+    int index = motorSpeed;
     if (index > rampIndex) {
       rampIndex++;
     } else if (index < rampIndex) {
@@ -162,16 +162,18 @@ void loop() {
 
     if (command.startsWith("speed")) {
       //Serial.println(command.substring(6));
-      motorSpeed = command.substring(6).toInt();
-      if (abs(motorSpeed) > RAMP_STEPS) {
+      int nextSpeed = command.substring(6).toInt();
+      if (abs(nextSpeed) > RAMP_STEPS) {
         motorSpeed = 0;
       }
 
-      if (motorSpeed > 0) {
-        movementDirection1 = MOVEMENT_RIGHT;
-      } else if (motorSpeed < 0) {
-        movementDirection1 = MOVEMENT_LEFT;
+      if (nextSpeed > 0) {
+        nextMovementDirection = MOVEMENT_RIGHT;
+      } else if (nextSpeed < 0) {
+        nextMovementDirection = MOVEMENT_LEFT;
       }
+
+      motorSpeed = abs(nextSpeed);
     }
 
     if (command.startsWith("enablemotordriver")) {
@@ -211,7 +213,7 @@ void loop() {
     //Serial.println((String)"Steps:" + steps + (String)" Direction:" + movementDirection + (String)" Speed:" + motorSpeed);
     //Serial.println((String)"LimitLeft:" + limitLeft + (String)" " + checkLeftLimit());
     //Serial.println((String)"LimitRight:" + limitRight + (String)" " + checkRightLimit());
-    Serial.println((String)"{ \"limitLeft\":" + checkLeftLimit() +  ", \"limitRight\":" + checkRightLimit() + " }");
+    Serial.println((String)"{ \"limitLeft\":" + checkLeftLimit() +  ", \"limitRight\":" + checkRightLimit() + ", \"motorSpeed\":" + motorSpeed + " }");
     counter = 0;
   }
 
@@ -226,7 +228,12 @@ int checkLeftLimit() {
 
   long distance = limitLeft - steps;
 
-  if (movementDirection == MOVEMENT_LEFT && distance <= 0) {
+  if (nextMovementDirection == MOVEMENT_LEFT && distance < 400 && motorSpeed > 2) {
+    int reduceSpeed = ceil(motorSpeed / 10.0);
+    motorSpeed = motorSpeed - reduceSpeed;
+  }
+
+  if (nextMovementDirection == MOVEMENT_LEFT && distance <= 0) {
     rampIndex = 0;
     motorSpeed = 0;
   }
@@ -241,7 +248,12 @@ int checkRightLimit() {
 
   long distance = steps - limitRight;
 
-  if (movementDirection == MOVEMENT_RIGHT && distance <= 0) {
+  if (nextMovementDirection == MOVEMENT_RIGHT && distance < 400 && motorSpeed > 2) {
+    int reduceSpeed = ceil(motorSpeed / 10.0);
+    motorSpeed = motorSpeed - reduceSpeed;
+  }
+
+  if (nextMovementDirection == MOVEMENT_RIGHT && distance <= 0) {
     rampIndex = 0;
     motorSpeed = 0;
   }
@@ -250,7 +262,7 @@ int checkRightLimit() {
 }
 
 void switchDirection() {
-  if (movementDirection1 == MOVEMENT_LEFT) {
+  if (nextMovementDirection == MOVEMENT_LEFT) {
     movementDirection = MOVEMENT_LEFT;
     digitalWrite(directionPin, !motorDirection);
   } else {

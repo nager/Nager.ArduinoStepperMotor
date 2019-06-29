@@ -23,6 +23,7 @@ namespace Nager.ArduinoStepperMotor.TestUI.CustomControl
         public void DataReceived(string data)
         {
             var limits = JsonConvert.DeserializeObject<LimitInfo>(data);
+            return;
             if (limits.LimitLeft == -1|| limits.LimitRight == -1)
             {
                 return;
