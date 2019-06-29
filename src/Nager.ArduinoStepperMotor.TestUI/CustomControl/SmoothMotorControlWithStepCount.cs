@@ -63,8 +63,8 @@ namespace Nager.ArduinoStepperMotor.TestUI.CustomControl
 
         private void buttonStop_Click(object sender, EventArgs e)
         {
-            this.trackBarSpeed.Value = 0;
-            this.trackBarSpeed.Focus();
+            this.SetSpeed(0);
+            this.SendSpeed(0);
         }
 
         private void trackBarSpeed_ValueChanged(object sender, EventArgs e)
