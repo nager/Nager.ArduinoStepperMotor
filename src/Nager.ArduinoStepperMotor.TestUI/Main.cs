@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Concurrent;
-using System.Diagnostics;
 using System.IO.Ports;
 using System.Text;
 using System.Threading;
@@ -13,7 +12,6 @@ namespace Nager.ArduinoStepperMotor.TestUI
         private SerialPort _serialPort;
         private ConcurrentQueue<string> _queue = new ConcurrentQueue<string>();
         private bool _stopUiUpdate = false;
-        private bool _updateSpeed = false;
 
         public Main()
         {
@@ -105,62 +103,23 @@ namespace Nager.ArduinoStepperMotor.TestUI
             this._serialPort.WriteLine(data);
             //sw.Stop();
             //this._queue.Enqueue($"{DateTime.Now:mm:ss.fff} Send - {data} {sw.Elapsed.TotalMilliseconds}ms");
-        }
 
-        private void buttonStart_Click(object sender, System.EventArgs e)
-        {
-            this.WriteSerialData("start");
-        }
-
-        private void buttonStop_Click(object sender, System.EventArgs e)
-        {
-            this.WriteSerialData("stop");
-        }
-
-        private void buttonMoveLeft_Click(object sender, System.EventArgs e)
-        {
-            var rotate = this.trackBar1.Value;
-            this.WriteSerialData($"move=-{rotate}");
-        }
-
-        private void buttonMoveRight_Click(object sender, System.EventArgs e)
-        {
-            var rotate = this.trackBar1.Value;
-            this.WriteSerialData($"move={rotate}");
-        }
-
-        private void UpdateSpeed()
-        {
-            if (!this._updateSpeed)
+            if (this.textBoxSend.InvokeRequired)
             {
-                return;
+                this.textBoxSend.Invoke(new Action(() =>
+                {
+                    this.textBoxSend.Text += $"{data}\r\n";
+                }));
             }
-
-            var speed = this.trackBarSpeed.Value;
-            this.textBoxSpeed.Text = speed.ToString();
-            this.WriteSerialData($"speed={speed}");
+            else
+            {
+                this.textBoxSend.Text += $"{data}\r\n";
+            }
         }
 
-        private void trackBarSpeed_ValueChanged(object sender, System.EventArgs e)
+        private void RefreshSerialPorts()
         {
-            this.UpdateSpeed();
-        }
-
-        private void trackBar1_ValueChanged(object sender, EventArgs e)
-        {
-            var rotate = this.trackBar1.Value;
-            this.textBoxSteps.Text = rotate.ToString();
-        }
-
-        private void trackBarSpeed_MouseUp(object sender, MouseEventArgs e)
-        {
-            this._updateSpeed = true;
-            this.UpdateSpeed();
-        }
-
-        private void trackBarSpeed_MouseDown(object sender, MouseEventArgs e)
-        {
-            this._updateSpeed = false;
+            this.comboBoxSerialPort.DataSource = SerialPort.GetPortNames();
         }
 
         private void buttonConnect_Click(object sender, EventArgs e)
@@ -202,12 +161,12 @@ namespace Nager.ArduinoStepperMotor.TestUI
             this.RefreshSerialPorts();
         }
 
-        private void RefreshSerialPorts()
+        private void smoothMotorControlWithStepCount1_SendCommand(string data)
         {
-            this.comboBoxSerialPort.DataSource = SerialPort.GetPortNames();
+            this.WriteSerialData(data);
         }
 
-        private void smoothMotorControlWithStepCount1_SendCommand(string data)
+        private void simpleMotorControl1_SendCommand(string data)
         {
             this.WriteSerialData(data);
         }

@@ -1,7 +1,6 @@
 ﻿using Nager.ArduinoStepperMotor.TestUI.Model;
 using Newtonsoft.Json;
 using System;
-using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
@@ -22,24 +21,44 @@ namespace Nager.ArduinoStepperMotor.TestUI.CustomControl
 
         public void DataReceived(string data)
         {
-            var limits = JsonConvert.DeserializeObject<LimitInfo>(data);
-            return;
-            if (limits.LimitLeft == -1|| limits.LimitRight == -1)
+            var motorInfo = JsonConvert.DeserializeObject<ArduinoMotorInfo>(data);
+
+            if (motorInfo.LimitLeft == -1 || motorInfo.LimitRight == -1)
             {
-                return;
+                this.SwitchLimitButtons(false);
+            }
+            else
+            {
+                this.SwitchLimitButtons(true);
             }
 
-            if (limits.LimitLeft < 1200 && this._speed < 0)
+            if (motorInfo.MotorSpeed == 0)
             {
-                var reduceSpeed = Math.Ceiling(Math.Abs(this._speed) / 2.0);
-                this.SendSpeed(this._speed + (int)reduceSpeed);
+                this.SetSpeed(0);
             }
+        }
 
-            if (limits.LimitRight < 1200 && this._speed > 0)
+        private void SwitchLimitButtons(bool limitActive)
+        {
+            this.buttonLimitDisable.Invoke((MethodInvoker)delegate
             {
-                var reduceSpeed = Math.Ceiling(this._speed / 2.0);
-                this.SendSpeed(this._speed - (int)reduceSpeed);
-            }
+                this.buttonLimitDisable.Enabled = limitActive;
+            });
+
+            this.buttonLimitEnable.Invoke((MethodInvoker)delegate
+            {
+                this.buttonLimitEnable.Enabled = !limitActive;
+            });
+
+            this.buttonSetLimitLeft.Invoke((MethodInvoker)delegate
+            {
+                this.buttonSetLimitLeft.Enabled = !limitActive;
+            });
+
+            this.buttonSetLimitRight.Invoke((MethodInvoker)delegate
+            {
+                this.buttonSetLimitRight.Enabled = !limitActive;
+            });
         }
 
         private void buttonStop_Click(object sender, EventArgs e)
@@ -57,6 +76,11 @@ namespace Nager.ArduinoStepperMotor.TestUI.CustomControl
         private void SendSpeed(int speed)
         {
             this._speed = speed;
+            this.SendCommand?.Invoke($"speed={speed}");
+        }
+
+        private void SetSpeed(int speed)
+        {
             this.textBoxSpeed.Invoke((MethodInvoker)delegate
             {
                 this.textBoxSpeed.Text = speed.ToString();
@@ -68,8 +92,6 @@ namespace Nager.ArduinoStepperMotor.TestUI.CustomControl
                 this.trackBarSpeed.Value = speed;
             });
             this.trackBarSpeed.ValueChanged += trackBarSpeed_ValueChanged;
-
-            this.SendCommand?.Invoke($"speed={speed}");
         }
 
         private void trackBarSpeed_KeyDown(object sender, KeyEventArgs e)
@@ -118,12 +140,16 @@ namespace Nager.ArduinoStepperMotor.TestUI.CustomControl
 
         private void buttonMaxLeft_Click(object sender, EventArgs e)
         {
-            this.SendSpeed(-255);
+            var speed = -255;
+            this.SetSpeed(speed);
+            this.SendSpeed(speed);
         }
 
         private void buttonMaxRight_Click(object sender, EventArgs e)
         {
-            this.SendSpeed(255);
+            var speed = 255;
+            this.SetSpeed(speed);
+            this.SendSpeed(speed);
         }
 
         private void buttonEnableMotorDriver_Click(object sender, EventArgs e)

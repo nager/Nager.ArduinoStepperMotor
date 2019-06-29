@@ -33,6 +33,8 @@
             this.trackBarSpeed = new System.Windows.Forms.TrackBar();
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
             this.panel1 = new System.Windows.Forms.Panel();
+            this.buttonDisableMotorDriver = new System.Windows.Forms.Button();
+            this.buttonEnableMotorDriver = new System.Windows.Forms.Button();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.buttonSetLimitRight = new System.Windows.Forms.Button();
             this.buttonLimitEnable = new System.Windows.Forms.Button();
@@ -42,8 +44,6 @@
             this.panel2 = new System.Windows.Forms.Panel();
             this.buttonMaxRight = new System.Windows.Forms.Button();
             this.buttonMaxLeft = new System.Windows.Forms.Button();
-            this.buttonEnableMotorDriver = new System.Windows.Forms.Button();
-            this.buttonDisableMotorDriver = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.trackBarSpeed)).BeginInit();
             this.tableLayoutPanel1.SuspendLayout();
             this.panel1.SuspendLayout();
@@ -117,6 +117,26 @@
             this.panel1.Size = new System.Drawing.Size(510, 81);
             this.panel1.TabIndex = 19;
             // 
+            // buttonDisableMotorDriver
+            // 
+            this.buttonDisableMotorDriver.Location = new System.Drawing.Point(121, 32);
+            this.buttonDisableMotorDriver.Name = "buttonDisableMotorDriver";
+            this.buttonDisableMotorDriver.Size = new System.Drawing.Size(111, 23);
+            this.buttonDisableMotorDriver.TabIndex = 25;
+            this.buttonDisableMotorDriver.Text = "Disable Motor Driver";
+            this.buttonDisableMotorDriver.UseVisualStyleBackColor = true;
+            this.buttonDisableMotorDriver.Click += new System.EventHandler(this.buttonDisableMotorDriver_Click);
+            // 
+            // buttonEnableMotorDriver
+            // 
+            this.buttonEnableMotorDriver.Location = new System.Drawing.Point(4, 32);
+            this.buttonEnableMotorDriver.Name = "buttonEnableMotorDriver";
+            this.buttonEnableMotorDriver.Size = new System.Drawing.Size(111, 23);
+            this.buttonEnableMotorDriver.TabIndex = 24;
+            this.buttonEnableMotorDriver.Text = "Enable Motor Driver";
+            this.buttonEnableMotorDriver.UseVisualStyleBackColor = true;
+            this.buttonEnableMotorDriver.Click += new System.EventHandler(this.buttonEnableMotorDriver_Click);
+            // 
             // groupBox1
             // 
             this.groupBox1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
@@ -133,7 +153,7 @@
             // 
             // buttonSetLimitRight
             // 
-            this.buttonSetLimitRight.Location = new System.Drawing.Point(176, 19);
+            this.buttonSetLimitRight.Location = new System.Drawing.Point(176, 46);
             this.buttonSetLimitRight.Name = "buttonSetLimitRight";
             this.buttonSetLimitRight.Size = new System.Drawing.Size(81, 23);
             this.buttonSetLimitRight.TabIndex = 22;
@@ -163,7 +183,7 @@
             // 
             // buttonSetLimitLeft
             // 
-            this.buttonSetLimitLeft.Location = new System.Drawing.Point(97, 19);
+            this.buttonSetLimitLeft.Location = new System.Drawing.Point(97, 46);
             this.buttonSetLimitLeft.Name = "buttonSetLimitLeft";
             this.buttonSetLimitLeft.Size = new System.Drawing.Size(73, 23);
             this.buttonSetLimitLeft.TabIndex = 21;
@@ -213,26 +233,6 @@
             this.buttonMaxLeft.Text = "Max Left";
             this.buttonMaxLeft.UseVisualStyleBackColor = true;
             this.buttonMaxLeft.Click += new System.EventHandler(this.buttonMaxLeft_Click);
-            // 
-            // buttonEnableMotorDriver
-            // 
-            this.buttonEnableMotorDriver.Location = new System.Drawing.Point(4, 32);
-            this.buttonEnableMotorDriver.Name = "buttonEnableMotorDriver";
-            this.buttonEnableMotorDriver.Size = new System.Drawing.Size(111, 23);
-            this.buttonEnableMotorDriver.TabIndex = 24;
-            this.buttonEnableMotorDriver.Text = "Enable Motor Driver";
-            this.buttonEnableMotorDriver.UseVisualStyleBackColor = true;
-            this.buttonEnableMotorDriver.Click += new System.EventHandler(this.buttonEnableMotorDriver_Click);
-            // 
-            // buttonDisableMotorDriver
-            // 
-            this.buttonDisableMotorDriver.Location = new System.Drawing.Point(121, 32);
-            this.buttonDisableMotorDriver.Name = "buttonDisableMotorDriver";
-            this.buttonDisableMotorDriver.Size = new System.Drawing.Size(111, 23);
-            this.buttonDisableMotorDriver.TabIndex = 25;
-            this.buttonDisableMotorDriver.Text = "Disable Motor Driver";
-            this.buttonDisableMotorDriver.UseVisualStyleBackColor = true;
-            this.buttonDisableMotorDriver.Click += new System.EventHandler(this.buttonDisableMotorDriver_Click);
             // 
             // SmoothMotorControlWithStepCount
             // 

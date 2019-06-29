@@ -56,6 +56,12 @@
     <Compile Include="CustomControl\RampControl.Designer.cs">
       <DependentUpon>RampControl.cs</DependentUpon>
     </Compile>
+    <Compile Include="CustomControl\SimpleMotorControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="CustomControl\SimpleMotorControl.Designer.cs">
+      <DependentUpon>SimpleMotorControl.cs</DependentUpon>
+    </Compile>
     <Compile Include="CustomControl\SmoothMotorControlWithStepCount.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -68,11 +74,14 @@
     <Compile Include="Main.Designer.cs">
       <DependentUpon>Main.cs</DependentUpon>
     </Compile>
-    <Compile Include="Model\LimitInfo.cs" />
+    <Compile Include="Model\ArduinoMotorInfo.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="CustomControl\RampControl.resx">
       <DependentUpon>RampControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="CustomControl\SimpleMotorControl.resx">
+      <DependentUpon>SimpleMotorControl.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="CustomControl\SmoothMotorControlWithStepCount.resx">
       <DependentUpon>SmoothMotorControlWithStepCount.cs</DependentUpon>
