@@ -170,5 +170,13 @@ namespace Nager.ArduinoStepperMotor.TestUI
         {
             this.WriteSerialData(data);
         }
+
+        private void textBoxSend_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Delete)
+            {
+                this.textBoxSend.Text = string.Empty;
+            }
+        }
     }
 }

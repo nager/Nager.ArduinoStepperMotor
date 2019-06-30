@@ -44,6 +44,7 @@
             this.panel2 = new System.Windows.Forms.Panel();
             this.buttonMaxRight = new System.Windows.Forms.Button();
             this.buttonMaxLeft = new System.Windows.Forms.Button();
+            this.buttonProgram1 = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.trackBarSpeed)).BeginInit();
             this.tableLayoutPanel1.SuspendLayout();
             this.panel1.SuspendLayout();
@@ -106,6 +107,7 @@
             // 
             // panel1
             // 
+            this.panel1.Controls.Add(this.buttonProgram1);
             this.panel1.Controls.Add(this.buttonDisableMotorDriver);
             this.panel1.Controls.Add(this.buttonEnableMotorDriver);
             this.panel1.Controls.Add(this.groupBox1);
@@ -234,6 +236,16 @@
             this.buttonMaxLeft.UseVisualStyleBackColor = true;
             this.buttonMaxLeft.Click += new System.EventHandler(this.buttonMaxLeft_Click);
             // 
+            // buttonProgram1
+            // 
+            this.buttonProgram1.Location = new System.Drawing.Point(121, 3);
+            this.buttonProgram1.Name = "buttonProgram1";
+            this.buttonProgram1.Size = new System.Drawing.Size(111, 23);
+            this.buttonProgram1.TabIndex = 26;
+            this.buttonProgram1.Text = "Program1";
+            this.buttonProgram1.UseVisualStyleBackColor = true;
+            this.buttonProgram1.Click += new System.EventHandler(this.buttonProgram1_Click);
+            // 
             // SmoothMotorControlWithStepCount
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -241,6 +253,7 @@
             this.Controls.Add(this.tableLayoutPanel1);
             this.Name = "SmoothMotorControlWithStepCount";
             this.Size = new System.Drawing.Size(514, 294);
+            this.Load += new System.EventHandler(this.SmoothMotorControlWithStepCount_Load);
             ((System.ComponentModel.ISupportInitialize)(this.trackBarSpeed)).EndInit();
             this.tableLayoutPanel1.ResumeLayout(false);
             this.tableLayoutPanel1.PerformLayout();
@@ -269,5 +282,6 @@
         private System.Windows.Forms.Button buttonMaxLeft;
         private System.Windows.Forms.Button buttonDisableMotorDriver;
         private System.Windows.Forms.Button buttonEnableMotorDriver;
+        private System.Windows.Forms.Button buttonProgram1;
     }
 }

@@ -158,7 +158,7 @@
             this.tabPage2.Location = new System.Drawing.Point(4, 22);
             this.tabPage2.Name = "tabPage2";
             this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage2.Size = new System.Drawing.Size(726, 322);
+            this.tabPage2.Size = new System.Drawing.Size(581, 322);
             this.tabPage2.TabIndex = 1;
             this.tabPage2.Text = "SmoothMotorControlWithStepCount";
             this.tabPage2.UseVisualStyleBackColor = true;
@@ -168,7 +168,7 @@
             this.smoothMotorControlWithStepCount1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.smoothMotorControlWithStepCount1.Location = new System.Drawing.Point(3, 3);
             this.smoothMotorControlWithStepCount1.Name = "smoothMotorControlWithStepCount1";
-            this.smoothMotorControlWithStepCount1.Size = new System.Drawing.Size(720, 316);
+            this.smoothMotorControlWithStepCount1.Size = new System.Drawing.Size(575, 316);
             this.smoothMotorControlWithStepCount1.TabIndex = 0;
             this.smoothMotorControlWithStepCount1.SendCommand += new System.Action<string>(this.smoothMotorControlWithStepCount1_SendCommand);
             // 
@@ -178,7 +178,7 @@
             this.tabPage3.Location = new System.Drawing.Point(4, 22);
             this.tabPage3.Name = "tabPage3";
             this.tabPage3.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage3.Size = new System.Drawing.Size(726, 322);
+            this.tabPage3.Size = new System.Drawing.Size(581, 322);
             this.tabPage3.TabIndex = 2;
             this.tabPage3.Text = "Ramp";
             this.tabPage3.UseVisualStyleBackColor = true;
@@ -189,7 +189,7 @@
             this.rampControl1.Location = new System.Drawing.Point(3, 3);
             this.rampControl1.Margin = new System.Windows.Forms.Padding(2);
             this.rampControl1.Name = "rampControl1";
-            this.rampControl1.Size = new System.Drawing.Size(720, 316);
+            this.rampControl1.Size = new System.Drawing.Size(575, 316);
             this.rampControl1.TabIndex = 0;
             // 
             // tabControl2
@@ -220,7 +220,7 @@
             this.tabPage5.Location = new System.Drawing.Point(4, 22);
             this.tabPage5.Name = "tabPage5";
             this.tabPage5.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage5.Size = new System.Drawing.Size(208, 408);
+            this.tabPage5.Size = new System.Drawing.Size(353, 408);
             this.tabPage5.TabIndex = 1;
             this.tabPage5.Text = "Send";
             this.tabPage5.UseVisualStyleBackColor = true;
@@ -233,8 +233,9 @@
             this.textBoxSend.Name = "textBoxSend";
             this.textBoxSend.ReadOnly = true;
             this.textBoxSend.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-            this.textBoxSend.Size = new System.Drawing.Size(202, 402);
+            this.textBoxSend.Size = new System.Drawing.Size(347, 402);
             this.textBoxSend.TabIndex = 2;
+            this.textBoxSend.KeyDown += new System.Windows.Forms.KeyEventHandler(this.textBoxSend_KeyDown);
             // 
             // Main
             // 
