@@ -46,14 +46,16 @@ namespace Nager.ArduinoStepperMotor.TestUI.CustomControl
 
         private void SwitchLimitButtons(bool limitActive)
         {
-            this.buttonLimitDisable.Invoke((MethodInvoker)delegate
+            this.buttonLimitSwitch.Invoke((MethodInvoker)delegate
             {
-                this.buttonLimitDisable.Enabled = limitActive;
-            });
-
-            this.buttonLimitEnable.Invoke((MethodInvoker)delegate
-            {
-                this.buttonLimitEnable.Enabled = !limitActive;
+                if (limitActive)
+                {
+                    this.buttonLimitSwitch.Text = "Disable";
+                }
+                else
+                {
+                    this.buttonLimitSwitch.Text = "Enable";
+                }
             });
 
             this.buttonSetLimitLeft.Invoke((MethodInvoker)delegate
@@ -142,38 +144,76 @@ namespace Nager.ArduinoStepperMotor.TestUI.CustomControl
 
         private async void buttonProgram1_Click(object sender, EventArgs e)
         {
-            this.SetSpeed(255);
-            this.SendSpeed();
-            await Task.Delay(2000);
+            var repeats = Convert.ToInt32(this.comboBoxRepeat.Text);
 
-            this.SetSpeed(-2);
-            this.SendSpeed();
-            await Task.Delay(100);
+            for (var i = 0; i < repeats; i++)
+            {
+                this.SetSpeed(255);
+                this.SendSpeed();
+                await Task.Delay(2000);
 
-            this.SetSpeed(-50);
-            this.SendSpeed();
-            await Task.Delay(200);
+                this.SetSpeed(-2);
+                this.SendSpeed();
+                await Task.Delay(100);
 
-            this.SetSpeed(-100);
-            this.SendSpeed();
-            await Task.Delay(100);
+                this.SetSpeed(-50);
+                this.SendSpeed();
+                await Task.Delay(200);
 
-            this.SetSpeed(-255);
-            this.SendSpeed();
-            await Task.Delay(100);
+                this.SetSpeed(-100);
+                this.SendSpeed();
+                await Task.Delay(100);
 
-            this.SetSpeed(0);
-            this.SendSpeed();
+                this.SetSpeed(-255);
+                this.SendSpeed();
+                await Task.Delay(100);
+
+                this.SetSpeed(0);
+                this.SendSpeed();
+            }
         }
 
-        private void buttonLimitEnable_Click(object sender, EventArgs e)
+        private async void buttonProgram2_Click(object sender, EventArgs e)
         {
-            this.SendCommand?.Invoke($"limitenable");
+            var repeats = Convert.ToInt32(this.comboBoxRepeat.Text);
+
+            for (var i = 0; i < repeats; i++)
+            {
+                this.SetSpeed(255);
+                this.SendSpeed();
+                await Task.Delay(2000);
+
+                this.SetSpeed(-2);
+                this.SendSpeed();
+                await Task.Delay(400);
+
+                this.SetSpeed(-50);
+                this.SendSpeed();
+                await Task.Delay(500);
+
+                this.SetSpeed(-100);
+                this.SendSpeed();
+                await Task.Delay(500);
+
+                this.SetSpeed(-255);
+                this.SendSpeed();
+                await Task.Delay(500);
+
+                this.SetSpeed(0);
+                this.SendSpeed();
+            }
         }
 
-        private void buttonLimitDisable_Click(object sender, EventArgs e)
+        private void buttonLimitSwitch_Click(object sender, EventArgs e)
         {
+            if (this._motorInfo.LimitLeft == -1)
+            {
+                this.SendCommand?.Invoke($"limitenable");
+                return;
+            }
+
             this.SendCommand?.Invoke($"limitdisable");
+            return;
         }
 
         private void buttonSetLimitLeft_Click(object sender, EventArgs e)

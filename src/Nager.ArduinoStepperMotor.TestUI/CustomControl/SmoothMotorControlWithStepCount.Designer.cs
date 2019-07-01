@@ -33,23 +33,26 @@
             this.trackBarSpeed = new System.Windows.Forms.TrackBar();
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
             this.panel1 = new System.Windows.Forms.Panel();
+            this.buttonProgram1 = new System.Windows.Forms.Button();
             this.buttonDisableMotorDriver = new System.Windows.Forms.Button();
             this.buttonEnableMotorDriver = new System.Windows.Forms.Button();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.buttonSetLimitRight = new System.Windows.Forms.Button();
-            this.buttonLimitEnable = new System.Windows.Forms.Button();
-            this.buttonLimitDisable = new System.Windows.Forms.Button();
+            this.buttonLimitSwitch = new System.Windows.Forms.Button();
             this.buttonSetLimitLeft = new System.Windows.Forms.Button();
             this.buttonRandom = new System.Windows.Forms.Button();
             this.panel2 = new System.Windows.Forms.Panel();
             this.buttonMaxRight = new System.Windows.Forms.Button();
             this.buttonMaxLeft = new System.Windows.Forms.Button();
-            this.buttonProgram1 = new System.Windows.Forms.Button();
+            this.groupBox2 = new System.Windows.Forms.GroupBox();
+            this.buttonProgram2 = new System.Windows.Forms.Button();
+            this.comboBoxRepeat = new System.Windows.Forms.ComboBox();
             ((System.ComponentModel.ISupportInitialize)(this.trackBarSpeed)).BeginInit();
             this.tableLayoutPanel1.SuspendLayout();
             this.panel1.SuspendLayout();
             this.groupBox1.SuspendLayout();
             this.panel2.SuspendLayout();
+            this.groupBox2.SuspendLayout();
             this.SuspendLayout();
             // 
             // textBoxSpeed
@@ -107,9 +110,10 @@
             // 
             // panel1
             // 
+            this.panel1.Controls.Add(this.comboBoxRepeat);
+            this.panel1.Controls.Add(this.buttonProgram2);
+            this.panel1.Controls.Add(this.groupBox2);
             this.panel1.Controls.Add(this.buttonProgram1);
-            this.panel1.Controls.Add(this.buttonDisableMotorDriver);
-            this.panel1.Controls.Add(this.buttonEnableMotorDriver);
             this.panel1.Controls.Add(this.groupBox1);
             this.panel1.Controls.Add(this.buttonRandom);
             this.panel1.Dock = System.Windows.Forms.DockStyle.Fill;
@@ -119,23 +123,33 @@
             this.panel1.Size = new System.Drawing.Size(510, 81);
             this.panel1.TabIndex = 19;
             // 
+            // buttonProgram1
+            // 
+            this.buttonProgram1.Location = new System.Drawing.Point(4, 32);
+            this.buttonProgram1.Name = "buttonProgram1";
+            this.buttonProgram1.Size = new System.Drawing.Size(85, 23);
+            this.buttonProgram1.TabIndex = 26;
+            this.buttonProgram1.Text = "Program1";
+            this.buttonProgram1.UseVisualStyleBackColor = true;
+            this.buttonProgram1.Click += new System.EventHandler(this.buttonProgram1_Click);
+            // 
             // buttonDisableMotorDriver
             // 
-            this.buttonDisableMotorDriver.Location = new System.Drawing.Point(121, 32);
+            this.buttonDisableMotorDriver.Location = new System.Drawing.Point(6, 17);
             this.buttonDisableMotorDriver.Name = "buttonDisableMotorDriver";
-            this.buttonDisableMotorDriver.Size = new System.Drawing.Size(111, 23);
+            this.buttonDisableMotorDriver.Size = new System.Drawing.Size(86, 23);
             this.buttonDisableMotorDriver.TabIndex = 25;
-            this.buttonDisableMotorDriver.Text = "Disable Motor Driver";
+            this.buttonDisableMotorDriver.Text = "Disable";
             this.buttonDisableMotorDriver.UseVisualStyleBackColor = true;
             this.buttonDisableMotorDriver.Click += new System.EventHandler(this.buttonDisableMotorDriver_Click);
             // 
             // buttonEnableMotorDriver
             // 
-            this.buttonEnableMotorDriver.Location = new System.Drawing.Point(4, 32);
+            this.buttonEnableMotorDriver.Location = new System.Drawing.Point(6, 46);
             this.buttonEnableMotorDriver.Name = "buttonEnableMotorDriver";
-            this.buttonEnableMotorDriver.Size = new System.Drawing.Size(111, 23);
+            this.buttonEnableMotorDriver.Size = new System.Drawing.Size(86, 23);
             this.buttonEnableMotorDriver.TabIndex = 24;
-            this.buttonEnableMotorDriver.Text = "Enable Motor Driver";
+            this.buttonEnableMotorDriver.Text = "Enable";
             this.buttonEnableMotorDriver.UseVisualStyleBackColor = true;
             this.buttonEnableMotorDriver.Click += new System.EventHandler(this.buttonEnableMotorDriver_Click);
             // 
@@ -143,19 +157,18 @@
             // 
             this.groupBox1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.groupBox1.Controls.Add(this.buttonSetLimitRight);
-            this.groupBox1.Controls.Add(this.buttonLimitEnable);
-            this.groupBox1.Controls.Add(this.buttonLimitDisable);
+            this.groupBox1.Controls.Add(this.buttonLimitSwitch);
             this.groupBox1.Controls.Add(this.buttonSetLimitLeft);
-            this.groupBox1.Location = new System.Drawing.Point(244, 3);
+            this.groupBox1.Location = new System.Drawing.Point(335, 3);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(263, 75);
+            this.groupBox1.Size = new System.Drawing.Size(172, 75);
             this.groupBox1.TabIndex = 23;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Limits";
             // 
             // buttonSetLimitRight
             // 
-            this.buttonSetLimitRight.Location = new System.Drawing.Point(176, 46);
+            this.buttonSetLimitRight.Location = new System.Drawing.Point(85, 46);
             this.buttonSetLimitRight.Name = "buttonSetLimitRight";
             this.buttonSetLimitRight.Size = new System.Drawing.Size(81, 23);
             this.buttonSetLimitRight.TabIndex = 22;
@@ -163,29 +176,19 @@
             this.buttonSetLimitRight.UseVisualStyleBackColor = true;
             this.buttonSetLimitRight.Click += new System.EventHandler(this.buttonSetLimitRight_Click);
             // 
-            // buttonLimitEnable
+            // buttonLimitSwitch
             // 
-            this.buttonLimitEnable.Location = new System.Drawing.Point(8, 46);
-            this.buttonLimitEnable.Name = "buttonLimitEnable";
-            this.buttonLimitEnable.Size = new System.Drawing.Size(83, 23);
-            this.buttonLimitEnable.TabIndex = 19;
-            this.buttonLimitEnable.Text = "Enable Limit";
-            this.buttonLimitEnable.UseVisualStyleBackColor = true;
-            this.buttonLimitEnable.Click += new System.EventHandler(this.buttonLimitEnable_Click);
-            // 
-            // buttonLimitDisable
-            // 
-            this.buttonLimitDisable.Location = new System.Drawing.Point(8, 19);
-            this.buttonLimitDisable.Name = "buttonLimitDisable";
-            this.buttonLimitDisable.Size = new System.Drawing.Size(83, 23);
-            this.buttonLimitDisable.TabIndex = 20;
-            this.buttonLimitDisable.Text = "Disable Limit";
-            this.buttonLimitDisable.UseVisualStyleBackColor = true;
-            this.buttonLimitDisable.Click += new System.EventHandler(this.buttonLimitDisable_Click);
+            this.buttonLimitSwitch.Location = new System.Drawing.Point(6, 19);
+            this.buttonLimitSwitch.Name = "buttonLimitSwitch";
+            this.buttonLimitSwitch.Size = new System.Drawing.Size(160, 23);
+            this.buttonLimitSwitch.TabIndex = 20;
+            this.buttonLimitSwitch.Text = "Limit State";
+            this.buttonLimitSwitch.UseVisualStyleBackColor = true;
+            this.buttonLimitSwitch.Click += new System.EventHandler(this.buttonLimitSwitch_Click);
             // 
             // buttonSetLimitLeft
             // 
-            this.buttonSetLimitLeft.Location = new System.Drawing.Point(97, 46);
+            this.buttonSetLimitLeft.Location = new System.Drawing.Point(6, 46);
             this.buttonSetLimitLeft.Name = "buttonSetLimitLeft";
             this.buttonSetLimitLeft.Size = new System.Drawing.Size(73, 23);
             this.buttonSetLimitLeft.TabIndex = 21;
@@ -197,7 +200,7 @@
             // 
             this.buttonRandom.Location = new System.Drawing.Point(3, 3);
             this.buttonRandom.Name = "buttonRandom";
-            this.buttonRandom.Size = new System.Drawing.Size(111, 23);
+            this.buttonRandom.Size = new System.Drawing.Size(86, 23);
             this.buttonRandom.TabIndex = 18;
             this.buttonRandom.Text = "Random drive";
             this.buttonRandom.UseVisualStyleBackColor = true;
@@ -236,15 +239,41 @@
             this.buttonMaxLeft.UseVisualStyleBackColor = true;
             this.buttonMaxLeft.Click += new System.EventHandler(this.buttonMaxLeft_Click);
             // 
-            // buttonProgram1
+            // groupBox2
             // 
-            this.buttonProgram1.Location = new System.Drawing.Point(121, 3);
-            this.buttonProgram1.Name = "buttonProgram1";
-            this.buttonProgram1.Size = new System.Drawing.Size(111, 23);
-            this.buttonProgram1.TabIndex = 26;
-            this.buttonProgram1.Text = "Program1";
-            this.buttonProgram1.UseVisualStyleBackColor = true;
-            this.buttonProgram1.Click += new System.EventHandler(this.buttonProgram1_Click);
+            this.groupBox2.Controls.Add(this.buttonDisableMotorDriver);
+            this.groupBox2.Controls.Add(this.buttonEnableMotorDriver);
+            this.groupBox2.Location = new System.Drawing.Point(231, 3);
+            this.groupBox2.Name = "groupBox2";
+            this.groupBox2.Size = new System.Drawing.Size(98, 75);
+            this.groupBox2.TabIndex = 27;
+            this.groupBox2.TabStop = false;
+            this.groupBox2.Text = "MotorDriver";
+            // 
+            // buttonProgram2
+            // 
+            this.buttonProgram2.Location = new System.Drawing.Point(95, 32);
+            this.buttonProgram2.Name = "buttonProgram2";
+            this.buttonProgram2.Size = new System.Drawing.Size(85, 23);
+            this.buttonProgram2.TabIndex = 28;
+            this.buttonProgram2.Text = "Program2";
+            this.buttonProgram2.UseVisualStyleBackColor = true;
+            this.buttonProgram2.Click += new System.EventHandler(this.buttonProgram2_Click);
+            // 
+            // comboBoxRepeat
+            // 
+            this.comboBoxRepeat.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.comboBoxRepeat.FormattingEnabled = true;
+            this.comboBoxRepeat.Items.AddRange(new object[] {
+            "1",
+            "5",
+            "10",
+            "20",
+            "30"});
+            this.comboBoxRepeat.Location = new System.Drawing.Point(4, 57);
+            this.comboBoxRepeat.Name = "comboBoxRepeat";
+            this.comboBoxRepeat.Size = new System.Drawing.Size(121, 21);
+            this.comboBoxRepeat.TabIndex = 29;
             // 
             // SmoothMotorControlWithStepCount
             // 
@@ -260,6 +289,7 @@
             this.panel1.ResumeLayout(false);
             this.groupBox1.ResumeLayout(false);
             this.panel2.ResumeLayout(false);
+            this.groupBox2.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
@@ -272,8 +302,7 @@
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel1;
         private System.Windows.Forms.Button buttonRandom;
         private System.Windows.Forms.Panel panel1;
-        private System.Windows.Forms.Button buttonLimitDisable;
-        private System.Windows.Forms.Button buttonLimitEnable;
+        private System.Windows.Forms.Button buttonLimitSwitch;
         private System.Windows.Forms.Button buttonSetLimitLeft;
         private System.Windows.Forms.Button buttonSetLimitRight;
         private System.Windows.Forms.GroupBox groupBox1;
@@ -283,5 +312,8 @@
         private System.Windows.Forms.Button buttonDisableMotorDriver;
         private System.Windows.Forms.Button buttonEnableMotorDriver;
         private System.Windows.Forms.Button buttonProgram1;
+        private System.Windows.Forms.Button buttonProgram2;
+        private System.Windows.Forms.GroupBox groupBox2;
+        private System.Windows.Forms.ComboBox comboBoxRepeat;
     }
 }
