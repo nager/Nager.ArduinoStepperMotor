@@ -10,7 +10,8 @@ namespace Nager.ArduinoStepperMotor.TestUI
     public partial class Main : Form
     {
         private SerialPort _serialPort;
-        private ConcurrentQueue<string> _queue = new ConcurrentQueue<string>();
+        private ConcurrentQueue<string> _queueReceive = new ConcurrentQueue<string>();
+        private ConcurrentQueue<string> _queueSend = new ConcurrentQueue<string>();
         private bool _stopUiUpdate = false;
 
         public Main()
@@ -18,7 +19,8 @@ namespace Nager.ArduinoStepperMotor.TestUI
             this.InitializeComponent();
             this.RefreshSerialPorts();
 
-            new Thread(this.RefreshUi).Start();
+            new Thread(this.RefreshReceive).Start();
+            new Thread(this.RefreshSend).Start();
         }
 
         private void Form1_FormClosed(object sender, FormClosedEventArgs e)
@@ -26,7 +28,7 @@ namespace Nager.ArduinoStepperMotor.TestUI
             this._stopUiUpdate = true;
         }
 
-        private void RefreshUi()
+        private void RefreshReceive()
         {
             var sb = new StringBuilder();
 
@@ -36,7 +38,7 @@ namespace Nager.ArduinoStepperMotor.TestUI
 
                 try
                 {
-                    foreach (var item in this._queue)
+                    foreach (var item in this._queueReceive)
                     {
                         sb.AppendLine(item);
                     }
@@ -62,6 +64,42 @@ namespace Nager.ArduinoStepperMotor.TestUI
             }
         }
 
+        private void RefreshSend()
+        {
+            var sb = new StringBuilder();
+
+            while (!this._stopUiUpdate)
+            {
+                sb.Clear();
+
+                try
+                {
+                    foreach (var item in this._queueSend)
+                    {
+                        sb.AppendLine(item);
+                    }
+
+                    if (this.textBoxSend.InvokeRequired)
+                    {
+                        this.textBoxSend.Invoke(new Action(() =>
+                        {
+                            this.textBoxSend.Text = sb.ToString();
+                        }));
+                    }
+                    else
+                    {
+                        this.textBoxSend.Text = sb.ToString();
+                    }
+                }
+                catch (Exception exception)
+                {
+
+                }
+
+                Thread.Sleep(50);
+            }
+        }
+
         private void SerialPortDataReceived(object sender, SerialDataReceivedEventArgs e)
         {
             try
@@ -71,12 +109,12 @@ namespace Nager.ArduinoStepperMotor.TestUI
                     var data = this._serialPort.ReadLine();
                     this.smoothMotorControlWithStepCount1.DataReceived(data);
   
-                    this._queue.Enqueue($"{DateTime.Now:mm:ss.fff} - {data.Trim()}");
+                    this._queueReceive.Enqueue($"{DateTime.Now:mm:ss.fff} - {data.Trim()}");
 
-                    if (this._queue.Count > 20)
+                    if (this._queueReceive.Count > 20)
                     {
-                        this._queue.TryDequeue(out var temp);
-                        this._queue.TryDequeue(out temp);
+                        this._queueReceive.TryDequeue(out var temp);
+                        this._queueReceive.TryDequeue(out temp);
                     }
                 }
             }
@@ -104,16 +142,13 @@ namespace Nager.ArduinoStepperMotor.TestUI
             //sw.Stop();
             //this._queue.Enqueue($"{DateTime.Now:mm:ss.fff} Send - {data} {sw.Elapsed.TotalMilliseconds}ms");
 
-            if (this.textBoxSend.InvokeRequired)
+            this._queueSend.Enqueue(data.Trim());
+
+
+            if (this._queueSend.Count > 20)
             {
-                this.textBoxSend.Invoke(new Action(() =>
-                {
-                    this.textBoxSend.Text += $"{data}\r\n";
-                }));
-            }
-            else
-            {
-                this.textBoxSend.Text += $"{data}\r\n";
+                this._queueSend.TryDequeue(out var temp);
+                this._queueSend.TryDequeue(out temp);
             }
         }
 

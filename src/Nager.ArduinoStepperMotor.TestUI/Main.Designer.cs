@@ -36,34 +36,33 @@
             this.comboBoxSerialPort = new System.Windows.Forms.ComboBox();
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tabPage1 = new System.Windows.Forms.TabPage();
-            this.simpleMotorControl1 = new Nager.ArduinoStepperMotor.TestUI.CustomControl.SimpleMotorControl();
             this.tabPage2 = new System.Windows.Forms.TabPage();
-            this.smoothMotorControlWithStepCount1 = new Nager.ArduinoStepperMotor.TestUI.CustomControl.SmoothMotorControlWithStepCount();
             this.tabPage3 = new System.Windows.Forms.TabPage();
-            this.rampControl1 = new Nager.ArduinoStepperMotor.TestUI.CustomControl.RampControl();
-            this.tabControl2 = new System.Windows.Forms.TabControl();
-            this.tabPage4 = new System.Windows.Forms.TabPage();
-            this.tabPage5 = new System.Windows.Forms.TabPage();
             this.textBoxSend = new System.Windows.Forms.TextBox();
+            this.simpleMotorControl1 = new Nager.ArduinoStepperMotor.TestUI.CustomControl.SimpleMotorControl();
+            this.smoothMotorControlWithStepCount1 = new Nager.ArduinoStepperMotor.TestUI.CustomControl.SmoothMotorControlWithStepCount();
+            this.rampControl1 = new Nager.ArduinoStepperMotor.TestUI.CustomControl.RampControl();
+            this.splitContainer1 = new System.Windows.Forms.SplitContainer();
             this.groupBox3.SuspendLayout();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
             this.tabPage2.SuspendLayout();
             this.tabPage3.SuspendLayout();
-            this.tabControl2.SuspendLayout();
-            this.tabPage4.SuspendLayout();
-            this.tabPage5.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
+            this.splitContainer1.Panel1.SuspendLayout();
+            this.splitContainer1.Panel2.SuspendLayout();
+            this.splitContainer1.SuspendLayout();
             this.SuspendLayout();
             // 
             // textBoxReceive
             // 
             this.textBoxReceive.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.textBoxReceive.Location = new System.Drawing.Point(3, 3);
+            this.textBoxReceive.Location = new System.Drawing.Point(0, 0);
             this.textBoxReceive.Multiline = true;
             this.textBoxReceive.Name = "textBoxReceive";
             this.textBoxReceive.ReadOnly = true;
             this.textBoxReceive.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-            this.textBoxReceive.Size = new System.Drawing.Size(347, 402);
+            this.textBoxReceive.Size = new System.Drawing.Size(367, 434);
             this.textBoxReceive.TabIndex = 1;
             // 
             // buttonConnect
@@ -96,7 +95,7 @@
             this.groupBox3.Dock = System.Windows.Forms.DockStyle.Top;
             this.groupBox3.Location = new System.Drawing.Point(0, 0);
             this.groupBox3.Name = "groupBox3";
-            this.groupBox3.Size = new System.Drawing.Size(589, 86);
+            this.groupBox3.Size = new System.Drawing.Size(544, 86);
             this.groupBox3.TabIndex = 13;
             this.groupBox3.TabStop = false;
             this.groupBox3.Text = "Connection";
@@ -129,7 +128,7 @@
             this.tabControl1.Location = new System.Drawing.Point(0, 86);
             this.tabControl1.Name = "tabControl1";
             this.tabControl1.SelectedIndex = 0;
-            this.tabControl1.Size = new System.Drawing.Size(589, 348);
+            this.tabControl1.Size = new System.Drawing.Size(544, 348);
             this.tabControl1.TabIndex = 12;
             // 
             // tabPage1
@@ -138,19 +137,10 @@
             this.tabPage1.Location = new System.Drawing.Point(4, 22);
             this.tabPage1.Name = "tabPage1";
             this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage1.Size = new System.Drawing.Size(581, 322);
+            this.tabPage1.Size = new System.Drawing.Size(546, 322);
             this.tabPage1.TabIndex = 0;
             this.tabPage1.Text = "Stepper A4988";
             this.tabPage1.UseVisualStyleBackColor = true;
-            // 
-            // simpleMotorControl1
-            // 
-            this.simpleMotorControl1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.simpleMotorControl1.Location = new System.Drawing.Point(3, 3);
-            this.simpleMotorControl1.Name = "simpleMotorControl1";
-            this.simpleMotorControl1.Size = new System.Drawing.Size(575, 316);
-            this.simpleMotorControl1.TabIndex = 0;
-            this.simpleMotorControl1.SendCommand += new System.Action<string>(this.simpleMotorControl1_SendCommand);
             // 
             // tabPage2
             // 
@@ -158,19 +148,10 @@
             this.tabPage2.Location = new System.Drawing.Point(4, 22);
             this.tabPage2.Name = "tabPage2";
             this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage2.Size = new System.Drawing.Size(581, 322);
+            this.tabPage2.Size = new System.Drawing.Size(536, 322);
             this.tabPage2.TabIndex = 1;
             this.tabPage2.Text = "SmoothMotorControlWithStepCount";
             this.tabPage2.UseVisualStyleBackColor = true;
-            // 
-            // smoothMotorControlWithStepCount1
-            // 
-            this.smoothMotorControlWithStepCount1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.smoothMotorControlWithStepCount1.Location = new System.Drawing.Point(3, 3);
-            this.smoothMotorControlWithStepCount1.Name = "smoothMotorControlWithStepCount1";
-            this.smoothMotorControlWithStepCount1.Size = new System.Drawing.Size(575, 316);
-            this.smoothMotorControlWithStepCount1.TabIndex = 0;
-            this.smoothMotorControlWithStepCount1.SendCommand += new System.Action<string>(this.smoothMotorControlWithStepCount1_SendCommand);
             // 
             // tabPage3
             // 
@@ -178,10 +159,40 @@
             this.tabPage3.Location = new System.Drawing.Point(4, 22);
             this.tabPage3.Name = "tabPage3";
             this.tabPage3.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage3.Size = new System.Drawing.Size(581, 322);
+            this.tabPage3.Size = new System.Drawing.Size(546, 322);
             this.tabPage3.TabIndex = 2;
             this.tabPage3.Text = "Ramp";
             this.tabPage3.UseVisualStyleBackColor = true;
+            // 
+            // textBoxSend
+            // 
+            this.textBoxSend.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.textBoxSend.Location = new System.Drawing.Point(0, 0);
+            this.textBoxSend.Multiline = true;
+            this.textBoxSend.Name = "textBoxSend";
+            this.textBoxSend.ReadOnly = true;
+            this.textBoxSend.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
+            this.textBoxSend.Size = new System.Drawing.Size(135, 434);
+            this.textBoxSend.TabIndex = 2;
+            this.textBoxSend.KeyDown += new System.Windows.Forms.KeyEventHandler(this.textBoxSend_KeyDown);
+            // 
+            // simpleMotorControl1
+            // 
+            this.simpleMotorControl1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.simpleMotorControl1.Location = new System.Drawing.Point(3, 3);
+            this.simpleMotorControl1.Name = "simpleMotorControl1";
+            this.simpleMotorControl1.Size = new System.Drawing.Size(540, 316);
+            this.simpleMotorControl1.TabIndex = 0;
+            this.simpleMotorControl1.SendCommand += new System.Action<string>(this.simpleMotorControl1_SendCommand);
+            // 
+            // smoothMotorControlWithStepCount1
+            // 
+            this.smoothMotorControlWithStepCount1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.smoothMotorControlWithStepCount1.Location = new System.Drawing.Point(3, 3);
+            this.smoothMotorControlWithStepCount1.Name = "smoothMotorControlWithStepCount1";
+            this.smoothMotorControlWithStepCount1.Size = new System.Drawing.Size(530, 316);
+            this.smoothMotorControlWithStepCount1.TabIndex = 0;
+            this.smoothMotorControlWithStepCount1.SendCommand += new System.Action<string>(this.smoothMotorControlWithStepCount1_SendCommand);
             // 
             // rampControl1
             // 
@@ -189,62 +200,34 @@
             this.rampControl1.Location = new System.Drawing.Point(3, 3);
             this.rampControl1.Margin = new System.Windows.Forms.Padding(2);
             this.rampControl1.Name = "rampControl1";
-            this.rampControl1.Size = new System.Drawing.Size(575, 316);
+            this.rampControl1.Size = new System.Drawing.Size(540, 316);
             this.rampControl1.TabIndex = 0;
             // 
-            // tabControl2
+            // splitContainer1
             // 
-            this.tabControl2.Controls.Add(this.tabPage4);
-            this.tabControl2.Controls.Add(this.tabPage5);
-            this.tabControl2.Dock = System.Windows.Forms.DockStyle.Right;
-            this.tabControl2.Location = new System.Drawing.Point(589, 0);
-            this.tabControl2.Name = "tabControl2";
-            this.tabControl2.SelectedIndex = 0;
-            this.tabControl2.Size = new System.Drawing.Size(361, 434);
-            this.tabControl2.TabIndex = 15;
+            this.splitContainer1.Dock = System.Windows.Forms.DockStyle.Right;
+            this.splitContainer1.Location = new System.Drawing.Point(544, 0);
+            this.splitContainer1.Name = "splitContainer1";
             // 
-            // tabPage4
+            // splitContainer1.Panel1
             // 
-            this.tabPage4.Controls.Add(this.textBoxReceive);
-            this.tabPage4.Location = new System.Drawing.Point(4, 22);
-            this.tabPage4.Name = "tabPage4";
-            this.tabPage4.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage4.Size = new System.Drawing.Size(353, 408);
-            this.tabPage4.TabIndex = 0;
-            this.tabPage4.Text = "Receive";
-            this.tabPage4.UseVisualStyleBackColor = true;
+            this.splitContainer1.Panel1.Controls.Add(this.textBoxReceive);
             // 
-            // tabPage5
+            // splitContainer1.Panel2
             // 
-            this.tabPage5.Controls.Add(this.textBoxSend);
-            this.tabPage5.Location = new System.Drawing.Point(4, 22);
-            this.tabPage5.Name = "tabPage5";
-            this.tabPage5.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage5.Size = new System.Drawing.Size(353, 408);
-            this.tabPage5.TabIndex = 1;
-            this.tabPage5.Text = "Send";
-            this.tabPage5.UseVisualStyleBackColor = true;
-            // 
-            // textBoxSend
-            // 
-            this.textBoxSend.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.textBoxSend.Location = new System.Drawing.Point(3, 3);
-            this.textBoxSend.Multiline = true;
-            this.textBoxSend.Name = "textBoxSend";
-            this.textBoxSend.ReadOnly = true;
-            this.textBoxSend.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-            this.textBoxSend.Size = new System.Drawing.Size(347, 402);
-            this.textBoxSend.TabIndex = 2;
-            this.textBoxSend.KeyDown += new System.Windows.Forms.KeyEventHandler(this.textBoxSend_KeyDown);
+            this.splitContainer1.Panel2.Controls.Add(this.textBoxSend);
+            this.splitContainer1.Size = new System.Drawing.Size(506, 434);
+            this.splitContainer1.SplitterDistance = 367;
+            this.splitContainer1.TabIndex = 14;
             // 
             // Main
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(950, 434);
+            this.ClientSize = new System.Drawing.Size(1050, 434);
             this.Controls.Add(this.tabControl1);
             this.Controls.Add(this.groupBox3);
-            this.Controls.Add(this.tabControl2);
+            this.Controls.Add(this.splitContainer1);
             this.Name = "Main";
             this.Text = "Nager.ArduinoStepperMotor.TestUI";
             this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.Form1_FormClosed);
@@ -253,11 +236,12 @@
             this.tabPage1.ResumeLayout(false);
             this.tabPage2.ResumeLayout(false);
             this.tabPage3.ResumeLayout(false);
-            this.tabControl2.ResumeLayout(false);
-            this.tabPage4.ResumeLayout(false);
-            this.tabPage4.PerformLayout();
-            this.tabPage5.ResumeLayout(false);
-            this.tabPage5.PerformLayout();
+            this.splitContainer1.Panel1.ResumeLayout(false);
+            this.splitContainer1.Panel1.PerformLayout();
+            this.splitContainer1.Panel2.ResumeLayout(false);
+            this.splitContainer1.Panel2.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).EndInit();
+            this.splitContainer1.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
@@ -276,10 +260,8 @@
         private System.Windows.Forms.TabPage tabPage3;
         private CustomControl.RampControl rampControl1;
         private CustomControl.SimpleMotorControl simpleMotorControl1;
-        private System.Windows.Forms.TabControl tabControl2;
-        private System.Windows.Forms.TabPage tabPage4;
-        private System.Windows.Forms.TabPage tabPage5;
         private System.Windows.Forms.TextBox textBoxSend;
+        private System.Windows.Forms.SplitContainer splitContainer1;
     }
 }
 

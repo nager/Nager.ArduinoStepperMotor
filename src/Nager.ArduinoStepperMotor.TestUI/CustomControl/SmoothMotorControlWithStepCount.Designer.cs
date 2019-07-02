@@ -33,9 +33,12 @@
             this.trackBarSpeed = new System.Windows.Forms.TrackBar();
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
             this.panel1 = new System.Windows.Forms.Panel();
-            this.buttonProgram1 = new System.Windows.Forms.Button();
+            this.comboBoxProgram = new System.Windows.Forms.ComboBox();
+            this.comboBoxRepeat = new System.Windows.Forms.ComboBox();
+            this.groupBox2 = new System.Windows.Forms.GroupBox();
             this.buttonDisableMotorDriver = new System.Windows.Forms.Button();
             this.buttonEnableMotorDriver = new System.Windows.Forms.Button();
+            this.buttonStartProgram = new System.Windows.Forms.Button();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.buttonSetLimitRight = new System.Windows.Forms.Button();
             this.buttonLimitSwitch = new System.Windows.Forms.Button();
@@ -44,15 +47,14 @@
             this.panel2 = new System.Windows.Forms.Panel();
             this.buttonMaxRight = new System.Windows.Forms.Button();
             this.buttonMaxLeft = new System.Windows.Forms.Button();
-            this.groupBox2 = new System.Windows.Forms.GroupBox();
-            this.buttonProgram2 = new System.Windows.Forms.Button();
-            this.comboBoxRepeat = new System.Windows.Forms.ComboBox();
+            this.groupBox3 = new System.Windows.Forms.GroupBox();
             ((System.ComponentModel.ISupportInitialize)(this.trackBarSpeed)).BeginInit();
             this.tableLayoutPanel1.SuspendLayout();
             this.panel1.SuspendLayout();
+            this.groupBox2.SuspendLayout();
             this.groupBox1.SuspendLayout();
             this.panel2.SuspendLayout();
-            this.groupBox2.SuspendLayout();
+            this.groupBox3.SuspendLayout();
             this.SuspendLayout();
             // 
             // textBoxSpeed
@@ -110,10 +112,8 @@
             // 
             // panel1
             // 
-            this.panel1.Controls.Add(this.comboBoxRepeat);
-            this.panel1.Controls.Add(this.buttonProgram2);
+            this.panel1.Controls.Add(this.groupBox3);
             this.panel1.Controls.Add(this.groupBox2);
-            this.panel1.Controls.Add(this.buttonProgram1);
             this.panel1.Controls.Add(this.groupBox1);
             this.panel1.Controls.Add(this.buttonRandom);
             this.panel1.Dock = System.Windows.Forms.DockStyle.Fill;
@@ -123,15 +123,47 @@
             this.panel1.Size = new System.Drawing.Size(510, 81);
             this.panel1.TabIndex = 19;
             // 
-            // buttonProgram1
+            // comboBoxProgram
             // 
-            this.buttonProgram1.Location = new System.Drawing.Point(4, 32);
-            this.buttonProgram1.Name = "buttonProgram1";
-            this.buttonProgram1.Size = new System.Drawing.Size(85, 23);
-            this.buttonProgram1.TabIndex = 26;
-            this.buttonProgram1.Text = "Program1";
-            this.buttonProgram1.UseVisualStyleBackColor = true;
-            this.buttonProgram1.Click += new System.EventHandler(this.buttonProgram1_Click);
+            this.comboBoxProgram.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.comboBoxProgram.FormattingEnabled = true;
+            this.comboBoxProgram.Items.AddRange(new object[] {
+            "Program1",
+            "Program2",
+            "Program3",
+            "Program4",
+            "Program5",
+            "Program6"});
+            this.comboBoxProgram.Location = new System.Drawing.Point(6, 15);
+            this.comboBoxProgram.Name = "comboBoxProgram";
+            this.comboBoxProgram.Size = new System.Drawing.Size(100, 21);
+            this.comboBoxProgram.TabIndex = 30;
+            // 
+            // comboBoxRepeat
+            // 
+            this.comboBoxRepeat.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.comboBoxRepeat.FormattingEnabled = true;
+            this.comboBoxRepeat.Items.AddRange(new object[] {
+            "1",
+            "5",
+            "10",
+            "20",
+            "30"});
+            this.comboBoxRepeat.Location = new System.Drawing.Point(112, 15);
+            this.comboBoxRepeat.Name = "comboBoxRepeat";
+            this.comboBoxRepeat.Size = new System.Drawing.Size(38, 21);
+            this.comboBoxRepeat.TabIndex = 29;
+            // 
+            // groupBox2
+            // 
+            this.groupBox2.Controls.Add(this.buttonDisableMotorDriver);
+            this.groupBox2.Controls.Add(this.buttonEnableMotorDriver);
+            this.groupBox2.Location = new System.Drawing.Point(231, 3);
+            this.groupBox2.Name = "groupBox2";
+            this.groupBox2.Size = new System.Drawing.Size(98, 75);
+            this.groupBox2.TabIndex = 27;
+            this.groupBox2.TabStop = false;
+            this.groupBox2.Text = "MotorDriver";
             // 
             // buttonDisableMotorDriver
             // 
@@ -152,6 +184,16 @@
             this.buttonEnableMotorDriver.Text = "Enable";
             this.buttonEnableMotorDriver.UseVisualStyleBackColor = true;
             this.buttonEnableMotorDriver.Click += new System.EventHandler(this.buttonEnableMotorDriver_Click);
+            // 
+            // buttonStartProgram
+            // 
+            this.buttonStartProgram.Location = new System.Drawing.Point(156, 13);
+            this.buttonStartProgram.Name = "buttonStartProgram";
+            this.buttonStartProgram.Size = new System.Drawing.Size(61, 23);
+            this.buttonStartProgram.TabIndex = 26;
+            this.buttonStartProgram.Text = "Start";
+            this.buttonStartProgram.UseVisualStyleBackColor = true;
+            this.buttonStartProgram.Click += new System.EventHandler(this.buttonStartProgram_Click);
             // 
             // groupBox1
             // 
@@ -239,41 +281,17 @@
             this.buttonMaxLeft.UseVisualStyleBackColor = true;
             this.buttonMaxLeft.Click += new System.EventHandler(this.buttonMaxLeft_Click);
             // 
-            // groupBox2
+            // groupBox3
             // 
-            this.groupBox2.Controls.Add(this.buttonDisableMotorDriver);
-            this.groupBox2.Controls.Add(this.buttonEnableMotorDriver);
-            this.groupBox2.Location = new System.Drawing.Point(231, 3);
-            this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Size = new System.Drawing.Size(98, 75);
-            this.groupBox2.TabIndex = 27;
-            this.groupBox2.TabStop = false;
-            this.groupBox2.Text = "MotorDriver";
-            // 
-            // buttonProgram2
-            // 
-            this.buttonProgram2.Location = new System.Drawing.Point(95, 32);
-            this.buttonProgram2.Name = "buttonProgram2";
-            this.buttonProgram2.Size = new System.Drawing.Size(85, 23);
-            this.buttonProgram2.TabIndex = 28;
-            this.buttonProgram2.Text = "Program2";
-            this.buttonProgram2.UseVisualStyleBackColor = true;
-            this.buttonProgram2.Click += new System.EventHandler(this.buttonProgram2_Click);
-            // 
-            // comboBoxRepeat
-            // 
-            this.comboBoxRepeat.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.comboBoxRepeat.FormattingEnabled = true;
-            this.comboBoxRepeat.Items.AddRange(new object[] {
-            "1",
-            "5",
-            "10",
-            "20",
-            "30"});
-            this.comboBoxRepeat.Location = new System.Drawing.Point(4, 57);
-            this.comboBoxRepeat.Name = "comboBoxRepeat";
-            this.comboBoxRepeat.Size = new System.Drawing.Size(121, 21);
-            this.comboBoxRepeat.TabIndex = 29;
+            this.groupBox3.Controls.Add(this.comboBoxProgram);
+            this.groupBox3.Controls.Add(this.buttonStartProgram);
+            this.groupBox3.Controls.Add(this.comboBoxRepeat);
+            this.groupBox3.Location = new System.Drawing.Point(4, 30);
+            this.groupBox3.Name = "groupBox3";
+            this.groupBox3.Size = new System.Drawing.Size(221, 42);
+            this.groupBox3.TabIndex = 31;
+            this.groupBox3.TabStop = false;
+            this.groupBox3.Text = "Program";
             // 
             // SmoothMotorControlWithStepCount
             // 
@@ -287,9 +305,10 @@
             this.tableLayoutPanel1.ResumeLayout(false);
             this.tableLayoutPanel1.PerformLayout();
             this.panel1.ResumeLayout(false);
+            this.groupBox2.ResumeLayout(false);
             this.groupBox1.ResumeLayout(false);
             this.panel2.ResumeLayout(false);
-            this.groupBox2.ResumeLayout(false);
+            this.groupBox3.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
@@ -311,9 +330,10 @@
         private System.Windows.Forms.Button buttonMaxLeft;
         private System.Windows.Forms.Button buttonDisableMotorDriver;
         private System.Windows.Forms.Button buttonEnableMotorDriver;
-        private System.Windows.Forms.Button buttonProgram1;
-        private System.Windows.Forms.Button buttonProgram2;
+        private System.Windows.Forms.Button buttonStartProgram;
         private System.Windows.Forms.GroupBox groupBox2;
         private System.Windows.Forms.ComboBox comboBoxRepeat;
+        private System.Windows.Forms.ComboBox comboBoxProgram;
+        private System.Windows.Forms.GroupBox groupBox3;
     }
 }
