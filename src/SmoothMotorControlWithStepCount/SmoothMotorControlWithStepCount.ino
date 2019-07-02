@@ -49,7 +49,8 @@ void setup() {
   TIMSK1 |= (1 << TOIE1);   // enable Timer1 overflow interrupt:
   interrupts();             // alle Interrupts scharf schalten
 
-  caculateAccel(3000, 1, 0.6);
+  //caculateAccel(3000, 1, 0.6);
+  caculateAccel(1600, 1, 0.25);
   //caculateAccel(1500, 1, 0.6);
 
   steps = 2147483647;
