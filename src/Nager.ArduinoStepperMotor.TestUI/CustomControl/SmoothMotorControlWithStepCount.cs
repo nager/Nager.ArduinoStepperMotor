@@ -452,7 +452,8 @@ namespace Nager.ArduinoStepperMotor.TestUI.CustomControl
 
         private void buttonSpeed_Click(object sender, EventArgs e)
         {
-            var speed = this.textBoxSpeed2.Text;
+            int.TryParse(this.textBoxSpeed2.Text, out var speed);
+            this._speed = speed;
             this.SendCommand?.Invoke($"speed={this._speed}");
         }
     }
