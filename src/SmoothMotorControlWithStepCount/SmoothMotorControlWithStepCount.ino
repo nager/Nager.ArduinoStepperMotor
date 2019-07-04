@@ -200,6 +200,13 @@ void loop() {
     if (command.startsWith("setlimitright")) {
       limitRight = steps;
     }
+
+    if (command.startsWith("ramp")) {
+      for (int i = 0; i < RAMP_STEPS; i++)
+      {
+        Serial.println((String)"Ramp:" + i + ":" + ramp[i]);
+      }
+    }
   }
 
   if (motorSpeed == 0) {

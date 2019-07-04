@@ -333,7 +333,6 @@ namespace Nager.ArduinoStepperMotor.TestUI.CustomControl
             {
                 for (var k = -1; k >= -255; k--)
                 {
-
                     //Start Position
                     this.SetSpeed(255);
                     this.SendSpeed();
@@ -404,22 +403,22 @@ namespace Nager.ArduinoStepperMotor.TestUI.CustomControl
         {
             if (this._motorInfo.LimitLeft == -1)
             {
-                this.SendCommand?.Invoke($"limitenable");
+                this.SendCommand?.Invoke("limitenable");
                 return;
             }
 
-            this.SendCommand?.Invoke($"limitdisable");
+            this.SendCommand?.Invoke("limitdisable");
             return;
         }
 
         private void buttonSetLimitLeft_Click(object sender, EventArgs e)
         {
-            this.SendCommand?.Invoke($"setlimitleft");
+            this.SendCommand?.Invoke("setlimitleft");
         }
 
         private void buttonSetLimitRight_Click(object sender, EventArgs e)
         {
-            this.SendCommand?.Invoke($"setlimitright");
+            this.SendCommand?.Invoke("setlimitright");
         }
 
         private void buttonMaxLeft_Click(object sender, EventArgs e)
@@ -438,12 +437,23 @@ namespace Nager.ArduinoStepperMotor.TestUI.CustomControl
 
         private void buttonEnableMotorDriver_Click(object sender, EventArgs e)
         {
-            this.SendCommand?.Invoke($"enablemotordriver");
+            this.SendCommand?.Invoke("enablemotordriver");
         }
 
         private void buttonDisableMotorDriver_Click(object sender, EventArgs e)
         {
-            this.SendCommand?.Invoke($"disablemotordriver");
+            this.SendCommand?.Invoke("disablemotordriver");
+        }
+
+        private void buttonRampInfo_Click(object sender, EventArgs e)
+        {
+            this.SendCommand?.Invoke("ramp");
+        }
+
+        private void buttonSpeed_Click(object sender, EventArgs e)
+        {
+            var speed = this.textBoxSpeed2.Text;
+            this.SendCommand?.Invoke($"speed={this._speed}");
         }
     }
 }

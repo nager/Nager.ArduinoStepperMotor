@@ -1,4 +1,5 @@
-﻿using System;
+﻿using log4net;
+using System;
 using System.Collections.Concurrent;
 using System.IO.Ports;
 using System.Text;
@@ -9,6 +10,8 @@ namespace Nager.ArduinoStepperMotor.TestUI
 {
     public partial class Main : Form
     {
+        private static readonly ILog Log = LogManager.GetLogger(typeof(Main));
+
         private SerialPort _serialPort;
         private ConcurrentQueue<string> _queueReceive = new ConcurrentQueue<string>();
         private ConcurrentQueue<string> _queueSend = new ConcurrentQueue<string>();
@@ -107,6 +110,7 @@ namespace Nager.ArduinoStepperMotor.TestUI
                 while (this._serialPort.BytesToRead > 0)
                 {
                     var data = this._serialPort.ReadLine();
+                    Log.Debug($"{nameof(SerialPortDataReceived)} - {data.Trim()}");
                     this.smoothMotorControlWithStepCount1.DataReceived(data);
   
                     this._queueReceive.Enqueue($"{DateTime.Now:mm:ss.fff} - {data.Trim()}");
@@ -139,6 +143,7 @@ namespace Nager.ArduinoStepperMotor.TestUI
             //var sw = new Stopwatch();
             //sw.Start();
             this._serialPort.WriteLine(data);
+            Log.Debug($"{nameof(WriteSerialData)} - {data}");
             //sw.Stop();
             //this._queue.Enqueue($"{DateTime.Now:mm:ss.fff} Send - {data} {sw.Elapsed.TotalMilliseconds}ms");
 

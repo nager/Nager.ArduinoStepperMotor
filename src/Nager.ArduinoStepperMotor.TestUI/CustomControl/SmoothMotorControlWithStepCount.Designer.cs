@@ -33,12 +33,13 @@
             this.trackBarSpeed = new System.Windows.Forms.TrackBar();
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
             this.panel1 = new System.Windows.Forms.Panel();
+            this.groupBox3 = new System.Windows.Forms.GroupBox();
             this.comboBoxProgram = new System.Windows.Forms.ComboBox();
+            this.buttonStartProgram = new System.Windows.Forms.Button();
             this.comboBoxRepeat = new System.Windows.Forms.ComboBox();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
             this.buttonDisableMotorDriver = new System.Windows.Forms.Button();
             this.buttonEnableMotorDriver = new System.Windows.Forms.Button();
-            this.buttonStartProgram = new System.Windows.Forms.Button();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.buttonSetLimitRight = new System.Windows.Forms.Button();
             this.buttonLimitSwitch = new System.Windows.Forms.Button();
@@ -47,14 +48,16 @@
             this.panel2 = new System.Windows.Forms.Panel();
             this.buttonMaxRight = new System.Windows.Forms.Button();
             this.buttonMaxLeft = new System.Windows.Forms.Button();
-            this.groupBox3 = new System.Windows.Forms.GroupBox();
+            this.buttonRampInfo = new System.Windows.Forms.Button();
+            this.textBoxSpeed2 = new System.Windows.Forms.TextBox();
+            this.buttonSpeed = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.trackBarSpeed)).BeginInit();
             this.tableLayoutPanel1.SuspendLayout();
             this.panel1.SuspendLayout();
+            this.groupBox3.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.groupBox1.SuspendLayout();
             this.panel2.SuspendLayout();
-            this.groupBox3.SuspendLayout();
             this.SuspendLayout();
             // 
             // textBoxSpeed
@@ -112,6 +115,7 @@
             // 
             // panel1
             // 
+            this.panel1.Controls.Add(this.buttonRampInfo);
             this.panel1.Controls.Add(this.groupBox3);
             this.panel1.Controls.Add(this.groupBox2);
             this.panel1.Controls.Add(this.groupBox1);
@@ -122,6 +126,18 @@
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(510, 81);
             this.panel1.TabIndex = 19;
+            // 
+            // groupBox3
+            // 
+            this.groupBox3.Controls.Add(this.comboBoxProgram);
+            this.groupBox3.Controls.Add(this.buttonStartProgram);
+            this.groupBox3.Controls.Add(this.comboBoxRepeat);
+            this.groupBox3.Location = new System.Drawing.Point(4, 30);
+            this.groupBox3.Name = "groupBox3";
+            this.groupBox3.Size = new System.Drawing.Size(221, 42);
+            this.groupBox3.TabIndex = 31;
+            this.groupBox3.TabStop = false;
+            this.groupBox3.Text = "Program";
             // 
             // comboBoxProgram
             // 
@@ -138,6 +154,16 @@
             this.comboBoxProgram.Name = "comboBoxProgram";
             this.comboBoxProgram.Size = new System.Drawing.Size(100, 21);
             this.comboBoxProgram.TabIndex = 30;
+            // 
+            // buttonStartProgram
+            // 
+            this.buttonStartProgram.Location = new System.Drawing.Point(156, 13);
+            this.buttonStartProgram.Name = "buttonStartProgram";
+            this.buttonStartProgram.Size = new System.Drawing.Size(61, 23);
+            this.buttonStartProgram.TabIndex = 26;
+            this.buttonStartProgram.Text = "Start";
+            this.buttonStartProgram.UseVisualStyleBackColor = true;
+            this.buttonStartProgram.Click += new System.EventHandler(this.buttonStartProgram_Click);
             // 
             // comboBoxRepeat
             // 
@@ -184,16 +210,6 @@
             this.buttonEnableMotorDriver.Text = "Enable";
             this.buttonEnableMotorDriver.UseVisualStyleBackColor = true;
             this.buttonEnableMotorDriver.Click += new System.EventHandler(this.buttonEnableMotorDriver_Click);
-            // 
-            // buttonStartProgram
-            // 
-            this.buttonStartProgram.Location = new System.Drawing.Point(156, 13);
-            this.buttonStartProgram.Name = "buttonStartProgram";
-            this.buttonStartProgram.Size = new System.Drawing.Size(61, 23);
-            this.buttonStartProgram.TabIndex = 26;
-            this.buttonStartProgram.Text = "Start";
-            this.buttonStartProgram.UseVisualStyleBackColor = true;
-            this.buttonStartProgram.Click += new System.EventHandler(this.buttonStartProgram_Click);
             // 
             // groupBox1
             // 
@@ -250,6 +266,8 @@
             // 
             // panel2
             // 
+            this.panel2.Controls.Add(this.buttonSpeed);
+            this.panel2.Controls.Add(this.textBoxSpeed2);
             this.panel2.Controls.Add(this.buttonMaxRight);
             this.panel2.Controls.Add(this.buttonMaxLeft);
             this.panel2.Controls.Add(this.buttonStop);
@@ -281,17 +299,33 @@
             this.buttonMaxLeft.UseVisualStyleBackColor = true;
             this.buttonMaxLeft.Click += new System.EventHandler(this.buttonMaxLeft_Click);
             // 
-            // groupBox3
+            // buttonRampInfo
             // 
-            this.groupBox3.Controls.Add(this.comboBoxProgram);
-            this.groupBox3.Controls.Add(this.buttonStartProgram);
-            this.groupBox3.Controls.Add(this.comboBoxRepeat);
-            this.groupBox3.Location = new System.Drawing.Point(4, 30);
-            this.groupBox3.Name = "groupBox3";
-            this.groupBox3.Size = new System.Drawing.Size(221, 42);
-            this.groupBox3.TabIndex = 31;
-            this.groupBox3.TabStop = false;
-            this.groupBox3.Text = "Program";
+            this.buttonRampInfo.Location = new System.Drawing.Point(95, 3);
+            this.buttonRampInfo.Name = "buttonRampInfo";
+            this.buttonRampInfo.Size = new System.Drawing.Size(86, 23);
+            this.buttonRampInfo.TabIndex = 32;
+            this.buttonRampInfo.Text = "Ramp Info";
+            this.buttonRampInfo.UseVisualStyleBackColor = true;
+            this.buttonRampInfo.Click += new System.EventHandler(this.buttonRampInfo_Click);
+            // 
+            // textBoxSpeed2
+            // 
+            this.textBoxSpeed2.Location = new System.Drawing.Point(378, 4);
+            this.textBoxSpeed2.Name = "textBoxSpeed2";
+            this.textBoxSpeed2.Size = new System.Drawing.Size(63, 20);
+            this.textBoxSpeed2.TabIndex = 19;
+            // 
+            // buttonSpeed
+            // 
+            this.buttonSpeed.Location = new System.Drawing.Point(447, 3);
+            this.buttonSpeed.Name = "buttonSpeed";
+            this.buttonSpeed.Size = new System.Drawing.Size(53, 28);
+            this.buttonSpeed.TabIndex = 20;
+            this.buttonSpeed.TabStop = false;
+            this.buttonSpeed.Text = "Speed";
+            this.buttonSpeed.UseVisualStyleBackColor = true;
+            this.buttonSpeed.Click += new System.EventHandler(this.buttonSpeed_Click);
             // 
             // SmoothMotorControlWithStepCount
             // 
@@ -305,10 +339,11 @@
             this.tableLayoutPanel1.ResumeLayout(false);
             this.tableLayoutPanel1.PerformLayout();
             this.panel1.ResumeLayout(false);
+            this.groupBox3.ResumeLayout(false);
             this.groupBox2.ResumeLayout(false);
             this.groupBox1.ResumeLayout(false);
             this.panel2.ResumeLayout(false);
-            this.groupBox3.ResumeLayout(false);
+            this.panel2.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -335,5 +370,8 @@
         private System.Windows.Forms.ComboBox comboBoxRepeat;
         private System.Windows.Forms.ComboBox comboBoxProgram;
         private System.Windows.Forms.GroupBox groupBox3;
+        private System.Windows.Forms.Button buttonRampInfo;
+        private System.Windows.Forms.Button buttonSpeed;
+        private System.Windows.Forms.TextBox textBoxSpeed2;
     }
 }

@@ -36,18 +36,18 @@
             this.comboBoxSerialPort = new System.Windows.Forms.ComboBox();
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tabPage1 = new System.Windows.Forms.TabPage();
-            this.tabPage2 = new System.Windows.Forms.TabPage();
-            this.tabPage3 = new System.Windows.Forms.TabPage();
-            this.textBoxSend = new System.Windows.Forms.TextBox();
             this.simpleMotorControl1 = new Nager.ArduinoStepperMotor.TestUI.CustomControl.SimpleMotorControl();
+            this.tabPage2 = new System.Windows.Forms.TabPage();
             this.smoothMotorControlWithStepCount1 = new Nager.ArduinoStepperMotor.TestUI.CustomControl.SmoothMotorControlWithStepCount();
+            this.tabPageRampSimulator = new System.Windows.Forms.TabPage();
             this.rampControl1 = new Nager.ArduinoStepperMotor.TestUI.CustomControl.RampControl();
+            this.textBoxSend = new System.Windows.Forms.TextBox();
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
             this.groupBox3.SuspendLayout();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
             this.tabPage2.SuspendLayout();
-            this.tabPage3.SuspendLayout();
+            this.tabPageRampSimulator.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
             this.splitContainer1.Panel2.SuspendLayout();
@@ -123,7 +123,7 @@
             // 
             this.tabControl1.Controls.Add(this.tabPage1);
             this.tabControl1.Controls.Add(this.tabPage2);
-            this.tabControl1.Controls.Add(this.tabPage3);
+            this.tabControl1.Controls.Add(this.tabPageRampSimulator);
             this.tabControl1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tabControl1.Location = new System.Drawing.Point(0, 86);
             this.tabControl1.Name = "tabControl1";
@@ -137,10 +137,19 @@
             this.tabPage1.Location = new System.Drawing.Point(4, 22);
             this.tabPage1.Name = "tabPage1";
             this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage1.Size = new System.Drawing.Size(546, 322);
+            this.tabPage1.Size = new System.Drawing.Size(536, 322);
             this.tabPage1.TabIndex = 0;
             this.tabPage1.Text = "Stepper A4988";
             this.tabPage1.UseVisualStyleBackColor = true;
+            // 
+            // simpleMotorControl1
+            // 
+            this.simpleMotorControl1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.simpleMotorControl1.Location = new System.Drawing.Point(3, 3);
+            this.simpleMotorControl1.Name = "simpleMotorControl1";
+            this.simpleMotorControl1.Size = new System.Drawing.Size(530, 316);
+            this.simpleMotorControl1.TabIndex = 0;
+            this.simpleMotorControl1.SendCommand += new System.Action<string>(this.simpleMotorControl1_SendCommand);
             // 
             // tabPage2
             // 
@@ -153,16 +162,34 @@
             this.tabPage2.Text = "SmoothMotorControlWithStepCount";
             this.tabPage2.UseVisualStyleBackColor = true;
             // 
-            // tabPage3
+            // smoothMotorControlWithStepCount1
             // 
-            this.tabPage3.Controls.Add(this.rampControl1);
-            this.tabPage3.Location = new System.Drawing.Point(4, 22);
-            this.tabPage3.Name = "tabPage3";
-            this.tabPage3.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage3.Size = new System.Drawing.Size(546, 322);
-            this.tabPage3.TabIndex = 2;
-            this.tabPage3.Text = "Ramp";
-            this.tabPage3.UseVisualStyleBackColor = true;
+            this.smoothMotorControlWithStepCount1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.smoothMotorControlWithStepCount1.Location = new System.Drawing.Point(3, 3);
+            this.smoothMotorControlWithStepCount1.Name = "smoothMotorControlWithStepCount1";
+            this.smoothMotorControlWithStepCount1.Size = new System.Drawing.Size(530, 316);
+            this.smoothMotorControlWithStepCount1.TabIndex = 0;
+            this.smoothMotorControlWithStepCount1.SendCommand += new System.Action<string>(this.smoothMotorControlWithStepCount1_SendCommand);
+            // 
+            // tabPageRampSimulator
+            // 
+            this.tabPageRampSimulator.Controls.Add(this.rampControl1);
+            this.tabPageRampSimulator.Location = new System.Drawing.Point(4, 22);
+            this.tabPageRampSimulator.Name = "tabPageRampSimulator";
+            this.tabPageRampSimulator.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPageRampSimulator.Size = new System.Drawing.Size(536, 322);
+            this.tabPageRampSimulator.TabIndex = 2;
+            this.tabPageRampSimulator.Text = "Ramp Simulator";
+            this.tabPageRampSimulator.UseVisualStyleBackColor = true;
+            // 
+            // rampControl1
+            // 
+            this.rampControl1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.rampControl1.Location = new System.Drawing.Point(3, 3);
+            this.rampControl1.Margin = new System.Windows.Forms.Padding(2);
+            this.rampControl1.Name = "rampControl1";
+            this.rampControl1.Size = new System.Drawing.Size(530, 316);
+            this.rampControl1.TabIndex = 0;
             // 
             // textBoxSend
             // 
@@ -175,33 +202,6 @@
             this.textBoxSend.Size = new System.Drawing.Size(135, 434);
             this.textBoxSend.TabIndex = 2;
             this.textBoxSend.KeyDown += new System.Windows.Forms.KeyEventHandler(this.textBoxSend_KeyDown);
-            // 
-            // simpleMotorControl1
-            // 
-            this.simpleMotorControl1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.simpleMotorControl1.Location = new System.Drawing.Point(3, 3);
-            this.simpleMotorControl1.Name = "simpleMotorControl1";
-            this.simpleMotorControl1.Size = new System.Drawing.Size(540, 316);
-            this.simpleMotorControl1.TabIndex = 0;
-            this.simpleMotorControl1.SendCommand += new System.Action<string>(this.simpleMotorControl1_SendCommand);
-            // 
-            // smoothMotorControlWithStepCount1
-            // 
-            this.smoothMotorControlWithStepCount1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.smoothMotorControlWithStepCount1.Location = new System.Drawing.Point(3, 3);
-            this.smoothMotorControlWithStepCount1.Name = "smoothMotorControlWithStepCount1";
-            this.smoothMotorControlWithStepCount1.Size = new System.Drawing.Size(530, 316);
-            this.smoothMotorControlWithStepCount1.TabIndex = 0;
-            this.smoothMotorControlWithStepCount1.SendCommand += new System.Action<string>(this.smoothMotorControlWithStepCount1_SendCommand);
-            // 
-            // rampControl1
-            // 
-            this.rampControl1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.rampControl1.Location = new System.Drawing.Point(3, 3);
-            this.rampControl1.Margin = new System.Windows.Forms.Padding(2);
-            this.rampControl1.Name = "rampControl1";
-            this.rampControl1.Size = new System.Drawing.Size(540, 316);
-            this.rampControl1.TabIndex = 0;
             // 
             // splitContainer1
             // 
@@ -235,7 +235,7 @@
             this.tabControl1.ResumeLayout(false);
             this.tabPage1.ResumeLayout(false);
             this.tabPage2.ResumeLayout(false);
-            this.tabPage3.ResumeLayout(false);
+            this.tabPageRampSimulator.ResumeLayout(false);
             this.splitContainer1.Panel1.ResumeLayout(false);
             this.splitContainer1.Panel1.PerformLayout();
             this.splitContainer1.Panel2.ResumeLayout(false);
@@ -257,7 +257,7 @@
         private System.Windows.Forms.TabPage tabPage2;
         private System.Windows.Forms.Button buttonRefresh;
         private CustomControl.SmoothMotorControlWithStepCount smoothMotorControlWithStepCount1;
-        private System.Windows.Forms.TabPage tabPage3;
+        private System.Windows.Forms.TabPage tabPageRampSimulator;
         private CustomControl.RampControl rampControl1;
         private CustomControl.SimpleMotorControl simpleMotorControl1;
         private System.Windows.Forms.TextBox textBoxSend;
