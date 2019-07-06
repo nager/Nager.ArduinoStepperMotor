@@ -149,143 +149,170 @@ namespace Nager.ArduinoStepperMotor.TestUI.CustomControl
 
         private async void buttonStartProgram_Click(object sender, EventArgs e)
         {
+            var repeats = Convert.ToInt32(this.comboBoxRepeat.Text);
             var program = this.comboBoxProgram.Text;
-            switch (program)
+
+            for (var i = 0; i < repeats; i++)
             {
-                case "Program1":
-                    await this.Program1Async();
-                    break;
-                case "Program2":
-                    await this.Program2Async();
-                    break;
-                case "Program3":
-                    await this.Program3Async();
-                    break;
-                case "Program4":
-                    await this.Program4Async();
-                    break;
-                case "Program5":
-                    await this.Program5Async();
-                    break;
-                case "Program6":
-                    await this.Program6Async();
-                    break;
+                switch (program)
+                {
+                    case "Program1":
+                        await this.Program1Async();
+                        break;
+                    case "Program2":
+                        await this.Program2Async();
+                        break;
+                    case "Program3":
+                        await this.Program3Async();
+                        break;
+                    case "Program4":
+                        await this.Program4Async();
+                        break;
+                    case "Program5":
+                        await this.Program5Async();
+                        break;
+                    case "Program6":
+                        await this.Program6Async();
+                        break;
+                }
             }
         }
 
         private async Task Program1Async()
         {
-            var repeats = Convert.ToInt32(this.comboBoxRepeat.Text);
-
-            for (var i = 0; i < repeats; i++)
+            //Start Position
+            this.SetSpeed(255);
+            this.SendSpeed();
+            for (var j = 0; j < 50; j++)
             {
-                //Start Position
-                this.SetSpeed(255);
-                this.SendSpeed();
-                for (var j = 0; j < 50; j++)
+                if (this._motorInfo.LimitRight == 0)
                 {
-                    if (this._motorInfo.LimitRight == 0)
-                    {
-                        break;
-                    }
-
-                    await Task.Delay(50);
+                    break;
                 }
 
-                this.SetSpeed(-2);
-                this.SendSpeed();
-                await Task.Delay(100);
-
-                this.SetSpeed(-50);
-                this.SendSpeed();
-                await Task.Delay(200);
-
-                this.SetSpeed(-100);
-                this.SendSpeed();
-                await Task.Delay(100);
-
-                this.SetSpeed(-255);
-                this.SendSpeed();
-                await Task.Delay(100);
-
-                this.SetSpeed(0);
-                this.SendSpeed();
+                await Task.Delay(50);
             }
+
+            this.SetSpeed(-2);
+            this.SendSpeed();
+            await Task.Delay(100);
+
+            this.SetSpeed(-50);
+            this.SendSpeed();
+            await Task.Delay(200);
+
+            this.SetSpeed(-100);
+            this.SendSpeed();
+            await Task.Delay(100);
+
+            this.SetSpeed(-255);
+            this.SendSpeed();
+            await Task.Delay(100);
+
+            this.SetSpeed(0);
+            this.SendSpeed();
         }
 
         private async Task Program2Async()
         {
-            var repeats = Convert.ToInt32(this.comboBoxRepeat.Text);
-
-            for (var i = 0; i < repeats; i++)
+            //Start Position
+            this.SetSpeed(255);
+            this.SendSpeed();
+            for (var j = 0; j < 50; j++)
             {
-                //Start Position
-                this.SetSpeed(255);
-                this.SendSpeed();
-                for (var j = 0; j < 50; j++)
+                if (this._motorInfo.LimitRight == 0)
                 {
-                    if (this._motorInfo.LimitRight == 0)
-                    {
-                        break;
-                    }
-
-                    await Task.Delay(50);
+                    break;
                 }
 
-                this.SetSpeed(-2);
-                this.SendSpeed();
-                await Task.Delay(400);
-
-                this.SetSpeed(-50);
-                this.SendSpeed();
-                await Task.Delay(500);
-
-                this.SetSpeed(-100);
-                this.SendSpeed();
-                await Task.Delay(500);
-
-                this.SetSpeed(-255);
-                this.SendSpeed();
-                await Task.Delay(500);
-
-                this.SetSpeed(0);
-                this.SendSpeed();
+                await Task.Delay(50);
             }
+
+            this.SetSpeed(-2);
+            this.SendSpeed();
+            await Task.Delay(400);
+
+            this.SetSpeed(-50);
+            this.SendSpeed();
+            await Task.Delay(500);
+
+            this.SetSpeed(-100);
+            this.SendSpeed();
+            await Task.Delay(500);
+
+            this.SetSpeed(-255);
+            this.SendSpeed();
+            await Task.Delay(500);
+
+            this.SetSpeed(0);
+            this.SendSpeed();
         }
 
         private async Task Program3Async()
         {
-            var repeats = Convert.ToInt32(this.comboBoxRepeat.Text);
-
-            for (var i = 0; i < repeats; i++)
+            //Start Position
+            this.SetSpeed(255);
+            this.SendSpeed();
+            for (var j = 0; j < 50; j++)
             {
-                //Start Position
-                this.SetSpeed(255);
-                this.SendSpeed();
-                for (var j = 0; j < 50; j++)
+                if (this._motorInfo.LimitRight == 0)
                 {
-                    if (this._motorInfo.LimitRight == 0)
-                    {
-                        break;
-                    }
-
-                    await Task.Delay(50);
+                    break;
                 }
 
-                this.SetSpeed(-255);
-                this.SendSpeed();
-                await Task.Delay(2000);
-
-                this.SetSpeed(0);
-                this.SendSpeed();
+                await Task.Delay(50);
             }
+
+            this.SetSpeed(-255);
+            this.SendSpeed();
+            await Task.Delay(2000);
+
+            this.SetSpeed(0);
+            this.SendSpeed();
         }
 
         private async Task Program4Async()
         {
-            var repeats = Convert.ToInt32(this.comboBoxRepeat.Text);
+            //Start Position
+            this.SetSpeed(255);
+            this.SendSpeed();
+            for (var j = 0; j < 50; j++)
+            {
+                if (this._motorInfo.LimitRight == 0)
+                {
+                    break;
+                }
 
-            for (var i = 0; i < repeats; i++)
+                await Task.Delay(50);
+            }
+
+            this.SetSpeed(-255);
+            this.SendSpeed();
+            await Task.Delay(40);
+
+            this.SetSpeed(100);
+            this.SendSpeed();
+            await Task.Delay(20);
+
+            this.SetSpeed(-255);
+            this.SendSpeed();
+            await Task.Delay(40);
+
+            this.SetSpeed(100);
+            this.SendSpeed();
+            await Task.Delay(20);
+
+            this.SetSpeed(-255);
+            this.SendSpeed();
+            await Task.Delay(500);
+
+            this.SetSpeed(0);
+            this.SendSpeed();
+        }
+
+        private async Task Program5Async()
+        {
+            for (var k = -1; k >= -255; k--)
             {
                 //Start Position
                 this.SetSpeed(255);
@@ -300,101 +327,49 @@ namespace Nager.ArduinoStepperMotor.TestUI.CustomControl
                     await Task.Delay(50);
                 }
 
-                this.SetSpeed(-255);
+                this.SetSpeed(k);
                 this.SendSpeed();
-                await Task.Delay(40);
 
-                this.SetSpeed(100);
-                this.SendSpeed();
-                await Task.Delay(20);
+                //Wait for End Position
+                for (var j = 0; j < 100; j++)
+                {
+                    if (this._motorInfo.LimitLeft == 0)
+                    {
+                        break;
+                    }
 
-                this.SetSpeed(-255);
-                this.SendSpeed();
-                await Task.Delay(40);
-
-                this.SetSpeed(100);
-                this.SendSpeed();
-                await Task.Delay(20);
-
-                this.SetSpeed(-255);
-                this.SendSpeed();
-                await Task.Delay(500);
+                    await Task.Delay(50);
+                }
 
                 this.SetSpeed(0);
                 this.SendSpeed();
-            }
-        }
-
-        private async Task Program5Async()
-        {
-            var repeats = Convert.ToInt32(this.comboBoxRepeat.Text);
-
-            for (var i = 0; i < repeats; i++)
-            {
-                for (var k = -1; k >= -255; k--)
-                {
-                    //Start Position
-                    this.SetSpeed(255);
-                    this.SendSpeed();
-                    for (var j = 0; j < 50; j++)
-                    {
-                        if (this._motorInfo.LimitRight == 0)
-                        {
-                            break;
-                        }
-
-                        await Task.Delay(50);
-                    }
-
-                    this.SetSpeed(k);
-                    this.SendSpeed();
-
-                    //Wait for End Position
-                    for (var j = 0; j < 100; j++)
-                    {
-                        if (this._motorInfo.LimitLeft == 0)
-                        {
-                            break;
-                        }
-
-                        await Task.Delay(50);
-                    }
-
-                    this.SetSpeed(0);
-                    this.SendSpeed();
-                }
             }
         }
 
         private async Task Program6Async()
         {
-            var repeats = Convert.ToInt32(this.comboBoxRepeat.Text);
-
-            for (var i = 0; i < repeats; i++)
+            //Start Position
+            this.SetSpeed(255);
+            this.SendSpeed();
+            for (var j = 0; j < 50; j++)
             {
-                //Start Position
-                this.SetSpeed(255);
-                this.SendSpeed();
-                for (var j = 0; j < 50; j++)
+                if (this._motorInfo.LimitRight == 0)
                 {
-                    if (this._motorInfo.LimitRight == 0)
-                    {
-                        break;
-                    }
-
-                    await Task.Delay(50);
+                    break;
                 }
 
-                this.SetSpeed(-51);
-                this.SendSpeed();
-                this.SendSpeed();
-
-
-                await Task.Delay(2000);
-
-                this.SetSpeed(0);
-                this.SendSpeed();
+                await Task.Delay(50);
             }
+
+            this.SetSpeed(-51);
+            this.SendSpeed();
+            this.SendSpeed();
+
+
+            await Task.Delay(2000);
+
+            this.SetSpeed(0);
+            this.SendSpeed();
         }
 
         #endregion

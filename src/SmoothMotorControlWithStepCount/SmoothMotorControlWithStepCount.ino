@@ -58,17 +58,7 @@ void setup() {
   limitLeft = steps + 500;
 }
 
-void caculateAccel(int startDelay, int angle, float acceleration) {
-  /*
-  uint16_t maxDelay = 2000;
-  uint16_t minDelay = 200;
-  for(uint16_t i = 0; i < 256; i++)
-  {
-    ramp[i] = (uint16_t)maxDelay - (uint32_t)((uint32_t)(maxDelay - minDelay) * (uint32_t)i / 256);
-  }
-  */
-
-  
+void caculateAccel(int startDelay, int angle, float acceleration) { 
   float c0 = startDelay * sqrt(2 * angle / acceleration) * 0.67703; // in us
   ramp[0] = c0 * TIMERTICKS_PER_US;
   float d = 0;
@@ -79,26 +69,10 @@ void caculateAccel(int startDelay, int angle, float acceleration) {
     ramp[i] = d * TIMERTICKS_PER_US;
     lastDelay = d;
   }
-  
 }
 
 ISR(TIMER1_OVF_vect) {
   TCNT1 = 65536; // Zähler erneut vorbelegen
-
-
-
-  /*
-    if (checkLeftLimit() < 600) {
-    if (rampIndex > 10) {
-      rampIndex--;
-    }
-    }
-    if (checkRightLimit() < 600) {
-    if (rampIndex > 10) {
-      rampIndex--;
-    }
-    }
-  */
 
   if (rampIndex > 0) {
     onTime = ramp[rampIndex];
@@ -134,7 +108,6 @@ ISR(TIMER1_OVF_vect) {
       rampIndex--;
     } else {
       switchDirection();
-      TCNT1 = 65400;
     }
   } else {
     //Change motor motorSpeed to a new ramp position
@@ -144,28 +117,33 @@ ISR(TIMER1_OVF_vect) {
     } else if (index < rampIndex) {
       rampIndex--;
     }
-
-    if (rampIndex == 0) {
-      //Disable stepper driver
-      //digitalWrite(motorDriverActivePin, HIGH);
-    } else if (rampIndex == 1) {
-      //Enable stepper driver
-      //digitalWrite(motorDriverActivePin, LOW);
-    }
   }
 }
 
 void loop() {
+  commandProcessing();
+
+  //if (counter == 20000) {
+  if (counter == 500) {
+    Serial.println((String)"{ \"limitLeft\":" + checkLeftLimit() +  ", \"limitRight\":" + checkRightLimit() + ", \"motorSpeed\":" + motorSpeed + " }");
+    counter = 0;
+  }
+
+  delayMicroseconds(50);
+  counter++;
+}
+
+void commandProcessing() {
   if (Serial.available() > 0) {
-    //Serial.println("read data");
     command = Serial.readStringUntil('\n');
-    //Serial.println(command);
 
     if (command.startsWith("speed")) {
-      //Serial.println(command.substring(6));
       int nextSpeed = command.substring(6).toInt();
+
+      //Check speed is higher as max
       if (abs(nextSpeed) > RAMP_STEPS) {
         motorSpeed = 0;
+        return;
       }
 
       if (nextSpeed > 0) {
@@ -179,26 +157,32 @@ void loop() {
 
     if (command.startsWith("enablemotordriver")) {
       digitalWrite(motorDriverActivePin, LOW);
+      return;
     }
 
     if (command.startsWith("disablemotordriver")) {
       digitalWrite(motorDriverActivePin, HIGH);
+      return;
     }
 
     if (command.startsWith("limitenable")) {
       limitActive = true;
+      return;
     }
 
     if (command.startsWith("limitdisable")) {
       limitActive = false;
+      return;
     }
 
     if (command.startsWith("setlimitleft")) {
       limitLeft = steps;
+      return;
     }
 
     if (command.startsWith("setlimitright")) {
       limitRight = steps;
+      return;
     }
 
     if (command.startsWith("ramp")) {
@@ -208,25 +192,6 @@ void loop() {
       }
     }
   }
-
-  if (motorSpeed == 0) {
-
-
-  } else {
-
-  }
-
-  //if (counter == 20000) {
-  if (counter == 500) {
-    //Serial.println((String)"Steps:" + steps + (String)" Direction:" + movementDirection + (String)" Speed:" + motorSpeed);
-    //Serial.println((String)"LimitLeft:" + limitLeft + (String)" " + checkLeftLimit());
-    //Serial.println((String)"LimitRight:" + limitRight + (String)" " + checkRightLimit());
-    Serial.println((String)"{ \"limitLeft\":" + checkLeftLimit() +  ", \"limitRight\":" + checkRightLimit() + ", \"motorSpeed\":" + motorSpeed + " }");
-    counter = 0;
-  }
-
-  delayMicroseconds(50);
-  counter++;
 }
 
 int checkLeftLimit() {
@@ -236,14 +201,14 @@ int checkLeftLimit() {
 
   long distance = limitLeft - steps;
 
-  if (nextMovementDirection == MOVEMENT_LEFT && distance < 400 && motorSpeed > 2) {
+  if (movementDirection == MOVEMENT_LEFT && distance < 400 && motorSpeed > 2) {
     int reduceSpeed = ceil(motorSpeed / 10.0);
     motorSpeed = motorSpeed - reduceSpeed;
   }
 
-  if (nextMovementDirection == MOVEMENT_LEFT && distance <= 0) {
+  if (movementDirection == MOVEMENT_LEFT && distance <= 0) {
     rampIndex = 0;
-    motorSpeed = 0;
+    //motorSpeed = 0;
   }
 
   return distance;
@@ -256,25 +221,30 @@ int checkRightLimit() {
 
   long distance = steps - limitRight;
 
-  if (nextMovementDirection == MOVEMENT_RIGHT && distance < 400 && motorSpeed > 2) {
+  if (movementDirection == MOVEMENT_RIGHT && distance < 400 && motorSpeed > 2) {
     int reduceSpeed = ceil(motorSpeed / 10.0);
     motorSpeed = motorSpeed - reduceSpeed;
   }
 
-  if (nextMovementDirection == MOVEMENT_RIGHT && distance <= 0) {
+  if (movementDirection == MOVEMENT_RIGHT && distance <= 0) {
     rampIndex = 0;
-    motorSpeed = 0;
+    //motorSpeed = 0;
   }
 
   return distance;
 }
 
 void switchDirection() {
+  if (movementDirection == nextMovementDirection){
+    return;
+  }
+  
   if (nextMovementDirection == MOVEMENT_LEFT) {
     movementDirection = MOVEMENT_LEFT;
     digitalWrite(directionPin, !motorDirection);
-  } else {
-    movementDirection = MOVEMENT_RIGHT;
-    digitalWrite(directionPin, motorDirection);
+    return;
   }
+  
+  movementDirection = MOVEMENT_RIGHT;
+  digitalWrite(directionPin, motorDirection);
 }
