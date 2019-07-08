@@ -6,6 +6,7 @@ enum movementDirections {
 int motorDriverActivePin = 7;
 int stepPin = 5;
 int directionPin = 6;
+int endstopPin = 2;
 
 unsigned int counter = 0;
 int onTime = 0;
@@ -33,29 +34,63 @@ void setup() {
   pinMode(motorDriverActivePin, OUTPUT); // Motor Driver Active
   pinMode(stepPin, OUTPUT); // Motor Step
   pinMode(directionPin, OUTPUT); // Motor Direction
+  pinMode(endstopPin, INPUT); // Endstop
 
-  digitalWrite(directionPin, LOW);
-  //digitalWrite(motorDriverActivePin, HIGH);
+  digitalWrite(directionPin, motorDirection);
   digitalWrite(motorDriverActivePin, LOW);
 
   //https://www.heise.de/developer/artikel/Timer-Counter-und-Interrupts-3273309.html
-  noInterrupts();           // Alle Interrupts temporär abschalten
+  noInterrupts();           // disable all interrupts
   TCCR1A = 0;               // set entire TCCR1A register to 0
   TCCR1B = 0;               // set entire TCCR1B register to 0
 
   TCNT1 = 65534;
   //TCNT1 = 0;            // Timer nach obiger Rechnung vorbelegen
   TCCR1B |= (1 << CS11);    // 0.5us
-  TIMSK1 |= (1 << TOIE1);   // enable Timer1 overflow interrupt:
-  interrupts();             // alle Interrupts scharf schalten
+  TIMSK1 |= (1 << TOIE1);   // enable Timer1 overflow interrupt
+  interrupts();             // enable all interrupts
 
   //caculateAccel(3000, 1, 0.6);
   caculateAccel(1600, 1, 0.25);
   //caculateAccel(1500, 1, 0.6);
 
+  //Drive to home position
+  limitActive = false;
+  for (int i = 1; i < 1000; i++) {
+    motorSpeed = 1;
+    if (digitalRead(endstopPin) == 0) {
+      motorSpeed = 0;
+      delay(1000);
+      break;
+    }
+    delay(20);
+  }
+  motorSpeed = 0;
+
+  nextMovementDirection = MOVEMENT_LEFT;
+  motorSpeed = 1;
+  delay(300);
+  motorSpeed = 0;
+  limitActive = true;
+
+  //Set limits
   steps = 2147483647;
-  limitRight = steps - 500;
-  limitLeft = steps + 500;
+  limitRight = steps;
+  limitLeft = steps + 1000;
+
+  //Trinamic Automatic Tuning TMC2208
+  for (int i = 1; i < 5; i++) {
+    nextMovementDirection = MOVEMENT_LEFT;
+    motorSpeed = 50;
+    delay(1000);
+    motorSpeed = 0;
+    delay(150); //standstill more than 130ms
+    nextMovementDirection = MOVEMENT_RIGHT;
+    motorSpeed = 50;
+    delay(1000);
+    motorSpeed = 0;
+    delay(150); //standstill more than 130ms
+  }
 }
 
 void caculateAccel(int startDelay, int angle, float acceleration) { 
@@ -122,6 +157,10 @@ ISR(TIMER1_OVF_vect) {
 
 void loop() {
   commandProcessing();
+
+  if (digitalRead(endstopPin) == 0) {
+    digitalWrite(motorDriverActivePin, HIGH);
+  }
 
   //if (counter == 20000) {
   if (counter == 500) {
