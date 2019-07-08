@@ -79,17 +79,17 @@ void setup() {
   limitLeft = steps + 1000;
 
   //Trinamic Automatic Tuning TMC2208
-  for (int i = 1; i < 5; i++) {
+  for (int i = 1; i < 2; i++) {
     nextMovementDirection = MOVEMENT_LEFT;
     motorSpeed = 50;
     delay(1000);
     motorSpeed = 0;
-    delay(150); //standstill more than 130ms
+    delay(300); //standstill more than 130ms
     nextMovementDirection = MOVEMENT_RIGHT;
     motorSpeed = 50;
     delay(1000);
     motorSpeed = 0;
-    delay(150); //standstill more than 130ms
+    delay(300); //standstill more than 130ms
   }
 }
 
