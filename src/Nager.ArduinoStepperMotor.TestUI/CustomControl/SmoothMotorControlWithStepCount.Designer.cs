@@ -33,6 +33,7 @@
             this.trackBarSpeed = new System.Windows.Forms.TrackBar();
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
             this.panel1 = new System.Windows.Forms.Panel();
+            this.buttonRampInfo = new System.Windows.Forms.Button();
             this.groupBox3 = new System.Windows.Forms.GroupBox();
             this.comboBoxProgram = new System.Windows.Forms.ComboBox();
             this.buttonStartProgram = new System.Windows.Forms.Button();
@@ -46,11 +47,10 @@
             this.buttonSetLimitLeft = new System.Windows.Forms.Button();
             this.buttonRandom = new System.Windows.Forms.Button();
             this.panel2 = new System.Windows.Forms.Panel();
+            this.buttonSpeed = new System.Windows.Forms.Button();
+            this.textBoxSpeed2 = new System.Windows.Forms.TextBox();
             this.buttonMaxRight = new System.Windows.Forms.Button();
             this.buttonMaxLeft = new System.Windows.Forms.Button();
-            this.buttonRampInfo = new System.Windows.Forms.Button();
-            this.textBoxSpeed2 = new System.Windows.Forms.TextBox();
-            this.buttonSpeed = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.trackBarSpeed)).BeginInit();
             this.tableLayoutPanel1.SuspendLayout();
             this.panel1.SuspendLayout();
@@ -126,6 +126,16 @@
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(510, 81);
             this.panel1.TabIndex = 19;
+            // 
+            // buttonRampInfo
+            // 
+            this.buttonRampInfo.Location = new System.Drawing.Point(95, 3);
+            this.buttonRampInfo.Name = "buttonRampInfo";
+            this.buttonRampInfo.Size = new System.Drawing.Size(86, 23);
+            this.buttonRampInfo.TabIndex = 32;
+            this.buttonRampInfo.Text = "Ramp Info";
+            this.buttonRampInfo.UseVisualStyleBackColor = true;
+            this.buttonRampInfo.Click += new System.EventHandler(this.buttonRampInfo_Click);
             // 
             // groupBox3
             // 
@@ -277,6 +287,24 @@
             this.panel2.Size = new System.Drawing.Size(508, 34);
             this.panel2.TabIndex = 20;
             // 
+            // buttonSpeed
+            // 
+            this.buttonSpeed.Location = new System.Drawing.Point(447, 3);
+            this.buttonSpeed.Name = "buttonSpeed";
+            this.buttonSpeed.Size = new System.Drawing.Size(53, 28);
+            this.buttonSpeed.TabIndex = 20;
+            this.buttonSpeed.TabStop = false;
+            this.buttonSpeed.Text = "Speed";
+            this.buttonSpeed.UseVisualStyleBackColor = true;
+            this.buttonSpeed.Click += new System.EventHandler(this.buttonSpeed_Click);
+            // 
+            // textBoxSpeed2
+            // 
+            this.textBoxSpeed2.Location = new System.Drawing.Point(378, 4);
+            this.textBoxSpeed2.Name = "textBoxSpeed2";
+            this.textBoxSpeed2.Size = new System.Drawing.Size(63, 20);
+            this.textBoxSpeed2.TabIndex = 19;
+            // 
             // buttonMaxRight
             // 
             this.buttonMaxRight.Location = new System.Drawing.Point(235, 3);
@@ -298,34 +326,6 @@
             this.buttonMaxLeft.Text = "Max Left";
             this.buttonMaxLeft.UseVisualStyleBackColor = true;
             this.buttonMaxLeft.Click += new System.EventHandler(this.buttonMaxLeft_Click);
-            // 
-            // buttonRampInfo
-            // 
-            this.buttonRampInfo.Location = new System.Drawing.Point(95, 3);
-            this.buttonRampInfo.Name = "buttonRampInfo";
-            this.buttonRampInfo.Size = new System.Drawing.Size(86, 23);
-            this.buttonRampInfo.TabIndex = 32;
-            this.buttonRampInfo.Text = "Ramp Info";
-            this.buttonRampInfo.UseVisualStyleBackColor = true;
-            this.buttonRampInfo.Click += new System.EventHandler(this.buttonRampInfo_Click);
-            // 
-            // textBoxSpeed2
-            // 
-            this.textBoxSpeed2.Location = new System.Drawing.Point(378, 4);
-            this.textBoxSpeed2.Name = "textBoxSpeed2";
-            this.textBoxSpeed2.Size = new System.Drawing.Size(63, 20);
-            this.textBoxSpeed2.TabIndex = 19;
-            // 
-            // buttonSpeed
-            // 
-            this.buttonSpeed.Location = new System.Drawing.Point(447, 3);
-            this.buttonSpeed.Name = "buttonSpeed";
-            this.buttonSpeed.Size = new System.Drawing.Size(53, 28);
-            this.buttonSpeed.TabIndex = 20;
-            this.buttonSpeed.TabStop = false;
-            this.buttonSpeed.Text = "Speed";
-            this.buttonSpeed.UseVisualStyleBackColor = true;
-            this.buttonSpeed.Click += new System.EventHandler(this.buttonSpeed_Click);
             // 
             // SmoothMotorControlWithStepCount
             // 

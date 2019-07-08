@@ -312,12 +312,12 @@ namespace Nager.ArduinoStepperMotor.TestUI.CustomControl
 
         private async Task Program5Async()
         {
-            for (var k = -1; k >= -255; k--)
+            for (var speed = 1; speed <= 255; speed++)
             {
                 //Start Position
                 this.SetSpeed(255);
                 this.SendSpeed();
-                for (var j = 0; j < 50; j++)
+                for (var j = 0; j < 100; j++)
                 {
                     if (this._motorInfo.LimitRight == 0)
                     {
@@ -327,7 +327,7 @@ namespace Nager.ArduinoStepperMotor.TestUI.CustomControl
                     await Task.Delay(50);
                 }
 
-                this.SetSpeed(k);
+                this.SetSpeed(-speed);
                 this.SendSpeed();
 
                 //Wait for End Position
@@ -343,6 +343,8 @@ namespace Nager.ArduinoStepperMotor.TestUI.CustomControl
 
                 this.SetSpeed(0);
                 this.SendSpeed();
+
+                await Task.Delay(100);
             }
         }
 
