@@ -81,12 +81,12 @@ void setup() {
   //Trinamic Automatic Tuning TMC2208
   for (int i = 1; i <= 2; i++) {
     nextMovementDirection = MOVEMENT_LEFT;
-    motorSpeed = 50;
+    motorSpeed = 255;
     delay(1000);
     motorSpeed = 0;
     delay(300); //standstill more than 130ms
     nextMovementDirection = MOVEMENT_RIGHT;
-    motorSpeed = 50;
+    motorSpeed = 255;
     delay(1000);
     motorSpeed = 0;
     delay(300); //standstill more than 130ms
