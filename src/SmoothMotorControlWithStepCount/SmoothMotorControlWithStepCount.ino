@@ -6,7 +6,8 @@ enum movementDirections {
 int motorDriverActivePin = 7;
 int stepPin = 5;
 int directionPin = 6;
-int endstopPin = 2;
+int endstopRightPin = 2;
+int endstopLeftPin = 3;
 
 unsigned int counter = 0;
 int onTime = 0;
@@ -34,7 +35,7 @@ void setup() {
   pinMode(motorDriverActivePin, OUTPUT); // Motor Driver Active
   pinMode(stepPin, OUTPUT); // Motor Step
   pinMode(directionPin, OUTPUT); // Motor Direction
-  pinMode(endstopPin, INPUT); // Endstop
+  pinMode(endstopRightPin, INPUT); // Endstop
 
   digitalWrite(directionPin, motorDirection);
   digitalWrite(motorDriverActivePin, LOW);
@@ -54,11 +55,15 @@ void setup() {
   caculateAccel(1600, 1, 0.25);
   //caculateAccel(1500, 1, 0.6);
 
-  //Drive to home position
+  steps = 2147483647;
+
+  //Disable Limits
   limitActive = false;
+
+  //Drive to right end position 
   for (int i = 1; i < 1000; i++) {
     motorSpeed = 1;
-    if (digitalRead(endstopPin) == 0) {
+    if (digitalRead(endstopRightPin) == 0) {
       motorSpeed = 0;
       delay(1000);
       break;
@@ -66,17 +71,36 @@ void setup() {
     delay(20);
   }
   motorSpeed = 0;
+  limitRight = steps + 100;
 
   nextMovementDirection = MOVEMENT_LEFT;
-  motorSpeed = 1;
-  delay(300);
+
+  //Drive to left end position 
+  for (int i = 1; i < 1000; i++) {
+    motorSpeed = 1;
+    if (digitalRead(endstopLeftPin) == 0) {
+      motorSpeed = 0;
+      delay(1000);
+      break;
+    }
+    delay(20);
+  }
   motorSpeed = 0;
+  limitLeft = steps - 100;
+
+  //Activate limits
   limitActive = true;
 
-  //Set limits
-  steps = 2147483647;
-  limitRight = steps;
-  limitLeft = steps + 1000;
+
+  //Move away from limit
+  nextMovementDirection = MOVEMENT_RIGHT;
+  motorSpeed = 1;
+  delay(500);
+  motorSpeed = 0;
+
+
+return;
+  
 
   //Trinamic Automatic Tuning TMC2208
   for (int i = 1; i <= 2; i++) {
@@ -158,7 +182,11 @@ ISR(TIMER1_OVF_vect) {
 void loop() {
   commandProcessing();
 
-  if (digitalRead(endstopPin) == 0) {
+  if (digitalRead(endstopRightPin) == 0) {
+    digitalWrite(motorDriverActivePin, HIGH);
+  }
+
+  if (digitalRead(endstopLeftPin) == 0) {
     digitalWrite(motorDriverActivePin, HIGH);
   }
 
