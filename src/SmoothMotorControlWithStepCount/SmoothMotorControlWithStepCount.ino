@@ -46,7 +46,6 @@ void setup() {
   TCCR1B = 0;               // set entire TCCR1B register to 0
 
   TCNT1 = 65534;
-  //TCNT1 = 0;            // Timer nach obiger Rechnung vorbelegen
   TCCR1B |= (1 << CS11);    // 0.5us
   TIMSK1 |= (1 << TOIE1);   // enable Timer1 overflow interrupt
   interrupts();             // enable all interrupts
@@ -99,9 +98,6 @@ void setup() {
   motorSpeed = 0;
 
 
-return;
-  
-
   //Trinamic Automatic Tuning TMC2208
   for (int i = 1; i <= 2; i++) {
     nextMovementDirection = MOVEMENT_LEFT;
@@ -131,7 +127,7 @@ void caculateAccel(int startDelay, int angle, float acceleration) {
 }
 
 ISR(TIMER1_OVF_vect) {
-  TCNT1 = 65536; // Zähler erneut vorbelegen
+  TCNT1 = 65536;
 
   if (rampIndex > 0) {
     onTime = ramp[rampIndex];
@@ -253,10 +249,12 @@ void commandProcessing() {
     }
 
     if (command.startsWith("ramp")) {
+      Serial.print((String)"{ ramp:[");
       for (int i = 0; i < RAMP_STEPS; i++)
       {
-        Serial.println((String)"Ramp:" + i + ":" + ramp[i]);
+        Serial.print((String)"" + ramp[i] + ",");
       }
+      Serial.println((String)"] }");
     }
   }
 }
