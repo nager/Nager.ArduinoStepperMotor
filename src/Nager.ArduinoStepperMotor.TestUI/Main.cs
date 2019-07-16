@@ -189,8 +189,8 @@ namespace Nager.ArduinoStepperMotor.TestUI
                 return;
             }
 
-            this._serialPort.Close();
             this._serialPort.DataReceived -= this.SerialPortDataReceived;
+            this._serialPort.Close();
 
             this.buttonConnect.Enabled = true;
             this.buttonDisconnect.Enabled = false;

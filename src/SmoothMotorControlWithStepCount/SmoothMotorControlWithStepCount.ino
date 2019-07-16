@@ -6,6 +6,9 @@ enum movementDirections {
 int motorDriverActivePin = 7;
 int stepPin = 5;
 int directionPin = 6;
+
+//Endstop configuration
+bool endstopEnable = false;
 int endstopRightPin = 2;
 int endstopLeftPin = 3;
 
@@ -51,45 +54,52 @@ void setup() {
   interrupts();             // enable all interrupts
 
   //caculateAccel(3000, 1, 0.6);
-  caculateAccel(1600, 1, 0.25);
+  //US-17HS4401S
+  //caculateAccel(1600, 1, 0.25);
   //caculateAccel(1500, 1, 0.6);
+
+  //17HS13-0404S + A4988
+  caculateAccel(100, 200, 0.05);
 
   steps = 2147483647;
 
-  //Disable Limits
-  limitActive = false;
-
-  //Drive to right end position 
-  for (int i = 1; i < 1000; i++) {
-    motorSpeed = 1;
-    if (digitalRead(endstopRightPin) == 0) {
-      motorSpeed = 0;
-      delay(1000);
-      break;
+  if (endstopEnable) {
+    
+    //Disable Limits
+    limitActive = false;
+  
+    //Drive to right end position 
+    for (int i = 1; i < 1000; i++) {
+      motorSpeed = 1;
+      if (digitalRead(endstopRightPin) == 0) {
+        motorSpeed = 0;
+        delay(1000);
+        break;
+      }
+      delay(20);
     }
-    delay(20);
-  }
-  motorSpeed = 0;
-  limitRight = steps + 100;
-
-  nextMovementDirection = MOVEMENT_LEFT;
-
-  //Drive to left end position 
-  for (int i = 1; i < 1000; i++) {
-    motorSpeed = 1;
-    if (digitalRead(endstopLeftPin) == 0) {
-      motorSpeed = 0;
-      delay(1000);
-      break;
+    motorSpeed = 0;
+    limitRight = steps + 100;
+  
+    nextMovementDirection = MOVEMENT_LEFT;
+  
+    //Drive to left end position 
+    for (int i = 1; i < 1000; i++) {
+      motorSpeed = 1;
+      if (digitalRead(endstopLeftPin) == 0) {
+        motorSpeed = 0;
+        delay(1000);
+        break;
+      }
+      delay(20);
     }
-    delay(20);
+    motorSpeed = 0;
+    limitLeft = steps - 100;
+  
+    //Activate limits
+    limitActive = true;
+    
   }
-  motorSpeed = 0;
-  limitLeft = steps - 100;
-
-  //Activate limits
-  limitActive = true;
-
 
   //Move away from limit
   nextMovementDirection = MOVEMENT_RIGHT;
@@ -177,14 +187,8 @@ ISR(TIMER1_OVF_vect) {
 
 void loop() {
   commandProcessing();
+  checkEndstops();
 
-  if (digitalRead(endstopRightPin) == 0) {
-    digitalWrite(motorDriverActivePin, HIGH);
-  }
-
-  if (digitalRead(endstopLeftPin) == 0) {
-    digitalWrite(motorDriverActivePin, HIGH);
-  }
 
   //if (counter == 20000) {
   if (counter == 500) {
@@ -194,6 +198,18 @@ void loop() {
 
   delayMicroseconds(50);
   counter++;
+}
+
+void checkEndstops() {
+  if (endstopEnable) {
+    if (digitalRead(endstopRightPin) == 0) {
+      digitalWrite(motorDriverActivePin, HIGH);
+    }
+  
+    if (digitalRead(endstopLeftPin) == 0) {
+      digitalWrite(motorDriverActivePin, HIGH);
+    }
+  }
 }
 
 void commandProcessing() {
