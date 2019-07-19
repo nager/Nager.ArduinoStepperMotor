@@ -8,7 +8,7 @@ int stepPin = 5;
 int directionPin = 6;
 
 //Endstop configuration
-bool endstopEnable = false;
+bool endstopEnable = true;
 int endstopRightPin = 2;
 int endstopLeftPin = 3;
 
@@ -189,7 +189,6 @@ void loop() {
   commandProcessing();
   checkEndstops();
 
-
   //if (counter == 20000) {
   if (counter == 500) {
     Serial.println((String)"{ \"limitLeft\":" + checkLeftLimit() +  ", \"limitRight\":" + checkRightLimit() + ", \"motorSpeed\":" + motorSpeed + " }");
@@ -271,6 +270,26 @@ void commandProcessing() {
         Serial.print((String)"" + ramp[i] + ",");
       }
       Serial.println((String)"] }");
+    }
+
+    if (command.startsWith("setramp=")) {
+      /*
+      Serial.println(command);
+      String data = strtok(const_cast<char*>(command.substring(8).c_str()), ";");
+      Serial.println(data);
+      int index = data.toInt();
+      data = strtok(0, ";");
+      Serial.println(data);
+      int value = data.toInt();
+      ramp[index] = value;
+      Serial.println((String)"index:" + index +  ", value:" + value);
+      */
+
+      int index = command.substring(8,11).toInt();
+      int value = command.substring(11,16).toInt();
+      ramp[index] = value;
+      //Serial.println((String)"index:" + index +  ", value:" + value);
+      //setramp=0000100001
     }
   }
 }

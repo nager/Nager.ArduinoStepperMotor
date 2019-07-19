@@ -1,6 +1,7 @@
 ﻿using Nager.ArduinoStepperMotor.TestUI.Model;
 using Newtonsoft.Json;
 using System;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
@@ -432,6 +433,16 @@ namespace Nager.ArduinoStepperMotor.TestUI.CustomControl
             int.TryParse(this.textBoxSpeed2.Text, out var speed);
             this._speed = speed;
             this.SendCommand?.Invoke($"speed={this._speed}");
+        }
+
+        private void buttonSetRamp_Click(object sender, EventArgs e)
+        {
+            for (var rampIndex = 1; rampIndex <= 255; rampIndex++)
+            {
+                var speed = 7800 - rampIndex * 30;
+
+                this.SendCommand?.Invoke($"setramp={rampIndex:000}{speed}");
+            }
         }
     }
 }

@@ -149,7 +149,6 @@ namespace Nager.ArduinoStepperMotor.TestUI
 
             this._queueSend.Enqueue(data.Trim());
 
-
             if (this._queueSend.Count > 20)
             {
                 this._queueSend.TryDequeue(out var temp);

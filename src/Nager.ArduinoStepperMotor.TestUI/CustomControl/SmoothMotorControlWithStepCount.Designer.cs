@@ -51,6 +51,7 @@
             this.textBoxSpeed2 = new System.Windows.Forms.TextBox();
             this.buttonMaxRight = new System.Windows.Forms.Button();
             this.buttonMaxLeft = new System.Windows.Forms.Button();
+            this.buttonSetRamp = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.trackBarSpeed)).BeginInit();
             this.tableLayoutPanel1.SuspendLayout();
             this.panel1.SuspendLayout();
@@ -66,7 +67,7 @@
             this.textBoxSpeed.Location = new System.Drawing.Point(3, 3);
             this.textBoxSpeed.Name = "textBoxSpeed";
             this.textBoxSpeed.ReadOnly = true;
-            this.textBoxSpeed.Size = new System.Drawing.Size(508, 20);
+            this.textBoxSpeed.Size = new System.Drawing.Size(544, 20);
             this.textBoxSpeed.TabIndex = 17;
             this.textBoxSpeed.TabStop = false;
             // 
@@ -88,7 +89,7 @@
             this.trackBarSpeed.Maximum = 255;
             this.trackBarSpeed.Minimum = -255;
             this.trackBarSpeed.Name = "trackBarSpeed";
-            this.trackBarSpeed.Size = new System.Drawing.Size(508, 123);
+            this.trackBarSpeed.Size = new System.Drawing.Size(544, 123);
             this.trackBarSpeed.TabIndex = 15;
             this.trackBarSpeed.TickFrequency = 10;
             this.trackBarSpeed.ValueChanged += new System.EventHandler(this.trackBarSpeed_ValueChanged);
@@ -110,11 +111,12 @@
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 40F));
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 85F));
-            this.tableLayoutPanel1.Size = new System.Drawing.Size(514, 294);
+            this.tableLayoutPanel1.Size = new System.Drawing.Size(550, 294);
             this.tableLayoutPanel1.TabIndex = 18;
             // 
             // panel1
             // 
+            this.panel1.Controls.Add(this.buttonSetRamp);
             this.panel1.Controls.Add(this.buttonRampInfo);
             this.panel1.Controls.Add(this.groupBox3);
             this.panel1.Controls.Add(this.groupBox2);
@@ -124,14 +126,14 @@
             this.panel1.Location = new System.Drawing.Point(2, 211);
             this.panel1.Margin = new System.Windows.Forms.Padding(2);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(510, 81);
+            this.panel1.Size = new System.Drawing.Size(546, 81);
             this.panel1.TabIndex = 19;
             // 
             // buttonRampInfo
             // 
-            this.buttonRampInfo.Location = new System.Drawing.Point(95, 3);
+            this.buttonRampInfo.Location = new System.Drawing.Point(91, 3);
             this.buttonRampInfo.Name = "buttonRampInfo";
-            this.buttonRampInfo.Size = new System.Drawing.Size(86, 23);
+            this.buttonRampInfo.Size = new System.Drawing.Size(69, 23);
             this.buttonRampInfo.TabIndex = 32;
             this.buttonRampInfo.Text = "Ramp Info";
             this.buttonRampInfo.UseVisualStyleBackColor = true;
@@ -142,9 +144,9 @@
             this.groupBox3.Controls.Add(this.comboBoxProgram);
             this.groupBox3.Controls.Add(this.buttonStartProgram);
             this.groupBox3.Controls.Add(this.comboBoxRepeat);
-            this.groupBox3.Location = new System.Drawing.Point(4, 30);
+            this.groupBox3.Location = new System.Drawing.Point(4, 36);
             this.groupBox3.Name = "groupBox3";
-            this.groupBox3.Size = new System.Drawing.Size(221, 42);
+            this.groupBox3.Size = new System.Drawing.Size(257, 42);
             this.groupBox3.TabIndex = 31;
             this.groupBox3.TabStop = false;
             this.groupBox3.Text = "Program";
@@ -194,7 +196,7 @@
             // 
             this.groupBox2.Controls.Add(this.buttonDisableMotorDriver);
             this.groupBox2.Controls.Add(this.buttonEnableMotorDriver);
-            this.groupBox2.Location = new System.Drawing.Point(231, 3);
+            this.groupBox2.Location = new System.Drawing.Point(267, 3);
             this.groupBox2.Name = "groupBox2";
             this.groupBox2.Size = new System.Drawing.Size(98, 75);
             this.groupBox2.TabIndex = 27;
@@ -227,7 +229,7 @@
             this.groupBox1.Controls.Add(this.buttonSetLimitRight);
             this.groupBox1.Controls.Add(this.buttonLimitSwitch);
             this.groupBox1.Controls.Add(this.buttonSetLimitLeft);
-            this.groupBox1.Location = new System.Drawing.Point(335, 3);
+            this.groupBox1.Location = new System.Drawing.Point(371, 3);
             this.groupBox1.Name = "groupBox1";
             this.groupBox1.Size = new System.Drawing.Size(172, 75);
             this.groupBox1.TabIndex = 23;
@@ -268,7 +270,7 @@
             // 
             this.buttonRandom.Location = new System.Drawing.Point(3, 3);
             this.buttonRandom.Name = "buttonRandom";
-            this.buttonRandom.Size = new System.Drawing.Size(86, 23);
+            this.buttonRandom.Size = new System.Drawing.Size(82, 23);
             this.buttonRandom.TabIndex = 18;
             this.buttonRandom.Text = "Random drive";
             this.buttonRandom.UseVisualStyleBackColor = true;
@@ -284,7 +286,7 @@
             this.panel2.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panel2.Location = new System.Drawing.Point(3, 172);
             this.panel2.Name = "panel2";
-            this.panel2.Size = new System.Drawing.Size(508, 34);
+            this.panel2.Size = new System.Drawing.Size(544, 34);
             this.panel2.TabIndex = 20;
             // 
             // buttonSpeed
@@ -327,13 +329,23 @@
             this.buttonMaxLeft.UseVisualStyleBackColor = true;
             this.buttonMaxLeft.Click += new System.EventHandler(this.buttonMaxLeft_Click);
             // 
+            // buttonSetRamp
+            // 
+            this.buttonSetRamp.Location = new System.Drawing.Point(166, 3);
+            this.buttonSetRamp.Name = "buttonSetRamp";
+            this.buttonSetRamp.Size = new System.Drawing.Size(64, 23);
+            this.buttonSetRamp.TabIndex = 33;
+            this.buttonSetRamp.Text = "Set Ramp";
+            this.buttonSetRamp.UseVisualStyleBackColor = true;
+            this.buttonSetRamp.Click += new System.EventHandler(this.buttonSetRamp_Click);
+            // 
             // SmoothMotorControlWithStepCount
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.Controls.Add(this.tableLayoutPanel1);
             this.Name = "SmoothMotorControlWithStepCount";
-            this.Size = new System.Drawing.Size(514, 294);
+            this.Size = new System.Drawing.Size(550, 294);
             this.Load += new System.EventHandler(this.SmoothMotorControlWithStepCount_Load);
             ((System.ComponentModel.ISupportInitialize)(this.trackBarSpeed)).EndInit();
             this.tableLayoutPanel1.ResumeLayout(false);
@@ -373,5 +385,6 @@
         private System.Windows.Forms.Button buttonRampInfo;
         private System.Windows.Forms.Button buttonSpeed;
         private System.Windows.Forms.TextBox textBoxSpeed2;
+        private System.Windows.Forms.Button buttonSetRamp;
     }
 }
