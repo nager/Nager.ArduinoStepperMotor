@@ -1,4 +1,5 @@
 ﻿using log4net;
+using Nager.ArduinoStepperMotor.TestUI.Model;
 using System;
 using System.Collections.Concurrent;
 using System.IO.Ports;
@@ -13,7 +14,7 @@ namespace Nager.ArduinoStepperMotor.TestUI
         private static readonly ILog Log = LogManager.GetLogger(typeof(Main));
 
         private SerialPort _serialPort;
-        private ConcurrentQueue<string> _queueReceive = new ConcurrentQueue<string>();
+        private ConcurrentQueue<SerialReceiveMessage> _queueReceive = new ConcurrentQueue<SerialReceiveMessage>();
         private ConcurrentQueue<string> _queueSend = new ConcurrentQueue<string>();
         private bool _stopUiUpdate = false;
 
@@ -29,6 +30,7 @@ namespace Nager.ArduinoStepperMotor.TestUI
         private void Form1_FormClosed(object sender, FormClosedEventArgs e)
         {
             this._stopUiUpdate = true;
+            this.CloseSerialPort();
         }
 
         private void RefreshReceive()
@@ -37,33 +39,42 @@ namespace Nager.ArduinoStepperMotor.TestUI
 
             while (!this._stopUiUpdate)
             {
-                sb.Clear();
-
                 try
                 {
-                    foreach (var item in this._queueReceive)
+                    if (!this._queueReceive.TryDequeue(out var receive))
                     {
-                        sb.AppendLine(item);
+                        Thread.Sleep(50);
+                        continue;
+                    }
+
+                    this.smoothMotorControlWithStepCount1.DataReceived(receive.Data);
+                    this.rampControl1.DataReceived(receive.Data);
+
+                    sb.AppendLine($"{receive.ReceiveDate:mm:ss.fff} - {receive.Data}");
+
+                    var text = sb.ToString();
+                    if (text.Length > 1000)
+                    {
+                        var index = text.IndexOf('\n');
+                        sb.Remove(0, index + 1);
                     }
 
                     if (this.textBoxReceive.InvokeRequired)
                     {
                         this.textBoxReceive.Invoke(new Action(() =>
                         {
-                            this.textBoxReceive.Text = sb.ToString();
+                            this.textBoxReceive.Text = text;
                         }));
                     }
                     else
                     {
-                        this.textBoxReceive.Text = sb.ToString();
+                        this.textBoxReceive.Text = text;
                     }
                 }
                 catch (Exception exception)
                 {
 
                 }
-
-                Thread.Sleep(50);
             }
         }
 
@@ -107,19 +118,12 @@ namespace Nager.ArduinoStepperMotor.TestUI
         {
             try
             {
-                while (this._serialPort.BytesToRead > 0)
+                while (this._serialPort.IsOpen && this._serialPort.BytesToRead > 0)
                 {
-                    var data = this._serialPort.ReadLine();
-                    Log.Debug($"{nameof(SerialPortDataReceived)} - {data.Trim()}");
-                    this.smoothMotorControlWithStepCount1.DataReceived(data);
-  
-                    this._queueReceive.Enqueue($"{DateTime.Now:mm:ss.fff} - {data.Trim()}");
+                    var data = this._serialPort.ReadLine().Trim();
+                    Log.Debug($"{nameof(SerialPortDataReceived)} - {data}");
 
-                    if (this._queueReceive.Count > 20)
-                    {
-                        this._queueReceive.TryDequeue(out var temp);
-                        this._queueReceive.TryDequeue(out temp);
-                    }
+                    this._queueReceive.Enqueue(new SerialReceiveMessage { ReceiveDate = DateTime.Now, Data = data });
                 }
             }
             catch (Exception exception)
@@ -140,12 +144,8 @@ namespace Nager.ArduinoStepperMotor.TestUI
                 return;
             }
 
-            //var sw = new Stopwatch();
-            //sw.Start();
             this._serialPort.WriteLine(data);
             Log.Debug($"{nameof(WriteSerialData)} - {data}");
-            //sw.Stop();
-            //this._queue.Enqueue($"{DateTime.Now:mm:ss.fff} Send - {data} {sw.Elapsed.TotalMilliseconds}ms");
 
             this._queueSend.Enqueue(data.Trim());
 
@@ -161,27 +161,28 @@ namespace Nager.ArduinoStepperMotor.TestUI
             this.comboBoxSerialPort.DataSource = SerialPort.GetPortNames();
         }
 
-        private void buttonConnect_Click(object sender, EventArgs e)
+        private bool OpenSerialPort()
         {
-            if (this._serialPort != null && this._serialPort.IsOpen)
-            {
-                return;
-            }
-
             var serialPort = this.comboBoxSerialPort.SelectedItem as string;
 
             this._serialPort = new SerialPort(serialPort, 115200, Parity.None, 8, StopBits.One);
             //this._serialPort.Handshake = Handshake.None;
             this._serialPort.DataReceived += this.SerialPortDataReceived;
             this._serialPort.RtsEnable = true;
-            //this._serialPort.ReadTimeout = 10000;
-            this._serialPort.Open();
 
-            this.buttonConnect.Enabled = false;
-            this.buttonDisconnect.Enabled = true;
+            try
+            {
+                this._serialPort.Open();
+                return true;
+            }
+            catch
+            {
+            }
+
+            return false;
         }
 
-        private void buttonDisconnect_Click(object sender, EventArgs e)
+        private void CloseSerialPort()
         {
             if (this._serialPort == null)
             {
@@ -189,7 +190,35 @@ namespace Nager.ArduinoStepperMotor.TestUI
             }
 
             this._serialPort.DataReceived -= this.SerialPortDataReceived;
-            this._serialPort.Close();
+
+            Log.Debug($"{nameof(CloseSerialPort)}");
+            if (this._serialPort.IsOpen)
+            {
+                this._serialPort.Close();
+            }
+            this._serialPort.Dispose();
+        }
+
+        private void buttonConnect_Click(object sender, EventArgs e)
+        {
+            if (this._serialPort != null && this._serialPort.IsOpen)
+            {
+                return;
+            }
+
+            if (!this.OpenSerialPort())
+            {
+                MessageBox.Show("Cannot connect");
+                return;
+            }
+
+            this.buttonConnect.Enabled = false;
+            this.buttonDisconnect.Enabled = true;
+        }
+
+        private void buttonDisconnect_Click(object sender, EventArgs e)
+        {
+            this.CloseSerialPort();
 
             this.buttonConnect.Enabled = true;
             this.buttonDisconnect.Enabled = false;
@@ -206,6 +235,11 @@ namespace Nager.ArduinoStepperMotor.TestUI
         }
 
         private void simpleMotorControl1_SendCommand(string data)
+        {
+            this.WriteSerialData(data);
+        }
+
+        private void rampControl1_SendCommand(string data)
         {
             this.WriteSerialData(data);
         }

@@ -33,7 +33,6 @@
             this.trackBarSpeed = new System.Windows.Forms.TrackBar();
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
             this.panel1 = new System.Windows.Forms.Panel();
-            this.buttonRampInfo = new System.Windows.Forms.Button();
             this.groupBox3 = new System.Windows.Forms.GroupBox();
             this.comboBoxProgram = new System.Windows.Forms.ComboBox();
             this.buttonStartProgram = new System.Windows.Forms.Button();
@@ -51,7 +50,6 @@
             this.textBoxSpeed2 = new System.Windows.Forms.TextBox();
             this.buttonMaxRight = new System.Windows.Forms.Button();
             this.buttonMaxLeft = new System.Windows.Forms.Button();
-            this.buttonSetRamp = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.trackBarSpeed)).BeginInit();
             this.tableLayoutPanel1.SuspendLayout();
             this.panel1.SuspendLayout();
@@ -86,10 +84,10 @@
             // 
             this.trackBarSpeed.Dock = System.Windows.Forms.DockStyle.Fill;
             this.trackBarSpeed.Location = new System.Drawing.Point(3, 43);
-            this.trackBarSpeed.Maximum = 255;
-            this.trackBarSpeed.Minimum = -255;
+            this.trackBarSpeed.Maximum = 100;
+            this.trackBarSpeed.Minimum = -100;
             this.trackBarSpeed.Name = "trackBarSpeed";
-            this.trackBarSpeed.Size = new System.Drawing.Size(544, 123);
+            this.trackBarSpeed.Size = new System.Drawing.Size(544, 44);
             this.trackBarSpeed.TabIndex = 15;
             this.trackBarSpeed.TickFrequency = 10;
             this.trackBarSpeed.ValueChanged += new System.EventHandler(this.trackBarSpeed_ValueChanged);
@@ -108,7 +106,7 @@
             this.tableLayoutPanel1.Name = "tableLayoutPanel1";
             this.tableLayoutPanel1.RowCount = 4;
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 40F));
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 50F));
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 40F));
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 85F));
             this.tableLayoutPanel1.Size = new System.Drawing.Size(550, 294);
@@ -116,28 +114,16 @@
             // 
             // panel1
             // 
-            this.panel1.Controls.Add(this.buttonSetRamp);
-            this.panel1.Controls.Add(this.buttonRampInfo);
             this.panel1.Controls.Add(this.groupBox3);
             this.panel1.Controls.Add(this.groupBox2);
             this.panel1.Controls.Add(this.groupBox1);
             this.panel1.Controls.Add(this.buttonRandom);
             this.panel1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panel1.Location = new System.Drawing.Point(2, 211);
+            this.panel1.Location = new System.Drawing.Point(2, 132);
             this.panel1.Margin = new System.Windows.Forms.Padding(2);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(546, 81);
+            this.panel1.Size = new System.Drawing.Size(546, 160);
             this.panel1.TabIndex = 19;
-            // 
-            // buttonRampInfo
-            // 
-            this.buttonRampInfo.Location = new System.Drawing.Point(91, 3);
-            this.buttonRampInfo.Name = "buttonRampInfo";
-            this.buttonRampInfo.Size = new System.Drawing.Size(69, 23);
-            this.buttonRampInfo.TabIndex = 32;
-            this.buttonRampInfo.Text = "Ramp Info";
-            this.buttonRampInfo.UseVisualStyleBackColor = true;
-            this.buttonRampInfo.Click += new System.EventHandler(this.buttonRampInfo_Click);
             // 
             // groupBox3
             // 
@@ -284,7 +270,7 @@
             this.panel2.Controls.Add(this.buttonMaxLeft);
             this.panel2.Controls.Add(this.buttonStop);
             this.panel2.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panel2.Location = new System.Drawing.Point(3, 172);
+            this.panel2.Location = new System.Drawing.Point(3, 93);
             this.panel2.Name = "panel2";
             this.panel2.Size = new System.Drawing.Size(544, 34);
             this.panel2.TabIndex = 20;
@@ -329,16 +315,6 @@
             this.buttonMaxLeft.UseVisualStyleBackColor = true;
             this.buttonMaxLeft.Click += new System.EventHandler(this.buttonMaxLeft_Click);
             // 
-            // buttonSetRamp
-            // 
-            this.buttonSetRamp.Location = new System.Drawing.Point(166, 3);
-            this.buttonSetRamp.Name = "buttonSetRamp";
-            this.buttonSetRamp.Size = new System.Drawing.Size(64, 23);
-            this.buttonSetRamp.TabIndex = 33;
-            this.buttonSetRamp.Text = "Set Ramp";
-            this.buttonSetRamp.UseVisualStyleBackColor = true;
-            this.buttonSetRamp.Click += new System.EventHandler(this.buttonSetRamp_Click);
-            // 
             // SmoothMotorControlWithStepCount
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -382,9 +358,7 @@
         private System.Windows.Forms.ComboBox comboBoxRepeat;
         private System.Windows.Forms.ComboBox comboBoxProgram;
         private System.Windows.Forms.GroupBox groupBox3;
-        private System.Windows.Forms.Button buttonRampInfo;
         private System.Windows.Forms.Button buttonSpeed;
         private System.Windows.Forms.TextBox textBoxSpeed2;
-        private System.Windows.Forms.Button buttonSetRamp;
     }
 }

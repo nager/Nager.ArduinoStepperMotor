@@ -78,6 +78,9 @@
       <DependentUpon>Main.cs</DependentUpon>
     </Compile>
     <Compile Include="Model\ArduinoMotorInfo.cs" />
+    <Compile Include="Model\MotorSpeedRamp.cs" />
+    <Compile Include="Model\RampInfo.cs" />
+    <Compile Include="Model\SerialReceiveMessage.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="CustomControl\RampControl.resx">

@@ -1,7 +1,6 @@
 ﻿using Nager.ArduinoStepperMotor.TestUI.Model;
 using Newtonsoft.Json;
 using System;
-using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
@@ -30,6 +29,11 @@ namespace Nager.ArduinoStepperMotor.TestUI.CustomControl
         public void DataReceived(string data)
         {
             var motorInfo = JsonConvert.DeserializeObject<ArduinoMotorInfo>(data);
+            if (motorInfo == null)
+            {
+                return;
+            }
+
             this._motorInfo = motorInfo;
 
             if (motorInfo.LimitLeft == -1 || motorInfo.LimitRight == -1)
@@ -43,7 +47,7 @@ namespace Nager.ArduinoStepperMotor.TestUI.CustomControl
 
             if (motorInfo.MotorSpeed == 0 && this._speed != 0)
             {
-                this.SetSpeed(0);
+                //this.SetSpeed(0);
             }
         }
 
@@ -80,7 +84,7 @@ namespace Nager.ArduinoStepperMotor.TestUI.CustomControl
 
         private void trackBarSpeed_ValueChanged(object sender, EventArgs e)
         {
-            this._speed = this.trackBarSpeed.Value;
+            this.SetSpeed(this.trackBarSpeed.Value, this.trackBarSpeed);
             this.SendSpeed();
         }
 
@@ -89,22 +93,29 @@ namespace Nager.ArduinoStepperMotor.TestUI.CustomControl
             this.SendCommand?.Invoke($"speed={this._speed}");
         }
 
-        private void SetSpeed(int speed)
+        private void SetSpeed(int speed, object sender = null)
         {
-            this._speed = speed;
+            var newSpeed = 255 * speed / 100.0;
 
-            this.textBoxSpeed.Invoke((MethodInvoker)delegate
+            this._speed = (int)newSpeed;
+
+            if (sender != this.textBoxSpeed)
             {
-                this.textBoxSpeed.Text = speed.ToString();
-            });
+                this.textBoxSpeed.Invoke((MethodInvoker)delegate
+                {
+                    this.textBoxSpeed.Text = $"Current Speed: {speed}";
+                });
+            }
 
-
-            this.trackBarSpeed.Invoke((MethodInvoker)delegate
+            if (sender != this.trackBarSpeed)
             {
-                this.trackBarSpeed.ValueChanged -= trackBarSpeed_ValueChanged;
-                this.trackBarSpeed.Value = speed;
-                this.trackBarSpeed.ValueChanged += trackBarSpeed_ValueChanged;
-            });
+                this.trackBarSpeed.Invoke((MethodInvoker)delegate
+                {
+                    this.trackBarSpeed.ValueChanged -= trackBarSpeed_ValueChanged;
+                    this.trackBarSpeed.Value = speed;
+                    this.trackBarSpeed.ValueChanged += trackBarSpeed_ValueChanged;
+                });
+            }
         }
 
         private void trackBarSpeed_KeyDown(object sender, KeyEventArgs e)
@@ -182,7 +193,7 @@ namespace Nager.ArduinoStepperMotor.TestUI.CustomControl
         private async Task Program1Async()
         {
             //Start Position
-            this.SetSpeed(255);
+            this.SetSpeed(100);
             this.SendSpeed();
             for (var j = 0; j < 50; j++)
             {
@@ -198,15 +209,15 @@ namespace Nager.ArduinoStepperMotor.TestUI.CustomControl
             this.SendSpeed();
             await Task.Delay(100);
 
-            this.SetSpeed(-50);
+            this.SetSpeed(-25);
             this.SendSpeed();
             await Task.Delay(200);
 
-            this.SetSpeed(-100);
+            this.SetSpeed(-50);
             this.SendSpeed();
             await Task.Delay(100);
 
-            this.SetSpeed(-255);
+            this.SetSpeed(-100);
             this.SendSpeed();
             await Task.Delay(100);
 
@@ -217,7 +228,7 @@ namespace Nager.ArduinoStepperMotor.TestUI.CustomControl
         private async Task Program2Async()
         {
             //Start Position
-            this.SetSpeed(255);
+            this.SetSpeed(100);
             this.SendSpeed();
             for (var j = 0; j < 50; j++)
             {
@@ -233,15 +244,15 @@ namespace Nager.ArduinoStepperMotor.TestUI.CustomControl
             this.SendSpeed();
             await Task.Delay(400);
 
+            this.SetSpeed(-25);
+            this.SendSpeed();
+            await Task.Delay(500);
+
             this.SetSpeed(-50);
             this.SendSpeed();
             await Task.Delay(500);
 
             this.SetSpeed(-100);
-            this.SendSpeed();
-            await Task.Delay(500);
-
-            this.SetSpeed(-255);
             this.SendSpeed();
             await Task.Delay(500);
 
@@ -252,7 +263,7 @@ namespace Nager.ArduinoStepperMotor.TestUI.CustomControl
         private async Task Program3Async()
         {
             //Start Position
-            this.SetSpeed(255);
+            this.SetSpeed(100);
             this.SendSpeed();
             for (var j = 0; j < 50; j++)
             {
@@ -264,7 +275,7 @@ namespace Nager.ArduinoStepperMotor.TestUI.CustomControl
                 await Task.Delay(50);
             }
 
-            this.SetSpeed(-255);
+            this.SetSpeed(-100);
             this.SendSpeed();
             await Task.Delay(2000);
 
@@ -275,7 +286,7 @@ namespace Nager.ArduinoStepperMotor.TestUI.CustomControl
         private async Task Program4Async()
         {
             //Start Position
-            this.SetSpeed(255);
+            this.SetSpeed(100);
             this.SendSpeed();
             for (var j = 0; j < 50; j++)
             {
@@ -287,7 +298,7 @@ namespace Nager.ArduinoStepperMotor.TestUI.CustomControl
                 await Task.Delay(50);
             }
 
-            this.SetSpeed(-255);
+            this.SetSpeed(-100);
             this.SendSpeed();
             await Task.Delay(40);
 
@@ -295,7 +306,7 @@ namespace Nager.ArduinoStepperMotor.TestUI.CustomControl
             this.SendSpeed();
             await Task.Delay(20);
 
-            this.SetSpeed(-255);
+            this.SetSpeed(-100);
             this.SendSpeed();
             await Task.Delay(40);
 
@@ -303,7 +314,7 @@ namespace Nager.ArduinoStepperMotor.TestUI.CustomControl
             this.SendSpeed();
             await Task.Delay(20);
 
-            this.SetSpeed(-255);
+            this.SetSpeed(-100);
             this.SendSpeed();
             await Task.Delay(500);
 
@@ -316,7 +327,7 @@ namespace Nager.ArduinoStepperMotor.TestUI.CustomControl
             for (var speed = 1; speed <= 255; speed++)
             {
                 //Start Position
-                this.SetSpeed(255);
+                this.SetSpeed(100);
                 this.SendSpeed();
                 for (var j = 0; j < 100; j++)
                 {
@@ -352,7 +363,7 @@ namespace Nager.ArduinoStepperMotor.TestUI.CustomControl
         private async Task Program6Async()
         {
             //Start Position
-            this.SetSpeed(255);
+            this.SetSpeed(100);
             this.SendSpeed();
             for (var j = 0; j < 50; j++)
             {
@@ -401,15 +412,13 @@ namespace Nager.ArduinoStepperMotor.TestUI.CustomControl
 
         private void buttonMaxLeft_Click(object sender, EventArgs e)
         {
-            var speed = -255;
-            this.SetSpeed(speed);
+            this.SetSpeed(-100);
             this.SendSpeed();
         }
 
         private void buttonMaxRight_Click(object sender, EventArgs e)
         {
-            var speed = 255;
-            this.SetSpeed(speed);
+            this.SetSpeed(100);
             this.SendSpeed();
         }
 
@@ -423,26 +432,11 @@ namespace Nager.ArduinoStepperMotor.TestUI.CustomControl
             this.SendCommand?.Invoke("disablemotordriver");
         }
 
-        private void buttonRampInfo_Click(object sender, EventArgs e)
-        {
-            this.SendCommand?.Invoke("ramp");
-        }
-
         private void buttonSpeed_Click(object sender, EventArgs e)
         {
             int.TryParse(this.textBoxSpeed2.Text, out var speed);
-            this._speed = speed;
+            this.SetSpeed(speed);
             this.SendCommand?.Invoke($"speed={this._speed}");
-        }
-
-        private void buttonSetRamp_Click(object sender, EventArgs e)
-        {
-            for (var rampIndex = 1; rampIndex <= 255; rampIndex++)
-            {
-                var speed = 7800 - rampIndex * 30;
-
-                this.SendCommand?.Invoke($"setramp={rampIndex:000}{speed}");
-            }
         }
     }
 }

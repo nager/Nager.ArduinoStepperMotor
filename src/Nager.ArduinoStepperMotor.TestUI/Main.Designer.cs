@@ -39,7 +39,7 @@
             this.simpleMotorControl1 = new Nager.ArduinoStepperMotor.TestUI.CustomControl.SimpleMotorControl();
             this.tabPage2 = new System.Windows.Forms.TabPage();
             this.smoothMotorControlWithStepCount1 = new Nager.ArduinoStepperMotor.TestUI.CustomControl.SmoothMotorControlWithStepCount();
-            this.tabPageRampSimulator = new System.Windows.Forms.TabPage();
+            this.tabPageRampConfiguration = new System.Windows.Forms.TabPage();
             this.rampControl1 = new Nager.ArduinoStepperMotor.TestUI.CustomControl.RampControl();
             this.textBoxSend = new System.Windows.Forms.TextBox();
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
@@ -47,7 +47,7 @@
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
             this.tabPage2.SuspendLayout();
-            this.tabPageRampSimulator.SuspendLayout();
+            this.tabPageRampConfiguration.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
             this.splitContainer1.Panel2.SuspendLayout();
@@ -95,7 +95,7 @@
             this.groupBox3.Dock = System.Windows.Forms.DockStyle.Top;
             this.groupBox3.Location = new System.Drawing.Point(0, 0);
             this.groupBox3.Name = "groupBox3";
-            this.groupBox3.Size = new System.Drawing.Size(544, 86);
+            this.groupBox3.Size = new System.Drawing.Size(574, 86);
             this.groupBox3.TabIndex = 13;
             this.groupBox3.TabStop = false;
             this.groupBox3.Text = "Connection";
@@ -123,12 +123,12 @@
             // 
             this.tabControl1.Controls.Add(this.tabPage1);
             this.tabControl1.Controls.Add(this.tabPage2);
-            this.tabControl1.Controls.Add(this.tabPageRampSimulator);
+            this.tabControl1.Controls.Add(this.tabPageRampConfiguration);
             this.tabControl1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tabControl1.Location = new System.Drawing.Point(0, 86);
             this.tabControl1.Name = "tabControl1";
             this.tabControl1.SelectedIndex = 0;
-            this.tabControl1.Size = new System.Drawing.Size(544, 348);
+            this.tabControl1.Size = new System.Drawing.Size(574, 348);
             this.tabControl1.TabIndex = 12;
             // 
             // tabPage1
@@ -157,7 +157,7 @@
             this.tabPage2.Location = new System.Drawing.Point(4, 22);
             this.tabPage2.Name = "tabPage2";
             this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage2.Size = new System.Drawing.Size(536, 322);
+            this.tabPage2.Size = new System.Drawing.Size(566, 322);
             this.tabPage2.TabIndex = 1;
             this.tabPage2.Text = "SmoothMotorControlWithStepCount";
             this.tabPage2.UseVisualStyleBackColor = true;
@@ -167,20 +167,20 @@
             this.smoothMotorControlWithStepCount1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.smoothMotorControlWithStepCount1.Location = new System.Drawing.Point(3, 3);
             this.smoothMotorControlWithStepCount1.Name = "smoothMotorControlWithStepCount1";
-            this.smoothMotorControlWithStepCount1.Size = new System.Drawing.Size(530, 316);
+            this.smoothMotorControlWithStepCount1.Size = new System.Drawing.Size(560, 316);
             this.smoothMotorControlWithStepCount1.TabIndex = 0;
             this.smoothMotorControlWithStepCount1.SendCommand += new System.Action<string>(this.smoothMotorControlWithStepCount1_SendCommand);
             // 
-            // tabPageRampSimulator
+            // tabPageRampConfiguration
             // 
-            this.tabPageRampSimulator.Controls.Add(this.rampControl1);
-            this.tabPageRampSimulator.Location = new System.Drawing.Point(4, 22);
-            this.tabPageRampSimulator.Name = "tabPageRampSimulator";
-            this.tabPageRampSimulator.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPageRampSimulator.Size = new System.Drawing.Size(536, 322);
-            this.tabPageRampSimulator.TabIndex = 2;
-            this.tabPageRampSimulator.Text = "Ramp Simulator";
-            this.tabPageRampSimulator.UseVisualStyleBackColor = true;
+            this.tabPageRampConfiguration.Controls.Add(this.rampControl1);
+            this.tabPageRampConfiguration.Location = new System.Drawing.Point(4, 22);
+            this.tabPageRampConfiguration.Name = "tabPageRampConfiguration";
+            this.tabPageRampConfiguration.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPageRampConfiguration.Size = new System.Drawing.Size(566, 322);
+            this.tabPageRampConfiguration.TabIndex = 2;
+            this.tabPageRampConfiguration.Text = "Ramp Configuration";
+            this.tabPageRampConfiguration.UseVisualStyleBackColor = true;
             // 
             // rampControl1
             // 
@@ -188,8 +188,9 @@
             this.rampControl1.Location = new System.Drawing.Point(3, 3);
             this.rampControl1.Margin = new System.Windows.Forms.Padding(2);
             this.rampControl1.Name = "rampControl1";
-            this.rampControl1.Size = new System.Drawing.Size(530, 316);
+            this.rampControl1.Size = new System.Drawing.Size(560, 316);
             this.rampControl1.TabIndex = 0;
+            this.rampControl1.SendCommand += new System.Action<string>(this.rampControl1_SendCommand);
             // 
             // textBoxSend
             // 
@@ -206,7 +207,7 @@
             // splitContainer1
             // 
             this.splitContainer1.Dock = System.Windows.Forms.DockStyle.Right;
-            this.splitContainer1.Location = new System.Drawing.Point(544, 0);
+            this.splitContainer1.Location = new System.Drawing.Point(574, 0);
             this.splitContainer1.Name = "splitContainer1";
             // 
             // splitContainer1.Panel1
@@ -224,7 +225,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1050, 434);
+            this.ClientSize = new System.Drawing.Size(1080, 434);
             this.Controls.Add(this.tabControl1);
             this.Controls.Add(this.groupBox3);
             this.Controls.Add(this.splitContainer1);
@@ -235,7 +236,7 @@
             this.tabControl1.ResumeLayout(false);
             this.tabPage1.ResumeLayout(false);
             this.tabPage2.ResumeLayout(false);
-            this.tabPageRampSimulator.ResumeLayout(false);
+            this.tabPageRampConfiguration.ResumeLayout(false);
             this.splitContainer1.Panel1.ResumeLayout(false);
             this.splitContainer1.Panel1.PerformLayout();
             this.splitContainer1.Panel2.ResumeLayout(false);
@@ -257,7 +258,7 @@
         private System.Windows.Forms.TabPage tabPage2;
         private System.Windows.Forms.Button buttonRefresh;
         private CustomControl.SmoothMotorControlWithStepCount smoothMotorControlWithStepCount1;
-        private System.Windows.Forms.TabPage tabPageRampSimulator;
+        private System.Windows.Forms.TabPage tabPageRampConfiguration;
         private CustomControl.RampControl rampControl1;
         private CustomControl.SimpleMotorControl simpleMotorControl1;
         private System.Windows.Forms.TextBox textBoxSend;
