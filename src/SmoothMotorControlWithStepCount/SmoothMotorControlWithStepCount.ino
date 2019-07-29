@@ -49,7 +49,11 @@ void setup() {
   TCCR1B = 0;               // set entire TCCR1B register to 0
 
   TCNT1 = 65534;
-  TCCR1B |= (1 << CS11);    // 0.5us
+
+  //TCCR1B |= (1 << CS10);    // 0.5us (No Prescale)
+  TCCR1B |= (1 << CS11);    // 0.5us (Prescale = 8)
+  //TCCR1B |= (1 << CS12);    // 0.5us (Prescale = 256)
+ 
   TIMSK1 |= (1 << TOIE1);   // enable Timer1 overflow interrupt
   interrupts();             // enable all interrupts
 
@@ -57,70 +61,13 @@ void setup() {
   //US-17HS4401S
   //caculateAccel(1600, 1, 0.25);
   //caculateAccel(1500, 1, 0.6);
+  caculateAccel(300, 1, 0.2);
 
   //17HS13-0404S + A4988
-  caculateAccel(100, 200, 0.05);
+  //caculateAccel(100, 200, 0.05);
 
-  steps = 2147483647;
-
-  if (endstopEnable) {
-    
-    //Disable Limits
-    limitActive = false;
-  
-    //Drive to right end position 
-    for (int i = 1; i < 1000; i++) {
-      motorSpeed = 1;
-      if (digitalRead(endstopRightPin) == 0) {
-        motorSpeed = 0;
-        delay(1000);
-        break;
-      }
-      delay(20);
-    }
-    motorSpeed = 0;
-    limitRight = steps + 100;
-  
-    nextMovementDirection = MOVEMENT_LEFT;
-  
-    //Drive to left end position 
-    for (int i = 1; i < 1000; i++) {
-      motorSpeed = 1;
-      if (digitalRead(endstopLeftPin) == 0) {
-        motorSpeed = 0;
-        delay(1000);
-        break;
-      }
-      delay(20);
-    }
-    motorSpeed = 0;
-    limitLeft = steps - 100;
-  
-    //Activate limits
-    limitActive = true;
-    
-  }
-
-  //Move away from limit
-  nextMovementDirection = MOVEMENT_RIGHT;
-  motorSpeed = 1;
-  delay(500);
-  motorSpeed = 0;
-
-
-  //Trinamic Automatic Tuning TMC2208
-  for (int i = 1; i <= 2; i++) {
-    nextMovementDirection = MOVEMENT_LEFT;
-    motorSpeed = 255;
-    delay(1000);
-    motorSpeed = 0;
-    delay(300); //standstill more than 130ms
-    nextMovementDirection = MOVEMENT_RIGHT;
-    motorSpeed = 255;
-    delay(1000);
-    motorSpeed = 0;
-    delay(300); //standstill more than 130ms
-  }
+  initialize();
+  trinamicAutomaticTuning();
 }
 
 void caculateAccel(int startDelay, int angle, float acceleration) { 
@@ -176,10 +123,9 @@ ISR(TIMER1_OVF_vect) {
     }
   } else {
     //Change motor motorSpeed to a new ramp position
-    int index = motorSpeed;
-    if (index > rampIndex) {
+    if (motorSpeed > rampIndex) {
       rampIndex++;
-    } else if (index < rampIndex) {
+    } else if (motorSpeed < rampIndex) {
       rampIndex--;
     }
   }
@@ -197,6 +143,69 @@ void loop() {
 
   delayMicroseconds(50);
   counter++;
+}
+
+void initialize() {
+  steps = 2147483647;
+
+  if (endstopEnable) {
+    
+    //Disable Limits
+    limitActive = false;
+  
+    //Drive to right end position 
+    for (int i = 1; i < 1000; i++) {
+      motorSpeed = 1;
+      if (digitalRead(endstopRightPin) == 0) {
+        motorSpeed = 0;
+        delay(1000);
+        break;
+      }
+      delay(20);
+    }
+    motorSpeed = 0;
+    limitRight = steps + 100;
+  
+    nextMovementDirection = MOVEMENT_LEFT;
+  
+    //Drive to left end position 
+    for (int i = 1; i < 1000; i++) {
+      motorSpeed = 1;
+      if (digitalRead(endstopLeftPin) == 0) {
+        motorSpeed = 0;
+        delay(1000);
+        break;
+      }
+      delay(20);
+    }
+    motorSpeed = 0;
+    limitLeft = steps - 100;
+  
+    //Activate limits
+    limitActive = true;
+  }
+
+    //Move away from limit
+  nextMovementDirection = MOVEMENT_RIGHT;
+  motorSpeed = 1;
+  delay(500);
+  motorSpeed = 0;
+}
+
+void trinamicAutomaticTuning() {
+  //Trinamic Automatic Tuning TMC2208
+  for (int i = 1; i <= 2; i++) {
+    nextMovementDirection = MOVEMENT_LEFT;
+    motorSpeed = RAMP_STEPS - 1;
+    delay(1000);
+    motorSpeed = 0;
+    delay(300); //standstill more than 130ms
+    nextMovementDirection = MOVEMENT_RIGHT;
+    motorSpeed = RAMP_STEPS - 1;
+    delay(1000);
+    motorSpeed = 0;
+    delay(300); //standstill more than 130ms
+  }
 }
 
 void checkEndstops() {
@@ -233,37 +242,43 @@ void commandProcessing() {
       motorSpeed = abs(nextSpeed);
     }
 
-    if (command.startsWith("enablemotordriver")) {
+    if (command.equals("enablemotordriver")) {
       digitalWrite(motorDriverActivePin, LOW);
       return;
     }
 
-    if (command.startsWith("disablemotordriver")) {
+    if (command.equals("disablemotordriver")) {
       digitalWrite(motorDriverActivePin, HIGH);
       return;
     }
 
-    if (command.startsWith("limitenable")) {
+    if (command.equals("limitenable")) {
       limitActive = true;
       return;
     }
 
-    if (command.startsWith("limitdisable")) {
+    if (command.equals("limitdisable")) {
       limitActive = false;
       return;
     }
 
-    if (command.startsWith("setlimitleft")) {
+    if (command.equals("setlimitleft")) {
       limitLeft = steps;
       return;
     }
 
-    if (command.startsWith("setlimitright")) {
+    if (command.equals("setlimitright")) {
       limitRight = steps;
       return;
     }
 
-    if (command.startsWith("ramp")) {
+    if (command.equals("step")) {
+      digitalWrite(stepPin, HIGH);
+      digitalWrite(stepPin, LOW);
+      return;
+    }
+
+    if (command.equals("ramp")) {
       Serial.print((String)"{ ramp:[");
       for (int i = 0; i < RAMP_STEPS; i++)
       {
@@ -308,7 +323,6 @@ int checkLeftLimit() {
 
   if (movementDirection == MOVEMENT_LEFT && distance <= 0) {
     rampIndex = 0;
-    //motorSpeed = 0;
   }
 
   return distance;
@@ -328,7 +342,6 @@ int checkRightLimit() {
 
   if (movementDirection == MOVEMENT_RIGHT && distance <= 0) {
     rampIndex = 0;
-    //motorSpeed = 0;
   }
 
   return distance;

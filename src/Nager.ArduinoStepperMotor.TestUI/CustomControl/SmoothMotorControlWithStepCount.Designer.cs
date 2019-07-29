@@ -50,6 +50,9 @@
             this.textBoxSpeed2 = new System.Windows.Forms.TextBox();
             this.buttonMaxRight = new System.Windows.Forms.Button();
             this.buttonMaxLeft = new System.Windows.Forms.Button();
+            this.buttonStep = new System.Windows.Forms.Button();
+            this.groupBox4 = new System.Windows.Forms.GroupBox();
+            this.comboBoxMicrostep = new System.Windows.Forms.ComboBox();
             ((System.ComponentModel.ISupportInitialize)(this.trackBarSpeed)).BeginInit();
             this.tableLayoutPanel1.SuspendLayout();
             this.panel1.SuspendLayout();
@@ -57,6 +60,7 @@
             this.groupBox2.SuspendLayout();
             this.groupBox1.SuspendLayout();
             this.panel2.SuspendLayout();
+            this.groupBox4.SuspendLayout();
             this.SuspendLayout();
             // 
             // textBoxSpeed
@@ -114,6 +118,7 @@
             // 
             // panel1
             // 
+            this.panel1.Controls.Add(this.groupBox4);
             this.panel1.Controls.Add(this.groupBox3);
             this.panel1.Controls.Add(this.groupBox2);
             this.panel1.Controls.Add(this.groupBox1);
@@ -155,7 +160,7 @@
             // 
             // buttonStartProgram
             // 
-            this.buttonStartProgram.Location = new System.Drawing.Point(156, 13);
+            this.buttonStartProgram.Location = new System.Drawing.Point(156, 14);
             this.buttonStartProgram.Name = "buttonStartProgram";
             this.buttonStartProgram.Size = new System.Drawing.Size(61, 23);
             this.buttonStartProgram.TabIndex = 26;
@@ -295,9 +300,9 @@
             // 
             // buttonMaxRight
             // 
-            this.buttonMaxRight.Location = new System.Drawing.Point(235, 3);
+            this.buttonMaxRight.Location = new System.Drawing.Point(205, 3);
             this.buttonMaxRight.Name = "buttonMaxRight";
-            this.buttonMaxRight.Size = new System.Drawing.Size(110, 28);
+            this.buttonMaxRight.Size = new System.Drawing.Size(80, 28);
             this.buttonMaxRight.TabIndex = 18;
             this.buttonMaxRight.TabStop = false;
             this.buttonMaxRight.Text = "Max Right";
@@ -308,12 +313,43 @@
             // 
             this.buttonMaxLeft.Location = new System.Drawing.Point(119, 3);
             this.buttonMaxLeft.Name = "buttonMaxLeft";
-            this.buttonMaxLeft.Size = new System.Drawing.Size(110, 28);
+            this.buttonMaxLeft.Size = new System.Drawing.Size(80, 28);
             this.buttonMaxLeft.TabIndex = 17;
             this.buttonMaxLeft.TabStop = false;
             this.buttonMaxLeft.Text = "Max Left";
             this.buttonMaxLeft.UseVisualStyleBackColor = true;
             this.buttonMaxLeft.Click += new System.EventHandler(this.buttonMaxLeft_Click);
+            // 
+            // buttonStep
+            // 
+            this.buttonStep.Location = new System.Drawing.Point(112, 18);
+            this.buttonStep.Name = "buttonStep";
+            this.buttonStep.Size = new System.Drawing.Size(61, 23);
+            this.buttonStep.TabIndex = 21;
+            this.buttonStep.TabStop = false;
+            this.buttonStep.Text = "Step";
+            this.buttonStep.UseVisualStyleBackColor = true;
+            this.buttonStep.Click += new System.EventHandler(this.buttonStep_Click);
+            // 
+            // groupBox4
+            // 
+            this.groupBox4.Controls.Add(this.comboBoxMicrostep);
+            this.groupBox4.Controls.Add(this.buttonStep);
+            this.groupBox4.Location = new System.Drawing.Point(4, 84);
+            this.groupBox4.Name = "groupBox4";
+            this.groupBox4.Size = new System.Drawing.Size(257, 56);
+            this.groupBox4.TabIndex = 32;
+            this.groupBox4.TabStop = false;
+            this.groupBox4.Text = "Step drive";
+            // 
+            // comboBoxMicrostep
+            // 
+            this.comboBoxMicrostep.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.comboBoxMicrostep.FormattingEnabled = true;
+            this.comboBoxMicrostep.Location = new System.Drawing.Point(6, 19);
+            this.comboBoxMicrostep.Name = "comboBoxMicrostep";
+            this.comboBoxMicrostep.Size = new System.Drawing.Size(100, 21);
+            this.comboBoxMicrostep.TabIndex = 31;
             // 
             // SmoothMotorControlWithStepCount
             // 
@@ -332,6 +368,7 @@
             this.groupBox1.ResumeLayout(false);
             this.panel2.ResumeLayout(false);
             this.panel2.PerformLayout();
+            this.groupBox4.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
@@ -360,5 +397,8 @@
         private System.Windows.Forms.GroupBox groupBox3;
         private System.Windows.Forms.Button buttonSpeed;
         private System.Windows.Forms.TextBox textBoxSpeed2;
+        private System.Windows.Forms.Button buttonStep;
+        private System.Windows.Forms.GroupBox groupBox4;
+        private System.Windows.Forms.ComboBox comboBoxMicrostep;
     }
 }

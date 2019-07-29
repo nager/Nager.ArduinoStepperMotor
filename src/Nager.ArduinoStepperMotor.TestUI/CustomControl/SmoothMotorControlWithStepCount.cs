@@ -1,6 +1,7 @@
 ﻿using Nager.ArduinoStepperMotor.TestUI.Model;
 using Newtonsoft.Json;
 using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
@@ -19,6 +20,21 @@ namespace Nager.ArduinoStepperMotor.TestUI.CustomControl
             this.InitializeComponent();
             this.comboBoxRepeat.SelectedIndex = 0;
             this.comboBoxProgram.SelectedIndex = 0;
+
+            var microstepInfos = new List<MicrostepInfo>
+            {
+                new MicrostepInfo { Name = "1/2", Multiplier = 2 },
+                new MicrostepInfo { Name = "1/4", Multiplier = 4 },
+                new MicrostepInfo { Name = "1/8", Multiplier = 8 },
+                new MicrostepInfo { Name = "1/16", Multiplier = 16 },
+                new MicrostepInfo { Name = "1/32", Multiplier = 32 },
+                new MicrostepInfo { Name = "1/256", Multiplier = 256 },
+            };
+
+            this.comboBoxMicrostep.DisplayMember = "Name";
+            this.comboBoxMicrostep.ValueMember = "Multiplier";
+            this.comboBoxMicrostep.DataSource = microstepInfos;
+            this.comboBoxMicrostep.SelectedIndex = 0;
         }
 
         private void SmoothMotorControlWithStepCount_Load(object sender, EventArgs e)
@@ -437,6 +453,19 @@ namespace Nager.ArduinoStepperMotor.TestUI.CustomControl
             int.TryParse(this.textBoxSpeed2.Text, out var speed);
             this.SetSpeed(speed);
             this.SendCommand?.Invoke($"speed={this._speed}");
+        }
+
+        private void buttonStep_Click(object sender, EventArgs e)
+        {
+            var stepCount = 200;
+            var microstepInfo = this.comboBoxMicrostep.SelectedItem as MicrostepInfo;
+
+            stepCount *= microstepInfo.Multiplier;
+
+            for (var i = 0; i < stepCount; i++)
+            {
+                this.SendCommand?.Invoke("step");
+            }
         }
     }
 }
