@@ -88,7 +88,7 @@ namespace Nager.ArduinoStepperMotor.TestUI.CustomControl
             items.Add(new MotorSpeedRamp(0, c0));
             double lastDelay = c0;
 
-            for (int i = 1; i < 255; i++)
+            for (int i = 1; i <= 255; i++)
             {
                 var d = lastDelay - (2 * lastDelay) / (4 * i + 1);
                 items.Add(new MotorSpeedRamp(i, d));

@@ -28,6 +28,8 @@ namespace Nager.ArduinoStepperMotor.TestUI.CustomControl
                 new MicrostepInfo { Name = "1/8", Multiplier = 8 },
                 new MicrostepInfo { Name = "1/16", Multiplier = 16 },
                 new MicrostepInfo { Name = "1/32", Multiplier = 32 },
+                new MicrostepInfo { Name = "1/64", Multiplier = 64 },
+                new MicrostepInfo { Name = "1/128", Multiplier = 128 },
                 new MicrostepInfo { Name = "1/256", Multiplier = 256 },
             };
 
@@ -109,7 +111,7 @@ namespace Nager.ArduinoStepperMotor.TestUI.CustomControl
             this.SendCommand?.Invoke($"speed={this._speed}");
         }
 
-        private void SetSpeed(int speed, object sender = null)
+        private void SetSpeed(double speed, object sender = null)
         {
             var newSpeed = 255 * speed / 100.0;
 
@@ -128,7 +130,7 @@ namespace Nager.ArduinoStepperMotor.TestUI.CustomControl
                 this.trackBarSpeed.Invoke((MethodInvoker)delegate
                 {
                     this.trackBarSpeed.ValueChanged -= trackBarSpeed_ValueChanged;
-                    this.trackBarSpeed.Value = speed;
+                    this.trackBarSpeed.Value = (int)speed;
                     this.trackBarSpeed.ValueChanged += trackBarSpeed_ValueChanged;
                 });
             }
@@ -340,7 +342,7 @@ namespace Nager.ArduinoStepperMotor.TestUI.CustomControl
 
         private async Task Program5Async()
         {
-            for (var speed = 1; speed <= 255; speed++)
+            for (var speed = 0.0; speed <= 100; speed += 0.5)
             {
                 //Start Position
                 this.SetSpeed(100);

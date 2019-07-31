@@ -50,18 +50,18 @@ void setup() {
 
   TCNT1 = 65534;
 
-  //TCCR1B |= (1 << CS10);    // 0.5us (No Prescale)
-  TCCR1B |= (1 << CS11);    // 0.5us (Prescale = 8)
-  //TCCR1B |= (1 << CS12);    // 0.5us (Prescale = 256)
+  //TCCR1B |= (1 << CS10);    // 4.1ms (No Prescale)
+  TCCR1B |= (1 << CS11);    // 32.8ms (Prescale = 8)
+  //TCCR1B |= (1 << CS12);    // 1049.6ms (Prescale = 256)
  
   TIMSK1 |= (1 << TOIE1);   // enable Timer1 overflow interrupt
   interrupts();             // enable all interrupts
 
   //caculateAccel(3000, 1, 0.6);
   //US-17HS4401S
-  //caculateAccel(1600, 1, 0.25);
+  caculateAccel(1600, 1, 0.25);
   //caculateAccel(1500, 1, 0.6);
-  caculateAccel(300, 1, 0.2);
+  //caculateAccel(300, 1, 0.2);
 
   //17HS13-0404S + A4988
   //caculateAccel(100, 200, 0.05);
@@ -288,23 +288,12 @@ void commandProcessing() {
     }
 
     if (command.startsWith("setramp=")) {
-      /*
-      Serial.println(command);
-      String data = strtok(const_cast<char*>(command.substring(8).c_str()), ";");
-      Serial.println(data);
-      int index = data.toInt();
-      data = strtok(0, ";");
-      Serial.println(data);
-      int value = data.toInt();
-      ramp[index] = value;
-      Serial.println((String)"index:" + index +  ", value:" + value);
-      */
-
+      //setramp=0008000 -> rampIndex 0 -> 8000
+      //setramp=0017000 -> rampIndex 1 -> 7000
+      //setramp=0026000 -> rampIndex 2 -> 6000
       int index = command.substring(8,11).toInt();
       int value = command.substring(11,16).toInt();
       ramp[index] = value;
-      //Serial.println((String)"index:" + index +  ", value:" + value);
-      //setramp=0000100001
     }
   }
 }
