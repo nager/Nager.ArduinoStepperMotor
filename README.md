@@ -1,6 +1,7 @@
 # Nager.ArduinoStepperMotor
-C# control a stepper motor via Serial Port communication
+C# control a stepper motor via Serial Port communication. 
 
+![TestUI](doc/TestUI.png)
 
 ## Project 1
 
@@ -50,4 +51,3 @@ Quantity | Product |
 1x | [UEETEK 4 Stück 1M Stepper Motor Cable HX2.54 4-pin to 6-pin](https://amzn.to/31w3uz7) |
 1x | [Usongshine Stepper Motor Nema 17 1.5A 17HS4401S](https://amzn.to/2KO4jO8) |
 
-![TestUI](doc/TestUI.png)
