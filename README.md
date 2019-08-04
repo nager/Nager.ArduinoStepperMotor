@@ -27,6 +27,7 @@ Quantity | Product |
 ## Project 2
 
 ![A4899WiringDiagram](doc/A4899WiringDiagram.png)
+![Project2](doc/Project2.jpg)
 
 ### Serial Commands (Baudrate 115200)
 
