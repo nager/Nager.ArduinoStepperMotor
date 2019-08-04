@@ -1,13 +1,12 @@
 # Nager.ArduinoStepperMotor
-Control a stepper motor over C#
+C# control a stepper motor via Serial Port communication
 
 
+## Project 1
 
 ![CncShieldWiringDiagram](doc/CncShieldWiringDiagram.png)
 
-![A4899WiringDiagram](doc/A4899WiringDiagram.png)
-
-## Serial Commands (Baudrate 115200)
+### Serial Commands (Baudrate 115200)
 
 Command | Description | 
 --- | --- | 
@@ -16,9 +15,7 @@ Command | Description |
 `move=500` | Move the motor for 500 steps
 `speed=200` | Change the rpm (rotation per minute) to the new value
 
-## Required Hardware
-
-### Project 1
+### Required Hardware
 
 Quantity | Product | 
 --- | --- | 
@@ -26,7 +23,26 @@ Quantity | Product |
 1x | [PChero Mechanic Endstop with LED Indicator](https://amzn.to/2UIAZh4) |
 1x | [Quimat Arduino CNC Shield Kit with Stepper Motor](https://amzn.to/2I4SG4M) |
 
-### Project 2
+## Project 2
+
+![A4899WiringDiagram](doc/A4899WiringDiagram.png)
+
+### Serial Commands (Baudrate 115200)
+
+Command | Description | 
+--- | --- | 
+`enablemotordriver` | Enable the motor driver, the motor has voltage
+`disablemotordriver` | Disable the motor driver, the motor has no voltage
+`speed` | Values between -255 and 255
+`limitenable` | The motor can only move between the limits
+`limitdisable` | No limits active
+`setlimitleft` | Set the current position as left limit
+`setlimitright` | Set the current position as right limit
+`step` | Motor move one step
+`ramp` | Returns the current ramp
+`setramp` | Set a new ramp (setramp=0008000) rampIndex 0 -> 8000
+
+### Required Hardware
 
 Quantity | Product | 
 --- | --- | 
