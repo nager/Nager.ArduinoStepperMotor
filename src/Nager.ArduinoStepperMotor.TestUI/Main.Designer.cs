@@ -231,7 +231,7 @@
             this.Controls.Add(this.splitContainer1);
             this.Name = "Main";
             this.Text = "Nager.ArduinoStepperMotor.TestUI";
-            this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.Form1_FormClosed);
+            this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.MainFormClosed);
             this.groupBox3.ResumeLayout(false);
             this.tabControl1.ResumeLayout(false);
             this.tabPage1.ResumeLayout(false);

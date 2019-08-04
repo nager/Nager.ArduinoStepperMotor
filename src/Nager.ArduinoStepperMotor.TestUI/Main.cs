@@ -27,7 +27,7 @@ namespace Nager.ArduinoStepperMotor.TestUI
             new Thread(this.RefreshSend).Start();
         }
 
-        private void Form1_FormClosed(object sender, FormClosedEventArgs e)
+        private void MainFormClosed(object sender, FormClosedEventArgs e)
         {
             this._stopUiUpdate = true;
             this.CloseSerialPort();
@@ -132,7 +132,7 @@ namespace Nager.ArduinoStepperMotor.TestUI
             }
         }
 
-        private void WriteSerialData(string data)
+        private void SerialPortDataWrite(string data)
         {
             if (this._serialPort == null)
             {
@@ -145,7 +145,7 @@ namespace Nager.ArduinoStepperMotor.TestUI
             }
 
             this._serialPort.WriteLine(data);
-            Log.Debug($"{nameof(WriteSerialData)} - {data}");
+            Log.Debug($"{nameof(SerialPortDataWrite)} - {data}");
 
             this._queueSend.Enqueue(data.Trim());
 
@@ -231,17 +231,17 @@ namespace Nager.ArduinoStepperMotor.TestUI
 
         private void smoothMotorControlWithStepCount1_SendCommand(string data)
         {
-            this.WriteSerialData(data);
+            this.SerialPortDataWrite(data);
         }
 
         private void simpleMotorControl1_SendCommand(string data)
         {
-            this.WriteSerialData(data);
+            this.SerialPortDataWrite(data);
         }
 
         private void rampControl1_SendCommand(string data)
         {
-            this.WriteSerialData(data);
+            this.SerialPortDataWrite(data);
         }
 
         private void textBoxSend_KeyDown(object sender, KeyEventArgs e)
