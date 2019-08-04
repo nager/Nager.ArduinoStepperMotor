@@ -14,8 +14,8 @@ namespace Nager.ArduinoStepperMotor.TestUI
         private static readonly ILog Log = LogManager.GetLogger(typeof(Main));
 
         private SerialPort _serialPort;
-        private ConcurrentQueue<SerialReceiveMessage> _queueReceive = new ConcurrentQueue<SerialReceiveMessage>();
-        private ConcurrentQueue<string> _queueSend = new ConcurrentQueue<string>();
+        private readonly ConcurrentQueue<SerialReceiveMessage> _queueReceive = new ConcurrentQueue<SerialReceiveMessage>();
+        private readonly ConcurrentQueue<string> _queueSend = new ConcurrentQueue<string>();
         private bool _stopUiUpdate = false;
 
         public Main()

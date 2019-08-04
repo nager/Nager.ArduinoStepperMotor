@@ -19,7 +19,7 @@ String command = "";
 bool limitActive = true;
 unsigned long limitRight = 0;
 unsigned long limitLeft = 0;
-int motorDirection = 0; //0 or 1 rotates the motor direction
+int motorDirection = 1; //0 or 1 rotates the motor direction
 
 #define RAMP_STEPS 256
 #define TIMERTICKS_PER_US 1
