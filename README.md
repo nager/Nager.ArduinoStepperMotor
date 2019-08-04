@@ -22,16 +22,16 @@ Command | Description |
 
 Quantity | Product | 
 --- | --- | 
-1x | [Akozon Automatische Kugelumlaufspindel Linearer CNC-Schlitten](https://amzn.to/2uOP0eR) |
+1x | [Akozon Automatic Ball Screw Linear CNC Slide Stroke Long Stage Actuator Guide Slide Table Aluminum with Stepper Motor 400mm Effective Range](https://amzn.to/2uOP0eR) |
 1x | [PChero Mechanic Endstop with LED Indicator](https://amzn.to/2UIAZh4) |
-1x | [Quimat Arduino CNC Shield Kit with Stepper Motot](https://amzn.to/2I4SG4M) |
+1x | [Quimat Arduino CNC Shield Kit with Stepper Motor](https://amzn.to/2I4SG4M) |
 
 ### Project 2
 
 Quantity | Product | 
 --- | --- | 
 1x | [A4988 Stepper Driver Control Expansion Board](https://amzn.to/2X9j6cO) |
-1x | [UEETEK 4 Stück 1M Stepper Motor Cable Bleidraht HX2.54 4-polig bis 6-polig](https://amzn.to/31w3uz7) |
+1x | [UEETEK 4 Stück 1M Stepper Motor Cable HX2.54 4-pin to 6-pin](https://amzn.to/31w3uz7) |
 1x | [Usongshine Stepper Motor Nema 17 1.5A 17HS4401S](https://amzn.to/2KO4jO8) |
 
 ![TestUI](doc/TestUI.png)
