@@ -33,6 +33,9 @@
             this.trackBarSpeed = new System.Windows.Forms.TrackBar();
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
             this.panel1 = new System.Windows.Forms.Panel();
+            this.groupBox4 = new System.Windows.Forms.GroupBox();
+            this.comboBoxMicrostep = new System.Windows.Forms.ComboBox();
+            this.buttonStep = new System.Windows.Forms.Button();
             this.groupBox3 = new System.Windows.Forms.GroupBox();
             this.comboBoxProgram = new System.Windows.Forms.ComboBox();
             this.buttonStartProgram = new System.Windows.Forms.Button();
@@ -50,17 +53,15 @@
             this.textBoxSpeed2 = new System.Windows.Forms.TextBox();
             this.buttonMaxRight = new System.Windows.Forms.Button();
             this.buttonMaxLeft = new System.Windows.Forms.Button();
-            this.buttonStep = new System.Windows.Forms.Button();
-            this.groupBox4 = new System.Windows.Forms.GroupBox();
-            this.comboBoxMicrostep = new System.Windows.Forms.ComboBox();
+            this.label1 = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.trackBarSpeed)).BeginInit();
             this.tableLayoutPanel1.SuspendLayout();
             this.panel1.SuspendLayout();
+            this.groupBox4.SuspendLayout();
             this.groupBox3.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.groupBox1.SuspendLayout();
             this.panel2.SuspendLayout();
-            this.groupBox4.SuspendLayout();
             this.SuspendLayout();
             // 
             // textBoxSpeed
@@ -129,6 +130,38 @@
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(546, 160);
             this.panel1.TabIndex = 19;
+            // 
+            // groupBox4
+            // 
+            this.groupBox4.Controls.Add(this.label1);
+            this.groupBox4.Controls.Add(this.comboBoxMicrostep);
+            this.groupBox4.Controls.Add(this.buttonStep);
+            this.groupBox4.Location = new System.Drawing.Point(4, 84);
+            this.groupBox4.Name = "groupBox4";
+            this.groupBox4.Size = new System.Drawing.Size(257, 73);
+            this.groupBox4.TabIndex = 32;
+            this.groupBox4.TabStop = false;
+            this.groupBox4.Text = "Step drive";
+            // 
+            // comboBoxMicrostep
+            // 
+            this.comboBoxMicrostep.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.comboBoxMicrostep.FormattingEnabled = true;
+            this.comboBoxMicrostep.Location = new System.Drawing.Point(6, 41);
+            this.comboBoxMicrostep.Name = "comboBoxMicrostep";
+            this.comboBoxMicrostep.Size = new System.Drawing.Size(100, 21);
+            this.comboBoxMicrostep.TabIndex = 31;
+            // 
+            // buttonStep
+            // 
+            this.buttonStep.Location = new System.Drawing.Point(112, 40);
+            this.buttonStep.Name = "buttonStep";
+            this.buttonStep.Size = new System.Drawing.Size(61, 23);
+            this.buttonStep.TabIndex = 21;
+            this.buttonStep.TabStop = false;
+            this.buttonStep.Text = "Step";
+            this.buttonStep.UseVisualStyleBackColor = true;
+            this.buttonStep.Click += new System.EventHandler(this.buttonStep_Click);
             // 
             // groupBox3
             // 
@@ -320,36 +353,14 @@
             this.buttonMaxLeft.UseVisualStyleBackColor = true;
             this.buttonMaxLeft.Click += new System.EventHandler(this.buttonMaxLeft_Click);
             // 
-            // buttonStep
+            // label1
             // 
-            this.buttonStep.Location = new System.Drawing.Point(112, 18);
-            this.buttonStep.Name = "buttonStep";
-            this.buttonStep.Size = new System.Drawing.Size(61, 23);
-            this.buttonStep.TabIndex = 21;
-            this.buttonStep.TabStop = false;
-            this.buttonStep.Text = "Step";
-            this.buttonStep.UseVisualStyleBackColor = true;
-            this.buttonStep.Click += new System.EventHandler(this.buttonStep_Click);
-            // 
-            // groupBox4
-            // 
-            this.groupBox4.Controls.Add(this.comboBoxMicrostep);
-            this.groupBox4.Controls.Add(this.buttonStep);
-            this.groupBox4.Location = new System.Drawing.Point(4, 84);
-            this.groupBox4.Name = "groupBox4";
-            this.groupBox4.Size = new System.Drawing.Size(257, 56);
-            this.groupBox4.TabIndex = 32;
-            this.groupBox4.TabStop = false;
-            this.groupBox4.Text = "Step drive";
-            // 
-            // comboBoxMicrostep
-            // 
-            this.comboBoxMicrostep.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.comboBoxMicrostep.FormattingEnabled = true;
-            this.comboBoxMicrostep.Location = new System.Drawing.Point(6, 19);
-            this.comboBoxMicrostep.Name = "comboBoxMicrostep";
-            this.comboBoxMicrostep.Size = new System.Drawing.Size(100, 21);
-            this.comboBoxMicrostep.TabIndex = 31;
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(6, 21);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(169, 13);
+            this.label1.TabIndex = 32;
+            this.label1.Text = "Check the Microstep configuration";
             // 
             // SmoothMotorControlWithStepCount
             // 
@@ -363,12 +374,13 @@
             this.tableLayoutPanel1.ResumeLayout(false);
             this.tableLayoutPanel1.PerformLayout();
             this.panel1.ResumeLayout(false);
+            this.groupBox4.ResumeLayout(false);
+            this.groupBox4.PerformLayout();
             this.groupBox3.ResumeLayout(false);
             this.groupBox2.ResumeLayout(false);
             this.groupBox1.ResumeLayout(false);
             this.panel2.ResumeLayout(false);
             this.panel2.PerformLayout();
-            this.groupBox4.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
@@ -400,5 +412,6 @@
         private System.Windows.Forms.Button buttonStep;
         private System.Windows.Forms.GroupBox groupBox4;
         private System.Windows.Forms.ComboBox comboBoxMicrostep;
+        private System.Windows.Forms.Label label1;
     }
 }
