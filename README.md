@@ -1,5 +1,7 @@
 # Nager.ArduinoStepperMotor
-C# control a stepper motor via Serial Port communication. 
+C# control a stepper motor via Serial Port communication.
+
+This project was developed to control a stepper motor smoothly and to adjust the speed during operation. Most of the libaries I tested at that time had an acceleration curve but always stopped when changing to another speed and then started again.
 
 [![Youtube Video](doc/video.jpg)](https://www.youtube.com/watch?v=VNwVPjmE1V4)<br>
 Watch the video on Youtube
