@@ -1,7 +1,7 @@
 # Nager.ArduinoStepperMotor
 C# control a stepper motor via Serial Port communication. 
 
-[![Youtube Video](https://img.youtube.com/vi/VNwVPjmE1V4/0.jpg)](https://www.youtube.com/watch?v=VNwVPjmE1V4)<br>
+[![Youtube Video](doc/video.jpg)](https://www.youtube.com/watch?v=VNwVPjmE1V4)<br>
 Watch the video on Youtube
 
 ![TestUI](doc/TestUI.png)
