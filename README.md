@@ -1,14 +1,11 @@
 # Nager.ArduinoStepperMotor
-C# control a stepper motor via Serial Port communication.
 
-This project was developed to control a stepper motor smoothly and to adjust the speed during operation. Most of the libaries I tested at that time had an acceleration curve but always stopped when changing to another speed and then started again.
+This project was developed to control a stepper motor smoothly and to adjust the speed during operation. Most of the libaries I tested at that time had an acceleration curve but always stopped when changing to another speed and then started again. There are two ways to communicate with the Arduino, one is via serial communication or by using a network module. If you have difficulties and the motor only whistles you should adjust the acceleration curve in the Arduino file.
+
+## Project Skier Simulator
 
 [![Youtube Video](doc/video.jpg)](https://www.youtube.com/watch?v=VNwVPjmE1V4)<br>
 Watch the video on Youtube
-
-![TestUI](doc/TestUI.png)
-
-## Project Skier Simulator
 
 ![A4899WiringDiagram](doc/A4899WiringDiagram.png)
 ![Project2](doc/Project2.jpg)
@@ -35,6 +32,12 @@ Quantity | Product |
 1x | [A4988 Stepper Driver Control Expansion Board](https://amzn.to/2X9j6cO) |
 1x | [UEETEK 4 Stück 1M Stepper Motor Cable HX2.54 4-pin to 6-pin](https://amzn.to/31w3uz7) |
 1x | [Usongshine Stepper Motor Nema 17 1.5A 17HS4401S](https://amzn.to/2KO4jO8) |
+
+## Test Software
+
+For control via serial communication I have developed a small test application.
+
+![TestUI](doc/TestUI.png)
 
 ## Project MotorControlWithCncShield
 
