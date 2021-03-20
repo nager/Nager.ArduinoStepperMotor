@@ -3,27 +3,30 @@ enum movementDirections {
   MOVEMENT_RIGHT
 };
 
+//Motor driver configuration
+int motorDriverStepPin = 5;
+int motorDriverDirectionPin = 6;
 int motorDriverActivePin = 7;
-int stepPin = 5;
-int directionPin = 6;
 
 //Endstop configuration
-bool endstopEnable = true;
+bool twoEndstopsAvailable = false;
 int endstopRightPin = 2;
 int endstopLeftPin = 3;
 
-unsigned int counter = 0;
-int onTime = 0;
+unsigned int loopCounter = 0;
+unsigned int loopMessageInterval = 500;
 
-String command = "";
 bool limitActive = true;
 unsigned long limitRight = 0;
 unsigned long limitLeft = 0;
-int motorDirection = 1; //0 or 1 rotates the motor direction
+
+String command = "";
+int motorDirection = 1; //switch the motor turn (0 or 1)
 
 #define RAMP_STEPS 256
 #define TIMERTICKS_PER_US 1
 
+int onTime = 0; //ramp calculation
 volatile unsigned int ramp[RAMP_STEPS];
 volatile byte rampIndex = 0;
 volatile int motorSpeed  = 0;
@@ -36,11 +39,15 @@ void setup() {
   Serial.begin(115200);
 
   pinMode(motorDriverActivePin, OUTPUT); // Motor Driver Active
-  pinMode(stepPin, OUTPUT); // Motor Step
-  pinMode(directionPin, OUTPUT); // Motor Direction
-  pinMode(endstopRightPin, INPUT); // Endstop
+  pinMode(motorDriverStepPin, OUTPUT); // Motor Driver Step
+  pinMode(motorDriverDirectionPin, OUTPUT); // Motor Driver Direction
 
-  digitalWrite(directionPin, motorDirection);
+  if (twoEndstopsAvailable) {
+    pinMode(endstopRightPin, INPUT); // Endstop Right
+    pinMode(endstopLeftPin, INPUT); // Endstop Left
+  }
+
+  digitalWrite(motorDriverDirectionPin, motorDirection);
   digitalWrite(motorDriverActivePin, LOW);
 
   //https://www.heise.de/developer/artikel/Timer-Counter-und-Interrupts-3273309.html
@@ -53,24 +60,25 @@ void setup() {
   //TCCR1B |= (1 << CS10);    // 4.1ms (No Prescale)
   TCCR1B |= (1 << CS11);    // 32.8ms (Prescale = 8)
   //TCCR1B |= (1 << CS12);    // 1049.6ms (Prescale = 256)
- 
+
   TIMSK1 |= (1 << TOIE1);   // enable Timer1 overflow interrupt
   interrupts();             // enable all interrupts
 
   //caculateAccel(3000, 1, 0.6);
   //US-17HS4401S
-  caculateAccel(1600, 1, 0.25);
+  //caculateAccel(1600, 1, 0.25);
   //caculateAccel(1500, 1, 0.6);
+  caculateAccel(3000, 1, 0.2);
   //caculateAccel(300, 1, 0.2);
 
   //17HS13-0404S + A4988
   //caculateAccel(100, 200, 0.05);
 
   initialize();
-  trinamicAutomaticTuning();
+  //trinamicAutomaticTuning();
 }
 
-void caculateAccel(int startDelay, int angle, float acceleration) { 
+void caculateAccel(int startDelay, int angle, float acceleration) {
   float c0 = startDelay * sqrt(2 * angle / acceleration) * 0.67703; // in us
   ramp[0] = c0 * TIMERTICKS_PER_US;
   float d = 0;
@@ -96,16 +104,8 @@ ISR(TIMER1_OVF_vect) {
       return;
     }
 
-    //http://profhof.com/arduino-port-manipulation/
-    //https://www.peterbeard.co/blog/post/why-is-arduino-digitalwrite-so-slow/
-    digitalWrite(stepPin, HIGH);
-    digitalWrite(stepPin, LOW);
-
-    //stepPin = 5
-    //PORTD |= B00001000;
-    //PORTD &= B11110111;
-    //PORTD = B00001000;
-    //PORTD = B00000000;
+    digitalWrite(motorDriverStepPin, HIGH);
+    digitalWrite(motorDriverStepPin, LOW);
 
     if (movementDirection == MOVEMENT_LEFT) {
       steps++;
@@ -135,61 +135,91 @@ void loop() {
   commandProcessing();
   checkEndstops();
 
-  //if (counter == 20000) {
-  if (counter == 500) {
+  if (loopCounter == loopMessageInterval) {
     Serial.println((String)"{ \"limitLeft\":" + checkLeftLimit() +  ", \"limitRight\":" + checkRightLimit() + ", \"motorSpeed\":" + motorSpeed + " }");
-    counter = 0;
+    loopCounter = 0;
   }
 
   delayMicroseconds(50);
-  counter++;
+  loopCounter++;
 }
 
 void initialize() {
   steps = 2147483647;
 
-  if (endstopEnable) {
-    
-    //Disable Limits
-    limitActive = false;
-  
-    //Drive to right end position 
-    for (int i = 1; i < 1000; i++) {
-      motorSpeed = 1;
-      if (digitalRead(endstopRightPin) == 0) {
-        motorSpeed = 0;
-        delay(1000);
-        break;
-      }
-      delay(20);
-    }
-    motorSpeed = 0;
-    limitRight = steps + 100;
-  
-    nextMovementDirection = MOVEMENT_LEFT;
-  
-    //Drive to left end position 
-    for (int i = 1; i < 1000; i++) {
-      motorSpeed = 1;
-      if (digitalRead(endstopLeftPin) == 0) {
-        motorSpeed = 0;
-        delay(1000);
-        break;
-      }
-      delay(20);
-    }
-    motorSpeed = 0;
-    limitLeft = steps - 100;
-  
-    //Activate limits
-    limitActive = true;
+  if (twoEndstopsAvailable) {
+    calibrateLimitViaEndstops();
+  } else {
+    limitRight = -1000;
+    limitLeft = 1000;
+    steps = 0;
   }
 
-    //Move away from limit
+  motorCheck();
+}
+
+void motorCheck() {
+  for (int i = 0; i <= 10; i++) {
+    moveOneStep();
+  }
+
+  nextMovementDirection = MOVEMENT_LEFT;
+  delay(100);
+
+  for (int i = 0; i <= 10; i++) {
+    moveOneStep();
+  }
+
   nextMovementDirection = MOVEMENT_RIGHT;
-  motorSpeed = 1;
-  delay(500);
+}
+
+void calibrateLimitViaEndstops()
+{
+  int paddingEndstop = 100;
+
+  //Disable Limits
+  limitActive = false;
+
+  //Drive to right end position
+  for (int i = 1; i < 2000; i++) {
+    motorSpeed = 1;
+    if (digitalRead(endstopRightPin) == 0) {
+      Serial.println("right end position reached");
+      motorSpeed = 0;
+      delay(1000);
+      break;
+    }
+    delay(20);
+  }
   motorSpeed = 0;
+  limitRight = steps + paddingEndstop;
+
+  //Switch direction
+  nextMovementDirection = MOVEMENT_LEFT;
+
+  //Drive to left end position
+  for (int i = 1; i < 2000; i++) {
+    motorSpeed = 1;
+    if (digitalRead(endstopLeftPin) == 0) {
+      Serial.println("left end position reached");
+      motorSpeed = 0;
+      delay(1000);
+      break;
+    }
+    delay(20);
+  }
+  motorSpeed = 0;
+  limitLeft = steps - paddingEndstop;
+
+  nextMovementDirection = MOVEMENT_RIGHT;
+
+  //Move away from limit
+  for (int i = 0; i <= 50; i++) {
+    moveOneStep();
+  }
+
+  //Activate limits
+  limitActive = true;
 }
 
 void trinamicAutomaticTuning() {
@@ -209,11 +239,11 @@ void trinamicAutomaticTuning() {
 }
 
 void checkEndstops() {
-  if (endstopEnable) {
+  if (twoEndstopsAvailable) {
     if (digitalRead(endstopRightPin) == 0) {
       digitalWrite(motorDriverActivePin, HIGH);
     }
-  
+
     if (digitalRead(endstopLeftPin) == 0) {
       digitalWrite(motorDriverActivePin, HIGH);
     }
@@ -273,8 +303,7 @@ void commandProcessing() {
     }
 
     if (command.equals("step")) {
-      digitalWrite(stepPin, HIGH);
-      digitalWrite(stepPin, LOW);
+      moveOneStep();
       return;
     }
 
@@ -291,8 +320,8 @@ void commandProcessing() {
       //setramp=0008000 -> rampIndex 0 -> 8000
       //setramp=0017000 -> rampIndex 1 -> 7000
       //setramp=0026000 -> rampIndex 2 -> 6000
-      int index = command.substring(8,11).toInt();
-      int value = command.substring(11,16).toInt();
+      int index = command.substring(8, 11).toInt();
+      int value = command.substring(11, 16).toInt();
       ramp[index] = value;
     }
   }
@@ -337,16 +366,27 @@ int checkRightLimit() {
 }
 
 void switchDirection() {
-  if (movementDirection == nextMovementDirection){
+  if (movementDirection == nextMovementDirection) {
     return;
   }
-  
+
   if (nextMovementDirection == MOVEMENT_LEFT) {
     movementDirection = MOVEMENT_LEFT;
-    digitalWrite(directionPin, !motorDirection);
+    digitalWrite(motorDriverDirectionPin, !motorDirection);
     return;
   }
-  
+
   movementDirection = MOVEMENT_RIGHT;
-  digitalWrite(directionPin, motorDirection);
+  digitalWrite(motorDriverDirectionPin, motorDirection);
+}
+
+void moveOneStep() {
+  digitalWrite(motorDriverStepPin, HIGH);
+  digitalWrite(motorDriverStepPin, LOW);
+
+  if (movementDirection == MOVEMENT_LEFT) {
+    steps++;
+  } else {
+    steps--;
+  }
 }

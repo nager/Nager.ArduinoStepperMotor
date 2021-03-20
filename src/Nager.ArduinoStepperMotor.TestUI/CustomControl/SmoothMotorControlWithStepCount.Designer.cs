@@ -34,8 +34,9 @@
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
             this.panel1 = new System.Windows.Forms.Panel();
             this.groupBox4 = new System.Windows.Forms.GroupBox();
+            this.label1 = new System.Windows.Forms.Label();
             this.comboBoxMicrostep = new System.Windows.Forms.ComboBox();
-            this.buttonStep = new System.Windows.Forms.Button();
+            this.buttonDriveFullTurn = new System.Windows.Forms.Button();
             this.groupBox3 = new System.Windows.Forms.GroupBox();
             this.comboBoxProgram = new System.Windows.Forms.ComboBox();
             this.buttonStartProgram = new System.Windows.Forms.Button();
@@ -53,7 +54,6 @@
             this.textBoxSpeed2 = new System.Windows.Forms.TextBox();
             this.buttonMaxRight = new System.Windows.Forms.Button();
             this.buttonMaxLeft = new System.Windows.Forms.Button();
-            this.label1 = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.trackBarSpeed)).BeginInit();
             this.tableLayoutPanel1.SuspendLayout();
             this.panel1.SuspendLayout();
@@ -89,12 +89,12 @@
             // 
             this.trackBarSpeed.Dock = System.Windows.Forms.DockStyle.Fill;
             this.trackBarSpeed.Location = new System.Drawing.Point(3, 43);
-            this.trackBarSpeed.Maximum = 100;
-            this.trackBarSpeed.Minimum = -100;
+            this.trackBarSpeed.Maximum = 255;
+            this.trackBarSpeed.Minimum = -255;
             this.trackBarSpeed.Name = "trackBarSpeed";
             this.trackBarSpeed.Size = new System.Drawing.Size(544, 44);
             this.trackBarSpeed.TabIndex = 15;
-            this.trackBarSpeed.TickFrequency = 10;
+            this.trackBarSpeed.TickFrequency = 17;
             this.trackBarSpeed.ValueChanged += new System.EventHandler(this.trackBarSpeed_ValueChanged);
             this.trackBarSpeed.KeyDown += new System.Windows.Forms.KeyEventHandler(this.trackBarSpeed_KeyDown);
             // 
@@ -135,13 +135,22 @@
             // 
             this.groupBox4.Controls.Add(this.label1);
             this.groupBox4.Controls.Add(this.comboBoxMicrostep);
-            this.groupBox4.Controls.Add(this.buttonStep);
+            this.groupBox4.Controls.Add(this.buttonDriveFullTurn);
             this.groupBox4.Location = new System.Drawing.Point(4, 84);
             this.groupBox4.Name = "groupBox4";
             this.groupBox4.Size = new System.Drawing.Size(257, 73);
             this.groupBox4.TabIndex = 32;
             this.groupBox4.TabStop = false;
-            this.groupBox4.Text = "Step drive";
+            this.groupBox4.Text = "Drive one full turn";
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(6, 21);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(169, 13);
+            this.label1.TabIndex = 32;
+            this.label1.Text = "Check the Microstep configuration";
             // 
             // comboBoxMicrostep
             // 
@@ -152,16 +161,16 @@
             this.comboBoxMicrostep.Size = new System.Drawing.Size(100, 21);
             this.comboBoxMicrostep.TabIndex = 31;
             // 
-            // buttonStep
+            // buttonDriveFullTurn
             // 
-            this.buttonStep.Location = new System.Drawing.Point(112, 40);
-            this.buttonStep.Name = "buttonStep";
-            this.buttonStep.Size = new System.Drawing.Size(61, 23);
-            this.buttonStep.TabIndex = 21;
-            this.buttonStep.TabStop = false;
-            this.buttonStep.Text = "Step";
-            this.buttonStep.UseVisualStyleBackColor = true;
-            this.buttonStep.Click += new System.EventHandler(this.buttonStep_Click);
+            this.buttonDriveFullTurn.Location = new System.Drawing.Point(112, 40);
+            this.buttonDriveFullTurn.Name = "buttonDriveFullTurn";
+            this.buttonDriveFullTurn.Size = new System.Drawing.Size(61, 23);
+            this.buttonDriveFullTurn.TabIndex = 21;
+            this.buttonDriveFullTurn.TabStop = false;
+            this.buttonDriveFullTurn.Text = "Drive";
+            this.buttonDriveFullTurn.UseVisualStyleBackColor = true;
+            this.buttonDriveFullTurn.Click += new System.EventHandler(this.buttonDriveFullTurn_Click);
             // 
             // groupBox3
             // 
@@ -353,15 +362,6 @@
             this.buttonMaxLeft.UseVisualStyleBackColor = true;
             this.buttonMaxLeft.Click += new System.EventHandler(this.buttonMaxLeft_Click);
             // 
-            // label1
-            // 
-            this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(6, 21);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(169, 13);
-            this.label1.TabIndex = 32;
-            this.label1.Text = "Check the Microstep configuration";
-            // 
             // SmoothMotorControlWithStepCount
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -409,7 +409,7 @@
         private System.Windows.Forms.GroupBox groupBox3;
         private System.Windows.Forms.Button buttonSpeed;
         private System.Windows.Forms.TextBox textBoxSpeed2;
-        private System.Windows.Forms.Button buttonStep;
+        private System.Windows.Forms.Button buttonDriveFullTurn;
         private System.Windows.Forms.GroupBox groupBox4;
         private System.Windows.Forms.ComboBox comboBoxMicrostep;
         private System.Windows.Forms.Label label1;

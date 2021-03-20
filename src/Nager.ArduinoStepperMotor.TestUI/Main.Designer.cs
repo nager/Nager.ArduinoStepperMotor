@@ -121,9 +121,9 @@
             // 
             // tabControl1
             // 
-            this.tabControl1.Controls.Add(this.tabPage1);
             this.tabControl1.Controls.Add(this.tabPage2);
             this.tabControl1.Controls.Add(this.tabPageRampConfiguration);
+            this.tabControl1.Controls.Add(this.tabPage1);
             this.tabControl1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tabControl1.Location = new System.Drawing.Point(0, 86);
             this.tabControl1.Name = "tabControl1";
@@ -137,7 +137,7 @@
             this.tabPage1.Location = new System.Drawing.Point(4, 22);
             this.tabPage1.Name = "tabPage1";
             this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage1.Size = new System.Drawing.Size(536, 322);
+            this.tabPage1.Size = new System.Drawing.Size(566, 322);
             this.tabPage1.TabIndex = 0;
             this.tabPage1.Text = "Stepper A4988";
             this.tabPage1.UseVisualStyleBackColor = true;
@@ -147,7 +147,7 @@
             this.simpleMotorControl1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.simpleMotorControl1.Location = new System.Drawing.Point(3, 3);
             this.simpleMotorControl1.Name = "simpleMotorControl1";
-            this.simpleMotorControl1.Size = new System.Drawing.Size(530, 316);
+            this.simpleMotorControl1.Size = new System.Drawing.Size(560, 316);
             this.simpleMotorControl1.TabIndex = 0;
             this.simpleMotorControl1.SendCommand += new System.Action<string>(this.simpleMotorControl1_SendCommand);
             // 

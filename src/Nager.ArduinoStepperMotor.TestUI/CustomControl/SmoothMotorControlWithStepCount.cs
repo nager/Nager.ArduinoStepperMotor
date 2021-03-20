@@ -113,9 +113,7 @@ namespace Nager.ArduinoStepperMotor.TestUI.CustomControl
 
         private void SetSpeed(double speed, object sender = null)
         {
-            var newSpeed = 255 * speed / 100.0;
-
-            this._speed = (int)newSpeed;
+            this._speed = (int)speed;
 
             if (sender != this.textBoxSpeed)
             {
@@ -430,13 +428,13 @@ namespace Nager.ArduinoStepperMotor.TestUI.CustomControl
 
         private void buttonMaxLeft_Click(object sender, EventArgs e)
         {
-            this.SetSpeed(-100);
+            this.SetSpeed(-255);
             this.SendSpeed();
         }
 
         private void buttonMaxRight_Click(object sender, EventArgs e)
         {
-            this.SetSpeed(100);
+            this.SetSpeed(255);
             this.SendSpeed();
         }
 
@@ -457,7 +455,7 @@ namespace Nager.ArduinoStepperMotor.TestUI.CustomControl
             this.SendCommand?.Invoke($"speed={this._speed}");
         }
 
-        private void buttonStep_Click(object sender, EventArgs e)
+        private void buttonDriveFullTurn_Click(object sender, EventArgs e)
         {
             var stepCount = 200;
             var microstepInfo = this.comboBoxMicrostep.SelectedItem as MicrostepInfo;
