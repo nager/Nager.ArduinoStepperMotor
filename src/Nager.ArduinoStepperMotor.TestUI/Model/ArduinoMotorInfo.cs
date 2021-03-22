@@ -2,8 +2,8 @@
 {
     public class ArduinoMotorInfo
     {
-        public int LimitLeft { get; set; }
-        public int LimitRight { get; set; }
+        public uint AvailableStepsLeft { get; set; }
+        public uint AvailableStepsRight { get; set; }
         public int MotorSpeed { get; set; }
     }
 }

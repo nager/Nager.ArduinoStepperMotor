@@ -9,6 +9,7 @@ unsigned int loopCounter = 0;
 unsigned int loopMessageInterval = 500;
 
 void setup() {
+  //Serial configuration
   Serial.setTimeout(50);
   Serial.begin(115200);
 
@@ -20,12 +21,17 @@ void loop() {
   commandProcessing();
   checkEndstops();
 
-  if (bme.readHumidity() > 65) {
-    moveOneStep();
-  }
+  float temperature = 0;
 
   if (loopCounter == loopMessageInterval) {
-    Serial.println((String)"{ \"limitLeft\":" + checkLeftLimit() +  ", \"limitRight\":" + checkRightLimit() + ", \"motorSpeed\":" + getMotorSpeed() + " }");
+    temperature = bme.readTemperature();
+
+    //Serial.println(temperature);
+    if (temperature < 20) {
+      //moveOneStep();
+    }
+
+    Serial.println((String)"{ \"availableStepsLeft\":" + checkLeftLimit() +  ", \"availableStepsRight\":" + checkRightLimit() + ", \"motorSpeed\":" + getMotorSpeed() + " }");
     loopCounter = 0;
   }
 

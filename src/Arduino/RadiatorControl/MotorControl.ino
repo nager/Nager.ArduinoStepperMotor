@@ -1,3 +1,5 @@
+const unsigned long ULONG_MAX = 0UL - 1UL;
+
 enum movementDirections {
   MOVEMENT_LEFT,
   MOVEMENT_RIGHT
@@ -9,8 +11,9 @@ int motorDriverDirectionPin = 6;
 int motorDriverActivePin = 7;
 
 //Endstop configuration
-bool twoEndstopsAvailable = false;
+bool endstopRightAvailable = true;
 int endstopRightPin = 2;
+bool endstopLeftAvailable = false;
 int endstopLeftPin = 3;
 
 bool limitActive = true;
@@ -27,7 +30,7 @@ int onTime = 0; //ramp calculation
 volatile unsigned int ramp[RAMP_STEPS];
 volatile byte rampIndex = 0;
 volatile int motorSpeed  = 0;
-volatile unsigned long steps = 0;
+volatile unsigned long steps = ULONG_MAX / 2;
 volatile enum movementDirections movementDirection = MOVEMENT_RIGHT;
 volatile enum movementDirections nextMovementDirection = MOVEMENT_RIGHT;
 
@@ -60,7 +63,7 @@ ISR(TIMER1_OVF_vect) {
     digitalWrite(motorDriverStepPin, HIGH);
     digitalWrite(motorDriverStepPin, LOW);
 
-    if (movementDirection == MOVEMENT_LEFT) {
+    if (movementDirection == MOVEMENT_RIGHT) {
       steps++;
     } else {
       steps--;
@@ -89,8 +92,11 @@ void motorControlSetup() {
   pinMode(motorDriverStepPin, OUTPUT); // Motor Driver Step
   pinMode(motorDriverDirectionPin, OUTPUT); // Motor Driver Direction
 
-  if (twoEndstopsAvailable) {
+  if (endstopRightAvailable) {
     pinMode(endstopRightPin, INPUT); // Endstop Right
+  }
+
+  if (endstopLeftAvailable) {
     pinMode(endstopLeftPin, INPUT); // Endstop Left
   }
 
@@ -126,9 +132,7 @@ void motorControlSetup() {
 }
 
 void motorInitialize() {
-  steps = 2147483647;
-
-  if (twoEndstopsAvailable) {
+  if (endstopRightAvailable || endstopLeftAvailable) {
     calibrateLimitViaEndstops();
   } else {
     limitRight = -1000;
@@ -154,50 +158,76 @@ void motorCheck() {
   nextMovementDirection = MOVEMENT_RIGHT;
 }
 
-void calibrateLimitViaEndstops()
-{
+void calibrateLimitViaEndstop(int endstopPin) {
+  for (int i = 1; i < 2000; i++) {
+    motorSpeed = 1;
+    if (digitalRead(endstopPin) == 0) {
+      motorSpeed = 0;
+      delay(1000);
+      break;
+    }
+    delay(20);
+  }
+  motorSpeed = 0;
+}
+
+void calibrateLimitViaEndstops() {
   int paddingEndstop = 100;
+
+  Serial.println("Calibration start");
+  Serial.println("Limit right:");
+  Serial.println(limitRight);
+  Serial.println("Limit left:");
+  Serial.println(limitLeft);
+  Serial.println("Steps:");
+  Serial.println(steps);
 
   //Disable Limits
   limitActive = false;
 
-  //Drive to right end position
-  for (int i = 1; i < 2000; i++) {
-    motorSpeed = 1;
-    if (digitalRead(endstopRightPin) == 0) {
-      Serial.println("right end position reached");
-      motorSpeed = 0;
-      delay(1000);
-      break;
-    }
-    delay(20);
-  }
-  motorSpeed = 0;
-  limitRight = steps + paddingEndstop;
+  if (endstopRightAvailable) {
 
-  //Switch direction
-  nextMovementDirection = MOVEMENT_LEFT;
+    nextMovementDirection = MOVEMENT_RIGHT;
 
-  //Drive to left end position
-  for (int i = 1; i < 2000; i++) {
-    motorSpeed = 1;
-    if (digitalRead(endstopLeftPin) == 0) {
-      Serial.println("left end position reached");
-      motorSpeed = 0;
-      delay(1000);
-      break;
-    }
-    delay(20);
+    calibrateLimitViaEndstop(endstopRightPin);
+    limitRight = steps - paddingEndstop;
+    Serial.println("End position reached for right endstop");
+    Serial.println(limitRight);
   }
-  motorSpeed = 0;
-  limitLeft = steps - paddingEndstop;
+  else {
+    limitRight = ULONG_MAX;
+  }
+
+  if (endstopLeftAvailable) {
+
+    //Switch direction
+    nextMovementDirection = MOVEMENT_LEFT;
+
+    calibrateLimitViaEndstop(endstopLeftPin);
+    limitLeft = steps + paddingEndstop;
+    Serial.println("End position reached for left endstop");
+    Serial.println(limitLeft);
+  }
+  else {
+    limitLeft = 0;
+  }
+
+  Serial.println("Calibration done");
+  Serial.println("Limit right:");
+  Serial.println(limitRight);
+  Serial.println("Limit left:");
+  Serial.println(limitLeft);
+  Serial.println("Steps:");
+  Serial.println(steps);
 
   nextMovementDirection = MOVEMENT_RIGHT;
 
   //Move away from limit
-  for (int i = 0; i <= 50; i++) {
+  for (int i = 0; i <= paddingEndstop * 2; i++) {
     moveOneStep();
   }
+
+  delay(1000);
 
   //Activate limits
   limitActive = true;
@@ -220,11 +250,12 @@ void trinamicAutomaticTuning() {
 }
 
 void checkEndstops() {
-  if (twoEndstopsAvailable) {
+  if (endstopRightAvailable) {
     if (digitalRead(endstopRightPin) == 0) {
       digitalWrite(motorDriverActivePin, HIGH);
     }
-
+  }
+  if (endstopLeftAvailable) {
     if (digitalRead(endstopLeftPin) == 0) {
       digitalWrite(motorDriverActivePin, HIGH);
     }
@@ -312,12 +343,12 @@ int getMotorSpeed() {
   return motorSpeed;
 }
 
-int checkLeftLimit() {
+unsigned long checkLeftLimit() {
   if (!limitActive) {
-    return -1;
+    return ULONG_MAX;
   }
 
-  long distance = limitLeft - steps;
+  unsigned long distance = steps - limitLeft;
 
   if (movementDirection == MOVEMENT_LEFT && distance < 400 && motorSpeed > 2) {
     int reduceSpeed = ceil(motorSpeed / 10.0);
@@ -331,12 +362,12 @@ int checkLeftLimit() {
   return distance;
 }
 
-int checkRightLimit() {
+unsigned long checkRightLimit() {
   if (!limitActive) {
-    return -1;
+    return ULONG_MAX;
   }
 
-  long distance = steps - limitRight;
+  unsigned long distance = limitRight - steps;
 
   if (movementDirection == MOVEMENT_RIGHT && distance < 400 && motorSpeed > 2) {
     int reduceSpeed = ceil(motorSpeed / 10.0);
@@ -345,6 +376,7 @@ int checkRightLimit() {
 
   if (movementDirection == MOVEMENT_RIGHT && distance <= 0) {
     rampIndex = 0;
+    motorSpeed = 0;
   }
 
   return distance;

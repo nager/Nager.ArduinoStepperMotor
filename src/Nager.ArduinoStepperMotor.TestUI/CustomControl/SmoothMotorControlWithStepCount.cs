@@ -54,7 +54,7 @@ namespace Nager.ArduinoStepperMotor.TestUI.CustomControl
 
             this._motorInfo = motorInfo;
 
-            if (motorInfo.LimitLeft == -1 || motorInfo.LimitRight == -1)
+            if (motorInfo.AvailableStepsLeft == uint.MaxValue || motorInfo.AvailableStepsRight == uint.MaxValue)
             {
                 this.SwitchLimitButtons(false);
             }
@@ -150,12 +150,12 @@ namespace Nager.ArduinoStepperMotor.TestUI.CustomControl
                 var minValue = -255;
                 var maxValue = 255;
 
-                if (this._motorInfo.LimitLeft < 100)
+                if (this._motorInfo.AvailableStepsLeft < 100)
                 {
                     minValue = 0;
                 }
 
-                if (this._motorInfo.LimitRight < 100)
+                if (this._motorInfo.AvailableStepsRight < 100)
                 {
                     maxValue = 0;
                 }
@@ -213,7 +213,7 @@ namespace Nager.ArduinoStepperMotor.TestUI.CustomControl
             this.SendSpeed();
             for (var j = 0; j < 50; j++)
             {
-                if (this._motorInfo.LimitRight == 0)
+                if (this._motorInfo.AvailableStepsRight == 0)
                 {
                     break;
                 }
@@ -248,7 +248,7 @@ namespace Nager.ArduinoStepperMotor.TestUI.CustomControl
             this.SendSpeed();
             for (var j = 0; j < 50; j++)
             {
-                if (this._motorInfo.LimitRight == 0)
+                if (this._motorInfo.AvailableStepsRight == 0)
                 {
                     break;
                 }
@@ -283,7 +283,7 @@ namespace Nager.ArduinoStepperMotor.TestUI.CustomControl
             this.SendSpeed();
             for (var j = 0; j < 50; j++)
             {
-                if (this._motorInfo.LimitRight == 0)
+                if (this._motorInfo.AvailableStepsRight == 0)
                 {
                     break;
                 }
@@ -306,7 +306,7 @@ namespace Nager.ArduinoStepperMotor.TestUI.CustomControl
             this.SendSpeed();
             for (var j = 0; j < 50; j++)
             {
-                if (this._motorInfo.LimitRight == 0)
+                if (this._motorInfo.AvailableStepsRight == 0)
                 {
                     break;
                 }
@@ -347,7 +347,7 @@ namespace Nager.ArduinoStepperMotor.TestUI.CustomControl
                 this.SendSpeed();
                 for (var j = 0; j < 100; j++)
                 {
-                    if (this._motorInfo.LimitRight == 0)
+                    if (this._motorInfo.AvailableStepsRight == 0)
                     {
                         break;
                     }
@@ -361,7 +361,7 @@ namespace Nager.ArduinoStepperMotor.TestUI.CustomControl
                 //Wait for End Position
                 for (var j = 0; j < 100; j++)
                 {
-                    if (this._motorInfo.LimitLeft == 0)
+                    if (this._motorInfo.AvailableStepsLeft == 0)
                     {
                         break;
                     }
@@ -383,7 +383,7 @@ namespace Nager.ArduinoStepperMotor.TestUI.CustomControl
             this.SendSpeed();
             for (var j = 0; j < 50; j++)
             {
-                if (this._motorInfo.LimitRight == 0)
+                if (this._motorInfo.AvailableStepsRight == 0)
                 {
                     break;
                 }
@@ -406,14 +406,13 @@ namespace Nager.ArduinoStepperMotor.TestUI.CustomControl
 
         private void buttonLimitSwitch_Click(object sender, EventArgs e)
         {
-            if (this._motorInfo.LimitLeft == -1)
+            if (this._motorInfo.AvailableStepsLeft == uint.MaxValue)
             {
                 this.SendCommand?.Invoke("limitenable");
                 return;
             }
 
             this.SendCommand?.Invoke("limitdisable");
-            return;
         }
 
         private void buttonSetLimitLeft_Click(object sender, EventArgs e)

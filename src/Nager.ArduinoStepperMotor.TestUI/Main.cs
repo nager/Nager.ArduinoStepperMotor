@@ -50,7 +50,7 @@ namespace Nager.ArduinoStepperMotor.TestUI
                     this.smoothMotorControlWithStepCount1.DataReceived(receive.Data);
                     this.rampControl1.DataReceived(receive.Data);
 
-                    sb.AppendLine($"{receive.ReceiveDate:mm:ss.fff} - {receive.Data}");
+                    sb.AppendLine($"{receive.ReceiveDate:mm:ss.fff} {receive.Data}");
 
                     var text = sb.ToString();
                     if (text.Length > 1000)
