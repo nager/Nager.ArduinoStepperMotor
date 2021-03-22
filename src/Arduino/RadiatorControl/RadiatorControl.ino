@@ -8,6 +8,9 @@ Adafruit_BME280 bme; // I2C
 unsigned int loopCounter = 0;
 unsigned int loopMessageInterval = 500;
 
+float desiredTemperature = 23;
+float currentTemperature = 0;
+
 void setup() {
   //Serial configuration
   Serial.setTimeout(50);
@@ -15,20 +18,26 @@ void setup() {
 
   humiditySensorSetup();
   motorControlSetup();
+
+  //Set limit for the other direction
+  unsigned long currentPosition = getCurrentPosition();
+  setLimitLeft(currentPosition - 2000);
 }
 
 void loop() {
   commandProcessing();
   checkEndstops();
 
-  float temperature = 0;
 
   if (loopCounter == loopMessageInterval) {
-    temperature = bme.readTemperature();
+    currentTemperature = bme.readTemperature();
 
     //Serial.println(temperature);
-    if (temperature < 20) {
-      //moveOneStep();
+    if (currentTemperature < desiredTemperature) {
+      //Open radiator
+      setMotorSpeed(-255);
+    } else {
+      setMotorSpeed(255);
     }
 
     Serial.println((String)"{ \"availableStepsLeft\":" + checkLeftLimit() +  ", \"availableStepsRight\":" + checkRightLimit() + ", \"motorSpeed\":" + getMotorSpeed() + " }");

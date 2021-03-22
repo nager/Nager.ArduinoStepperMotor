@@ -135,23 +135,25 @@ void motorInitialize() {
   if (endstopRightAvailable || endstopLeftAvailable) {
     calibrateLimitViaEndstops();
   } else {
-    limitRight = -1000;
-    limitLeft = 1000;
-    steps = 0;
+    setLimitRight(ULONG_MAX);
+    setLimitLeft(0);
+    steps = ULONG_MAX / 2;
   }
 
   motorCheck();
 }
 
 void motorCheck() {
-  for (int i = 0; i <= 10; i++) {
+  int motorMovementSteps = 5;
+  
+  for (int i = 0; i <= motorMovementSteps; i++) {
     moveOneStep();
   }
 
   nextMovementDirection = MOVEMENT_LEFT;
   delay(100);
 
-  for (int i = 0; i <= 10; i++) {
+  for (int i = 0; i <= motorMovementSteps; i++) {
     moveOneStep();
   }
 
@@ -175,12 +177,6 @@ void calibrateLimitViaEndstops() {
   int paddingEndstop = 100;
 
   Serial.println("Calibration start");
-  Serial.println("Limit right:");
-  Serial.println(limitRight);
-  Serial.println("Limit left:");
-  Serial.println(limitLeft);
-  Serial.println("Steps:");
-  Serial.println(steps);
 
   //Disable Limits
   limitActive = false;
@@ -190,12 +186,12 @@ void calibrateLimitViaEndstops() {
     nextMovementDirection = MOVEMENT_RIGHT;
 
     calibrateLimitViaEndstop(endstopRightPin);
-    limitRight = steps - paddingEndstop;
+    setLimitRight(steps - paddingEndstop);
     Serial.println("End position reached for right endstop");
     Serial.println(limitRight);
   }
   else {
-    limitRight = ULONG_MAX;
+    setLimitRight(ULONG_MAX);
   }
 
   if (endstopLeftAvailable) {
@@ -204,26 +200,20 @@ void calibrateLimitViaEndstops() {
     nextMovementDirection = MOVEMENT_LEFT;
 
     calibrateLimitViaEndstop(endstopLeftPin);
-    limitLeft = steps + paddingEndstop;
+    setLimitLeft(steps + paddingEndstop);
     Serial.println("End position reached for left endstop");
     Serial.println(limitLeft);
   }
   else {
-    limitLeft = 0;
+    setLimitLeft(0);
   }
 
   Serial.println("Calibration done");
-  Serial.println("Limit right:");
-  Serial.println(limitRight);
-  Serial.println("Limit left:");
-  Serial.println(limitLeft);
-  Serial.println("Steps:");
-  Serial.println(steps);
 
   nextMovementDirection = MOVEMENT_RIGHT;
 
   //Move away from limit
-  for (int i = 0; i <= paddingEndstop * 2; i++) {
+  for (int i = 0; i < paddingEndstop * 2; i++) {
     moveOneStep();
   }
 
@@ -231,6 +221,14 @@ void calibrateLimitViaEndstops() {
 
   //Activate limits
   limitActive = true;
+}
+
+void setLimitLeft(unsigned long limit) {
+  limitLeft = limit;
+}
+
+void setLimitRight(unsigned long limit) {
+  limitRight = limit;
 }
 
 void trinamicAutomaticTuning() {
@@ -262,26 +260,33 @@ void checkEndstops() {
   }
 }
 
+void setMotorSpeed(int speed) {
+  //Check speed is higher as max
+  if (abs(speed) > RAMP_STEPS) {
+    motorSpeed = 0;
+    return;
+  }
+
+  if (speed > 0) {
+    nextMovementDirection = MOVEMENT_RIGHT;
+  } else if (speed < 0) {
+    nextMovementDirection = MOVEMENT_LEFT;
+  }
+
+  motorSpeed = abs(speed);
+}
+
+int getMotorSpeed() {
+  return motorSpeed;
+}
+
 void commandProcessing() {
   if (Serial.available() > 0) {
     command = Serial.readStringUntil('\n');
 
     if (command.startsWith("speed")) {
       int nextSpeed = command.substring(6).toInt();
-
-      //Check speed is higher as max
-      if (abs(nextSpeed) > RAMP_STEPS) {
-        motorSpeed = 0;
-        return;
-      }
-
-      if (nextSpeed > 0) {
-        nextMovementDirection = MOVEMENT_RIGHT;
-      } else if (nextSpeed < 0) {
-        nextMovementDirection = MOVEMENT_LEFT;
-      }
-
-      motorSpeed = abs(nextSpeed);
+      setMotorSpeed(nextSpeed);
     }
 
     if (command.equals("enablemotordriver")) {
@@ -305,12 +310,12 @@ void commandProcessing() {
     }
 
     if (command.equals("setlimitleft")) {
-      limitLeft = steps;
+      setLimitLeft(steps);
       return;
     }
 
     if (command.equals("setlimitright")) {
-      limitRight = steps;
+      setLimitRight(steps);
       return;
     }
 
@@ -339,8 +344,8 @@ void commandProcessing() {
   }
 }
 
-int getMotorSpeed() {
-  return motorSpeed;
+unsigned long getCurrentPosition() {
+  return steps;
 }
 
 unsigned long checkLeftLimit() {
