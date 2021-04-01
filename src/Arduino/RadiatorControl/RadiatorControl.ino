@@ -16,12 +16,14 @@ void setup() {
   Serial.setTimeout(50);
   Serial.begin(115200);
 
+  Serial.println("Start humidity");
   humiditySensorSetup();
+  Serial.println("Start motor");
   motorControlSetup();
 
   //Set limit for the other direction
   unsigned long currentPosition = getCurrentPosition();
-  setLimitLeft(currentPosition - 2000);
+  setLimitLeft(currentPosition - 800);
 }
 
 void loop() {
@@ -35,12 +37,12 @@ void loop() {
     //Serial.println(temperature);
     if (currentTemperature < desiredTemperature) {
       //Open radiator
-      setMotorSpeed(-255);
+      setMotorSpeed(1);
     } else {
-      setMotorSpeed(255);
+      setMotorSpeed(-1);
     }
 
-    Serial.println((String)"{ \"availableStepsLeft\":" + checkLeftLimit() +  ", \"availableStepsRight\":" + checkRightLimit() + ", \"motorSpeed\":" + getMotorSpeed() + " }");
+    Serial.println((String)"{ \"availableStepsLeft\":" + checkLeftLimit() +  ", \"availableStepsRight\":" + checkRightLimit() + ", \"motorSpeed\":" + getMotorSpeed() + ", \"temp\":" + currentTemperature + " }");
     loopCounter = 0;
   }
 

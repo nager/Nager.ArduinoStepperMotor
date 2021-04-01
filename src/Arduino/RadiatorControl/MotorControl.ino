@@ -120,8 +120,13 @@ void motorControlSetup() {
   //caculateAccel(3000, 1, 0.6);
   //US-17HS4401S
   //caculateAccel(1600, 1, 0.25);
+  
+  //last config
   //caculateAccel(1500, 1, 0.6);
-  caculateAccel(3000, 1, 0.2);
+  //test config
+  caculateAccel(6000, 3, 0.1);
+  
+  //caculateAccel(3000, 1, 0.2);
   //caculateAccel(300, 1, 0.2);
 
   //17HS13-0404S + A4988
@@ -163,6 +168,7 @@ void motorCheck() {
 void calibrateLimitViaEndstop(int endstopPin) {
   for (int i = 1; i < 2000; i++) {
     motorSpeed = 1;
+    Serial.println(digitalRead(endstopPin));
     if (digitalRead(endstopPin) == 0) {
       motorSpeed = 0;
       delay(1000);
@@ -174,7 +180,7 @@ void calibrateLimitViaEndstop(int endstopPin) {
 }
 
 void calibrateLimitViaEndstops() {
-  int paddingEndstop = 100;
+  int paddingEndstop = 50;
 
   Serial.println("Calibration start");
 
@@ -186,7 +192,15 @@ void calibrateLimitViaEndstops() {
     nextMovementDirection = MOVEMENT_RIGHT;
 
     calibrateLimitViaEndstop(endstopRightPin);
-    setLimitRight(steps - paddingEndstop);
+
+    //Move away from limit
+    nextMovementDirection = MOVEMENT_LEFT;
+    for (int i = 0; i < paddingEndstop * 8; i++) {
+      moveOneStep();
+      delay(10);
+    }
+
+    setLimitRight(steps);
     Serial.println("End position reached for right endstop");
     Serial.println(limitRight);
   }
@@ -203,6 +217,13 @@ void calibrateLimitViaEndstops() {
     setLimitLeft(steps + paddingEndstop);
     Serial.println("End position reached for left endstop");
     Serial.println(limitLeft);
+
+    //Move away from limit
+    nextMovementDirection = MOVEMENT_RIGHT;
+    for (int i = 0; i < paddingEndstop * 8; i++) {
+      moveOneStep();
+      delay(10);
+    }
   }
   else {
     setLimitLeft(0);
@@ -212,10 +233,7 @@ void calibrateLimitViaEndstops() {
 
   nextMovementDirection = MOVEMENT_RIGHT;
 
-  //Move away from limit
-  for (int i = 0; i < paddingEndstop * 2; i++) {
-    moveOneStep();
-  }
+  Serial.println("Move away done");
 
   delay(1000);
 
